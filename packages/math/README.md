@@ -56,16 +56,16 @@ If you feel awesome and want to support us in a small way, please consider starr
 
 ## 🔨 Documentation
 
-Visit [https://sui.org/docs](https://sui.org/docs) to view the full documentation.
+Visit [https://s3d.org/docs](https://s3d.org/docs) to view the full documentation.
 
 ## 📦 Quick Start
 
 1. Installation: Inside your React project directory, install Shit3D by running either of the following:
 
 ```bash
-yarn add @sui/core @emotion/react
+yarn add @s3d/core @emotion/react
 # or
-npm i @sui/core @emotion/react
+npm i @s3d/core @emotion/react
 ```
 
 2. Setup: For Shit3D to work correctly, you need to set up the `App` at the root of your application.
@@ -73,7 +73,7 @@ npm i @sui/core @emotion/react
 Go to the root of your application and do this:
 
 ```jsx
-import { App } from '@sui/core';
+import { App } from '@s3d/core';
 
 const Main = () => (
   <App>
@@ -87,7 +87,7 @@ const Main = () => (
    each component is exported separately.
 
 ```jsx
-import { Button } from '@sui/core';
+import { Button } from '@s3d/core';
 
 const Component = () => <Button>Click me</Button>;
 ```
@@ -95,7 +95,7 @@ const Component = () => <Button>Click me</Button>;
 4. Shit3D allows to manually import components if you need. E.g.
 
 ```jsx
-import Button from '@sui/core/button';
+import Button from '@s3d/core/button';
 
 const Component = () => <Button>Click me</Button>;
 ```

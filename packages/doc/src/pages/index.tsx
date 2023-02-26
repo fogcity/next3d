@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { App } from '@sui/core';
+import { App } from '@s3d/core';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
@@ -21,7 +21,7 @@ function HomepageHeader() {
           <Link className={clsx('button button--primary button--lg', styles.gradient)} to='/docs/intro'>
             Get Started
           </Link>
-          <Link> {'>'} npm install @sui/core @emotion/react</Link>
+          <Link> {'>'} npm install @s3d/core @emotion/react</Link>
         </div>
       </div>
     </header>

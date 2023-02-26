@@ -6,9 +6,9 @@
   ],
   "scripts": {
     "build": "npx lerna run build",
-    "test:core": "npx lerna run test --scope=@sui/core",
-    "dev:docs": "npx lerna run dev --scope=@sui/docs",
-    "dev:core": "npx lerna run dev --scope=@sui/core",
+    "test:core": "npx lerna run test --scope=@s3d/core",
+    "dev:docs": "npx lerna run dev --scope=@s3d/docs",
+    "dev:core": "npx lerna run dev --scope=@s3d/core",
     "dev": "npx lerna run dev",
     "release": "npx lerna publish --no-private"
   },
