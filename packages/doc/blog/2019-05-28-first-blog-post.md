@@ -3,7 +3,7 @@ slug: first-blog-post
 title: First Blog Post
 authors:
   name: Sylas Xu
-  title: Maintainer of Shit UI
+  title: Maintainer of Shit 3D
   url: https://github.com/xymzhs
   image_url: https://github.com/endiliey.png
 tags: [hola]

@@ -4,13 +4,13 @@ sidebar_position: 1
 
 # Get Started
 
-Welcome to the ShitUI documentation (first release)!
+Welcome to the Shit3D documentation (first release)!
 
-ShitUI allows you to make beautiful, modern and fast mobile websites/apps, no matter what your design experience is, you will easily learn the most standardized component design and usage methods here. Components are built with React and Emotion, refer to IOS and Material design guidelines, and are inspired by Vuesax, Flutter.
+Shit3D allows you to make beautiful, modern and fast mobile websites/apps, no matter what your design experience is, you will easily learn the most standardized component design and usage methods here. Components are built with React and Emotion, refer to IOS and Material design guidelines, and are inspired by Vuesax, Flutter.
 
 ## Installation
 
-Inside your React project directory, install ShitUI by running either of the following:
+Inside your React project directory, install Shit3D by running either of the following:
 
 ```bash
 npm install @sui/core @emotion/reactt
@@ -18,7 +18,7 @@ npm install @sui/core @emotion/reactt
 
 ## Setup
 
-For ShitUI to work correctly, you need to set up the `App` at the root of your application (if not ,the components also show right).
+For Shit3D to work correctly, you need to set up the `App` at the root of your application (if not ,the components also show right).
 
 Go to the root of your application and do this:
 
@@ -38,9 +38,9 @@ function Main({ Component }) {
 }
 ```
 
-## Using ShitUI components
+## Using Shit3D components
 
-Once ShitUI is installed you can use any of the components as follows. ShitUI uses tree-shaking so the unused modules will not be included in the bundle during the build process and each component is exported separately.
+Once Shit3D is installed you can use any of the components as follows. Shit3D uses tree-shaking so the unused modules will not be included in the bundle during the build process and each component is exported separately.
 
 ```tsx
 import { Button } from '@sui/core';

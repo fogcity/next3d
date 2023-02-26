@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const path = require('path');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Shit UI',
-  tagline: '🚀 The React UI tools helps you create the best web app',
+  title: 'Shit 3D',
+  tagline: '🚀 The 3D tools helps you create the best web 3D app',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -102,7 +102,7 @@ const config = {
       // },
       navbar: {
         hideOnScroll:true,
-        title: 'Shit UI',
+        title: 'Shit 3D',
         logo: {
           alt: 'UI Logo',
           src: 'img/logo.png',
@@ -168,7 +168,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Shit UI, Inc.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Shit 3D, Inc.`,
       },
       prism: {
         theme: lightCodeTheme,

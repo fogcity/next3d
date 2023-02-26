@@ -15,7 +15,7 @@ function HomepageHeader() {
       <div className='container'>
         <h1 className='hero__title'>{siteConfig.title}</h1>
         <p className='hero__subtitle'>
-          🚀 The React UI tools helps you create the <span className={styles.best}>best</span> web app
+          🚀 The 3D tools helps you create the <span className={styles.best}>best</span> web app
         </p>
         <div className={styles.buttons}>
           <Link className={clsx('button button--primary button--lg', styles.gradient)} to='/docs/intro'>
@@ -31,7 +31,7 @@ function HomepageHeader() {
 export default function Home(): JSX.Element {
   const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout title={`${siteConfig.title}`} description='🚀 The React UI tools helps you create the best web app'>
+    <Layout title={`${siteConfig.title}`} description='🚀 The 3D tools helps you create the best web 3D app'>
       <HomepageHeader />
 
       <main>

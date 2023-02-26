@@ -1,11 +1,11 @@
 <!-- markdownlint-disable-next-line -->
 <p align="center">
-  <img width='13%' src="./images/logo.png" alt="Shit UI">
-  <h1 align="center">Shit UI</h1>
+  <img width='13%' src="./images/logo.png" alt="Shit 3D">
+  <h1 align="center">Shit 3D</h1>
 </p>
 </br>
 <p align="center">
-  The React UI tools helps you create the best web app.
+  The 3D tools helps you create the best web 3D app.
 </p>
 <div align="center">
 
@@ -19,7 +19,7 @@
 
 English | [Português](./README-pt_BR.md) | [简体中文](./README-zh_CN.md) | [Українською](./README-uk_UA.md) | [Spanish](./README-sp_MX.md) | [日本語](./README-ja_JP.md)
 
-  <img width='100%' src="./images/components.jpg" alt="Shit UI">
+  <img width='100%' src="./images/components.jpg" alt="Shit 3D">
 </div>
 
 ## ✨ Features
@@ -54,7 +54,7 @@ Visit [https://sui.org/docs](https://sui.org/docs) to view the full documentatio
 
 ## 📦 Quick Start
 
-1. Installation: Inside your React project directory, install ShitUI by running either of the following:
+1. Installation: Inside your React project directory, install Shit3D by running either of the following:
 
 ```bash
 yarn add @sui/core @emotion/react
@@ -62,7 +62,7 @@ yarn add @sui/core @emotion/react
 npm i @sui/core @emotion/react
 ```
 
-2. Setup: For ShitUI to work correctly, you need to set up the `App` at the root of your application.
+2. Setup: For Shit3D to work correctly, you need to set up the `App` at the root of your application.
 
 Go to the root of your application and do this:
 
@@ -76,8 +76,8 @@ const Main = () => (
 );
 ```
 
-3. Using ShitUI components: Once ShitUI is installed you can use any of the components as follows.
-   ShitUI uses tree-shaking so the unused modules will not be included in the bundle during the build process and
+3. Using Shit3D components: Once Shit3D is installed you can use any of the components as follows.
+   Shit3D uses tree-shaking so the unused modules will not be included in the bundle during the build process and
    each component is exported separately.
 
 ```jsx
@@ -86,7 +86,7 @@ import { Button } from '@sui/core';
 const Component = () => <Button>Click me</Button>;
 ```
 
-4. ShitUI allows to manually import components if you need. E.g.
+4. Shit3D allows to manually import components if you need. E.g.
 
 ```jsx
 import Button from '@sui/core/button';

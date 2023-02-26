@@ -14,7 +14,7 @@ const FeatureList: FeatureItem[] = [
     // Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        ShitUI provides a simple way to customize the default themes, you can change the colors, fonts, breakpoints and
+        Shit3D provides a simple way to customize the default themes, you can change the colors, fonts, breakpoints and
         everything you need.
       </>
     ),
@@ -24,7 +24,7 @@ const FeatureList: FeatureItem[] = [
     // Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        ShitUI components have been created with the Developer's experience in mind, avoiding having to import multiple
+        Shit3D components have been created with the Developer's experience in mind, avoiding having to import multiple
         components to display just one.
       </>
     ),
@@ -34,7 +34,7 @@ const FeatureList: FeatureItem[] = [
     // Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Thanks to ShitUI is built on top of the amazing CSS-in-JS library Emotion, you can customize any components in
+        Thanks to Shit3D is built on top of the amazing CSS-in-JS library Emotion, you can customize any components in
         several ways eather using the css prop, styled function or native CSS selectors.
       </>
     ),
