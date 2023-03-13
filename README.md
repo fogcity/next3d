@@ -1,7 +1,7 @@
 <!-- markdownlint-disable-next-line -->
 <p align="center">
   <img width='13%' src="./images/logo.png" alt="Shit 3D">
-  <h1 align="center">Shit 3D</h1>
+  <h1 align="center">Next 3D</h1>
 </p>
 </br>
 <p align="center">
@@ -54,7 +54,7 @@ Visit [https://s3d.org/docs](https://s3d.org/docs) to view the full documentatio
 
 ## 📦 Quick Start
 
-1. Installation: Inside your React project directory, install Shit3D by running either of the following:
+1. Installation: Inside your React project directory, install Next3D by running either of the following:
 
 ```bash
 yarn add @s3d/core @emotion/react
