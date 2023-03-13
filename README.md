@@ -70,7 +70,7 @@ import { createGround } from "../lib/meshes";
 import { scale, translate } from "../lib/transform";
 import React,{ useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from 'rana-ui';
+import { Button } from '@sui/core';
 
 function App() {
   useEffect(() => {
