@@ -1,4 +1,4 @@
-import { Row, Col, Container } from '@s3d/core';
+import { Row, Col, Container } from '@next3d/core';
 import React from 'react';
 
 export default ({ children }) => (

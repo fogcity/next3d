@@ -1,6 +1,6 @@
 <!-- markdownlint-disable-next-line -->
 <p align="center">
-  <img width='13%' src="./images/logo.png" alt="Shit 3D">
+  <img width='13%' src="./images/logo.png" alt="Next 3D">
   <h1 align="center">Next 3D</h1>
 </p>
 </br>
@@ -19,7 +19,7 @@
 
 English | [Português](./README-pt_BR.md) | [简体中文](./README-zh_CN.md) | [Українською](./README-uk_UA.md) | [Spanish](./README-sp_MX.md) | [日本語](./README-ja_JP.md)
 
-  <img width='100%' src="./images/components.jpg" alt="Shit 3D">
+  <img width='100%' src="./images/site.png" alt="Next 3D">
 </div>
 
 ## ✨ Features
@@ -57,13 +57,12 @@ Visit [https://s3d.org/docs](https://s3d.org/docs) to view the full documentatio
 1. Installation: Inside your React project directory, install Next3D by running either of the following:
 
 ```bash
-yarn add @s3d/core @emotion/react
+yarn add @next3d/core @emotion/react
 # or
-npm i @s3d/core @emotion/react
+npm i @next3d/core @emotion/react
 ```
 
 2. Here is a quick react example to get you started, **it's all you need**:
-
 
 ```jsx
 import { createBox, createSphere, vec3, createEngine, createScene, createPerspectiveCamera, createPointLight } from "../lib";

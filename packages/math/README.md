@@ -17,16 +17,11 @@
 [![Renovate status](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://github.com/mui-org/material-ui/issues/27062)
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/mui-org/material-ui.svg)](https://isitmaintained.com/project/mui-org/material-ui 'Average time to resolve an issue')
 
-
-
-  English | [Português](./README-pt_BR.md) | [简体中文](./README-zh_CN.md) | [Українською](./README-uk_UA.md) | [Spanish](./README-sp_MX.md) | [日本語](./README-ja_JP.md)
-
+English | [Português](./README-pt_BR.md) | [简体中文](./README-zh_CN.md) | [Українською](./README-uk_UA.md) | [Spanish](./README-sp_MX.md) | [日本語](./README-ja_JP.md)
 
   <img width='100%' src="../../images/components.jpg" alt="Shit 3D">
   
 </div>
-
-
 
 ## ✨ Features
 
@@ -45,8 +40,8 @@
 - [Electron](https://www.electronjs.org/)
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/electron/electron_48x48.png" alt="Electron" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Electron |
-| --- | --- | --- | --- | --- |
-| Edge | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Edge                                                                                                                                                                                                 | last 2 versions                                                                                                                                                                                                  | last 2 versions                                                                                                                                                                                              | last 2 versions                                                                                                                                                                                              | last 2 versions                                                                                                                                                                                                      |
 
 ## ⭐ Support the project
 
@@ -63,9 +58,9 @@ Visit [https://s3d.org/docs](https://s3d.org/docs) to view the full documentatio
 1. Installation: Inside your React project directory, install Shit3D by running either of the following:
 
 ```bash
-yarn add @s3d/core @emotion/react
+yarn add @next3d/core @emotion/react
 # or
-npm i @s3d/core @emotion/react
+npm i @next3d/core @emotion/react
 ```
 
 2. Setup: For Shit3D to work correctly, you need to set up the `App` at the root of your application.
@@ -73,7 +68,7 @@ npm i @s3d/core @emotion/react
 Go to the root of your application and do this:
 
 ```jsx
-import { App } from '@s3d/core';
+import { App } from '@next3d/core';
 
 const Main = () => (
   <App>
@@ -87,7 +82,7 @@ const Main = () => (
    each component is exported separately.
 
 ```jsx
-import { Button } from '@s3d/core';
+import { Button } from '@next3d/core';
 
 const Component = () => <Button>Click me</Button>;
 ```
@@ -95,7 +90,7 @@ const Component = () => <Button>Click me</Button>;
 4. Shit3D allows to manually import components if you need. E.g.
 
 ```jsx
-import Button from '@s3d/core/button';
+import Button from '@next3d/core/button';
 
 const Component = () => <Button>Click me</Button>;
 ```
