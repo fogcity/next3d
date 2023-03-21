@@ -1,10 +1,9 @@
 import { DType, mat4 } from './matrix';
 
 export class Vector {
-  data: Float32Array;
+  data!: Float32Array;
   ndim: number = 4;
   dtype: DType = 'f32';
-  byteLength: number;
   constructor(x: number, y: number, z: number = 0, w: number = 1, dtype: DType = 'f32') {
     if (dtype == 'f32') this.data = new Float32Array([x, y, z, w]);
   }
@@ -17,7 +16,7 @@ export class Vector {
   set(data: number[]) {
     if (this.dtype == 'f32') this.data = new Float32Array(data);
   }
-  equils(v: Vector) {
+  equal(v: Vector) {
     let e = false;
     if (v.data.byteLength == this.data.byteLength) {
       if (this.data.toString() == v.data.toString()) e = true;
