@@ -12,7 +12,7 @@ export class Matrix {
   byteLength: number;
   size: number;
   constructor(data: number[] | number[][], public dType: DType = "f32") {
-    this.data = createTypedArray(data.flat(), dType);
+    this.data = createTypedArray((data as number[]).flat(), dType);
     this.byteLength = this.data.byteLength;
     this.size = this.data.length;
   }

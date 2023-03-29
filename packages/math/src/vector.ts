@@ -48,8 +48,7 @@ export class Vector {
     return this;
   }
   norm() {
-    const r = this.data[0] ** 2 + this.data[1] ** 2 + this.data[2] ** 2;
-    return Math.sqrt(r);
+    return Math.hypot(...this.data) ;
   }
   normalizing() {
     const n = this.norm();
