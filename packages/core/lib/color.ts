@@ -1,9 +1,10 @@
 import { DType, mat4 } from './matrix';
 
-export class Vector {
-  data!: Float32Array;
+export class Color {
+  data: Float32Array;
   ndim: number = 4;
   dtype: DType = 'f32';
+
   constructor(x: number, y: number, z: number = 0, w: number = 1, dtype: DType = 'f32') {
     if (dtype == 'f32') this.data = new Float32Array([x, y, z, w]);
   }
@@ -16,26 +17,26 @@ export class Vector {
   set(data: number[]) {
     if (this.dtype == 'f32') this.data = new Float32Array(data);
   }
-  equal(v: Vector) {
+  equils(v: Color) {
     let e = false;
     if (v.data.byteLength == this.data.byteLength) {
       if (this.data.toString() == v.data.toString()) e = true;
     }
     return e;
   }
-  mul(v: Vector) {
+  mul(v: Color) {
     this.data[0] *= v.data[0];
     this.data[1] *= v.data[1];
     this.data[2] *= v.data[2];
     return this;
   }
-  add(v: Vector) {
+  add(v: Color) {
     this.data[0] += v.data[0];
     this.data[1] += v.data[1];
     this.data[2] += v.data[2];
     return this;
   }
-  sub(v: Vector) {
+  sub(v: Color) {
     this.data[0] -= v.data[0];
     this.data[1] -= v.data[1];
     this.data[2] -= v.data[2];
@@ -48,7 +49,8 @@ export class Vector {
     return this;
   }
   norm() {
-    return Math.hypot(...this.data) ;
+    const r = this.data[0] ** 2 + this.data[1] ** 2 + this.data[2] ** 2;
+    return Math.sqrt(r);
   }
   normalizing() {
     const n = this.norm();
@@ -58,31 +60,31 @@ export class Vector {
     this.data[2] /= n;
     return this;
   }
-  dot(v: Vector) {
+  dot(v: Color) {
     return this.data[0] * v.data[0] + this.data[1] * v.data[1] + this.data[2] * v.data[2];
   }
-  cross(v: Vector) {
-    return vec4(
+  cross(v: Color) {
+    return color4(
       this.data[1] * v.data[2] - this.data[2] * v.data[1],
       this.data[0] * v.data[2] - this.data[2] * v.data[0],
       this.data[0] * v.data[1] - this.data[1] * v.data[0],
       1,
     );
   }
-  cos(v: Vector) {
+  cos(v: Color) {
     return (this.dot(v) / this.norm()) * v.norm();
   }
-  orthogonal(v: Vector) {
+  orthogonal(v: Color) {
     return this.dot(v) == 0;
   }
 }
 
-export function vec2(x: number, y: number, dtype: DType = 'f32') {
-  return new Vector(x, y, 0, 1, dtype);
+export function color2(x: number, y: number, dtype: DType = 'f32') {
+  return new Color(x, y, 0, 1, dtype);
 }
-export function vec3(x: number, y: number, z: number, dtype: DType = 'f32') {
-  return new Vector(x, y, z, 1, dtype);
+export function color3(x: number, y: number, z: number, dtype: DType = 'f32') {
+  return new Color(x, y, z, 1, dtype);
 }
-export function vec4(x: number, y: number, z: number, w: number = 1, dtype: DType = 'f32') {
-  return new Vector(x, y, z, w, dtype);
+export function color4(x: number, y: number, z: number, w: number = 1, dtype: DType = 'f32') {
+  return new Color(x, y, z, w, dtype);
 }
