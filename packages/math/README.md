@@ -1,7 +1,7 @@
 <!-- markdownlint-disable-next-line -->
 <p align="center">
-  <img width='13%' src="../../images/logo.png" alt="Shit 3D">
-  <h1 align="center">Shit 3D</h1>
+  <img width='13%' src="../../images/logo.png" alt="Next 3D">
+  <h1 align="center">Next 3D</h1>
 </p>
 </br>
 <p align="center">
@@ -19,7 +19,7 @@
 
 English | [Português](./README-pt_BR.md) | [简体中文](./README-zh_CN.md) | [Українською](./README-uk_UA.md) | [Spanish](./README-sp_MX.md) | [日本語](./README-ja_JP.md)
 
-  <img width='100%' src="../../images/components.jpg" alt="Shit 3D">
+  <img width='100%' src="../../images/components.jpg" alt="Next 3D">
   
 </div>
 
@@ -55,7 +55,7 @@ Visit [https://s3d.org/docs](https://s3d.org/docs) to view the full documentatio
 
 ## 📦 Quick Start
 
-1. Installation: Inside your React project directory, install Shit3D by running either of the following:
+1. Installation: Inside your React project directory, install Next 3D by running either of the following:
 
 ```bash
 yarn add @next3d/core @emotion/react
@@ -63,7 +63,7 @@ yarn add @next3d/core @emotion/react
 npm i @next3d/core @emotion/react
 ```
 
-2. Setup: For Shit3D to work correctly, you need to set up the `App` at the root of your application.
+2. Setup: For Next 3D to work correctly, you need to set up the `App` at the root of your application.
 
 Go to the root of your application and do this:
 
@@ -77,8 +77,8 @@ const Main = () => (
 );
 ```
 
-3. Using Shit3D components: Once Shit3D is installed you can use any of the components as follows.
-   Shit3D uses tree-shaking so the unused modules will not be included in the bundle during the build process and
+3. Using Next 3D components: Once Next 3D is installed you can use any of the components as follows.
+   Next 3D uses tree-shaking so the unused modules will not be included in the bundle during the build process and
    each component is exported separately.
 
 ```jsx
@@ -87,7 +87,7 @@ import { Button } from '@next3d/core';
 const Component = () => <Button>Click me</Button>;
 ```
 
-4. Shit3D allows to manually import components if you need. E.g.
+4. Next 3D allows to manually import components if you need. E.g.
 
 ```jsx
 import Button from '@next3d/core/button';

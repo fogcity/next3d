@@ -1,0 +1,48 @@
+{
+  "name": "next3d",
+  "version": "0.0.1",
+  "description": "🚀 The 3D tools helps you create the best web 3D app.",
+  "main": "build/index.umd.js",
+  "module": "build/index.js",
+  "files": [
+    "build"
+  ],
+  "types": "build/index.d.ts",
+  "scripts": {
+    "dev": "rollup -wc rollup.config.js ",
+    "build": "cross-env NODE_ENV=development && rollup -c rollup.config.js",
+    "build:prod": "cross-env NODE_ENV=production && rollup -c rollup.config.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "lint": "eslint --fix --ext .ts,.tsx src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fogcity/shit-3d.git"
+  },
+  "keywords": [
+    "webgpu",
+    "render",
+    "3d"
+  ],
+  "author": {
+    "name": "Web Cypher"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fogcity/shit-3d/issues"
+  },
+  "size-limit": [
+    {
+      "path": "build/index.js",
+      "limit": "15 KB"
+    }
+  ],
+  "homepage": "https://github.com/fogcity/shit-3d#readme",
+  "devDependencies": {
+    "@next3d/core": "*",
+    "@next3d/math": "*"
+  }
+}

@@ -65,12 +65,9 @@ npm i @next3d/core @emotion/react
 2. Here is a quick react example to get you started, **it's all you need**:
 
 ```jsx
-import { createBox, createSphere, vec3, createEngine, createScene, createPerspectiveCamera, createPointLight } from "../lib";
-import { createGround } from "../lib/meshes";
-import { scale, translate } from "../lib/transform";
+import { createBox, createSphere, vec3, createEngine, createScene, createPerspectiveCamera, createPointLight,createGround,scale, translate } from "next3d";
 import React,{ useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from '@sui/core';
 
 function App() {
   useEffect(() => {

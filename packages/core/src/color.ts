@@ -1,7 +1,7 @@
 import { DType, mat4 } from './matrix';
 
 export class Color {
-  data: Float32Array;
+  data!: Float32Array;
   ndim: number = 4;
   dtype: DType = 'f32';
 
