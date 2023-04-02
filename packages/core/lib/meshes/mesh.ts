@@ -1,9 +1,9 @@
 import { Color, color3, color4 } from "../color";
 import { Geometry } from "../geometry/index";
 import { Material } from "../material";
-import { Matrix } from "../matrix";
+import { Matrix } from "../math/matrix";
 import { Scene } from "../scene";
-import { translate } from "../transform";
+import { translate } from "../math/transform";
 
 export class Mesh {
   transform: Matrix;

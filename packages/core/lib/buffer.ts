@@ -1,4 +1,4 @@
-import { Matrix } from "./matrix";
+import { Matrix } from "./math/matrix";
 
 export const createMappedBuffer = (
   data: Matrix,

@@ -1,6 +1,6 @@
 import { createGroundGeometry } from "../geometry/index";
 import { Scene } from "../scene";
-import { scale } from "../transform";
+import { scale } from "../math/transform";
 import { float } from "../types";
 import { Mesh } from "./mesh";
 type GroundOptions = {

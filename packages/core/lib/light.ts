@@ -1,7 +1,7 @@
 import { Color, color3 } from "./color";
 import { Scene } from "./scene";
 import { FloatArray } from "./types";
-import { vec3, vec4, Vector } from "./vector";
+import { vec3, vec4, Vector } from "./math/vector";
 export type LightOptions = {
   color?: Vector;
   position: Vector;

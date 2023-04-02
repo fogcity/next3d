@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, 'lib/index.ts'),
-      name: 'rana',
+      name: 'next3d',
       fileName: 'index',
     },
   },

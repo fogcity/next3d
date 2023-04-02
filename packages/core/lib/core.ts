@@ -4,10 +4,7 @@ import { createShaderModule } from "./shaders/index";
 
 export const initGPU = async (canvas: HTMLCanvasElement) => {
   if (!("gpu" in navigator)) {
-    console.error(
-      "WebGPU is not supported. Enable chrome://flags/#enable-unsafe-webgpu flag."
-    );
-    return;
+    throw new Error("WebGPU is not supported. Enable chrome://flags/#enable-unsafe-webgpu flag.");
   }
   const gpu: GPU = navigator.gpu;
 
@@ -16,8 +13,8 @@ export const initGPU = async (canvas: HTMLCanvasElement) => {
   });
 
   if (!adapter) {
-    console.error("Failed to get GPU adapter.");
-    return;
+    throw new Error("Failed to get GPU adapter.");
+
   }
 
   const device = await adapter.requestDevice({
@@ -25,8 +22,8 @@ export const initGPU = async (canvas: HTMLCanvasElement) => {
     requiredLimits: {},
   });
   if (!device) {
-    console.error("Failed to get GPU device.");
-    return;
+    throw new Error("Failed to get GPU device.");
+   
   }
 
   // Get a context to display our rendered image on the canvas
@@ -34,7 +31,8 @@ export const initGPU = async (canvas: HTMLCanvasElement) => {
   const context = canvas.getContext("webgpu");
 
   if (!context) {
-    console.error("webgpu is not supported.");
+    throw new Error("webgpu is not supported.");
+
   }
   const format = gpu.getPreferredCanvasFormat();
   context.configure({

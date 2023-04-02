@@ -1,7 +1,7 @@
-import { vec3, Vector } from "./vector";
-import { lookAt, orthographic, perspective } from "./transform";
+import { vec3, Vector } from "./math/vector";
+import { lookAt, orthographic, perspective } from "./math/transform";
 import { Scene } from "./scene";
-import { Matrix } from "./matrix";
+import { Matrix } from "./math/matrix";
 import { int } from "./types";
 type CameraOptions = {
   position?: Vector;

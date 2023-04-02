@@ -3,7 +3,7 @@ import { createBox, createSphere, vec3, createEngine, createScene, createPerspec
 
 import { memo } from "react";
 import { createGround } from "../lib/meshes";
-import { scale, translate } from "../lib/transform";
+import { scale, translate } from "../lib/math/transform";
 
 function App() {
   // const [fov, setFov] = useState("150");

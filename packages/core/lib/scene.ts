@@ -9,13 +9,13 @@ import { Camera, createPerspectiveCamera } from "./camera";
 import { createPipline } from "./core";
 import { Engine } from "./engine";
 import { Light } from "./light";
-import { Matrix } from "./matrix";
+import { Matrix } from "./math/matrix";
 import { Mesh } from "./meshes/mesh";
-import { translate } from "./transform";
+import { translate } from "./math/transform";
 import vertShaderCode from "./shaders/vert.wgsl?raw";
 import fragShaderCode from "./shaders/frag.wgsl?raw";
 import shadowShaderCode from "./shaders/shadow.wgsl?raw";
-import { vec3 } from "./vector";
+import { vec3 } from "./math/vector";
 type MeshBuffer = {
   vertex: GPUBuffer;
   index: GPUBuffer;

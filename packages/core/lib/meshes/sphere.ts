@@ -1,6 +1,6 @@
 import { createSphereGeometry } from "../geometry/index";
 import { Scene } from "../scene";
-import { translate } from "../transform";
+import { translate } from "../math/transform";
 import { int } from "../types";
 import { Mesh } from "./mesh";
 type SphereOptions = {

@@ -4,7 +4,12 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "types": ["vite/client", "@webgpu/types"],
     "declaration": true,
-    "noImplicitAny": false,       "noEmit": true,  "skipLibCheck": true,"forceConsistentCasingInFileNames": true,     "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,     
+    "allowSyntheticDefaultImports": true,
+      "noEmit": true,  
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,   
+        "noFallthroughCasesInSwitch": true,
     "suppressImplicitAnyIndexErrors": true,
     "removeComments": false,
     "emitDecoratorMetadata": true,
@@ -15,7 +20,6 @@
     "strictNullChecks": false,
     "jsx": "react",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
   },
   "include": ["lib/.d.ts", "lib"],
   "references": [{ "path": "./tsconfig.node.json" }]

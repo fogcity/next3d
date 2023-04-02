@@ -1,4 +1,4 @@
-import { DType, mat4 } from './matrix';
+import { DType, mat4 } from './math/matrix';
 
 export class Color {
   data: Float32Array;

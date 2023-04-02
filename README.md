@@ -24,13 +24,10 @@ English | [Português](./README-pt_BR.md) | [简体中文](./README-zh_CN.md) | 
 
 ## ✨ Features
 
-- 🌈 Cutting-edge and fashionable ui design.
-- 📦 A set of high-quality React components out of the box.
+- 📦 A set of high-quality webgpu components out of the box.
 - 🛡 Written in TypeScript with predictable static types.
 - ⚙️ Whole package of design resources and development tools.
 - 📖 Extensive documentation and demos
-- 🌍 Support i18n, built-in N+ languages
-- 🎨 Powerful theme customization in every detail.
 
 ## 🖥 Environment Support
 
@@ -54,12 +51,12 @@ Visit [https://s3d.org/docs](https://s3d.org/docs) to view the full documentatio
 
 ## 📦 Quick Start
 
-1. Installation: Inside your React project directory, install Next3D by running either of the following:
+1. Installation: Inside your project directory, install Next3D by running either of the following:
 
 ```bash
-yarn add @next3d/core @emotion/react
+yarn add next3d
 # or
-npm i @next3d/core @emotion/react
+npm i next3d
 ```
 
 2. Here is a quick react example to get you started, **it's all you need**:
