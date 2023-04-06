@@ -18,6 +18,7 @@ fn main(
     let lightNumber = arrayLength(&pointLight);
 
     var lightResult = ambientColor * ambientIntensity;
+
     // add shadow factor
     var shadow : f32 = 0.0;
     // apply Percentage-closer filtering (PCF)
@@ -51,7 +52,7 @@ fn main(
                 var diffuse = max(dot(normalize(L), fragNormal), 0.0);
                 var distanceFactor = pow(1.0 - distance / pointLightRadius, 2.0);
                 var lightFactor = pointLightColor * pointLightIntensity * diffuse * distanceFactor;
-                 lightResult += lightFactor;
+                 lightResult += shadow * lightFactor;
             }
      }
    }
@@ -62,7 +63,7 @@ fn main(
             if(distance < 0.1) {
                 return vec4<f32>(1.0,1.0,1.0,1.0);
             } else {
-                return vec4<f32>(objectColor * lightResult, 1.0);
+                return vec4<f32>(objectColor  * lightResult, 1.0);
             }
     
 }

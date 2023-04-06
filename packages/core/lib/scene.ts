@@ -176,7 +176,6 @@ export class Scene {
         const light = this.lights[i];
         queue.writeBuffer(this.lightBuffer, i * 8 * 4, light.array());
         cameraLight.position = light.position;
-        console.log('cameraLight.getViewProjectionMatrix().array()', cameraLight.getViewProjectionMatrix().array());
 
         queue.writeBuffer(this.lightProjectionBuffer, 0, cameraLight.getViewProjectionMatrix().array());
       }
@@ -264,14 +263,14 @@ export class Scene {
 
   addLight(light: Light) {
     this.lights.push(light);
-    if (light.render) {
-      const lightSphere = createSphere('light', this, {
-        r: 0.05,
-      });
-      const lp = light.position.array();
-      lightSphere.transform = translate(...lp).mul(lightSphere.transform);
-      this.addMesh(lightSphere);
-    }
+    // if (light.render) {
+    //   const lightSphere = createSphere('light', this, {
+    //     r: 0.05,
+    //   });
+    //   const lp = light.position.array();
+    //   lightSphere.transform = translate(...lp).mul(lightSphere.transform);
+    //   this.addMesh(lightSphere);
+    // }
   }
 
   removeLight(name: string) {
