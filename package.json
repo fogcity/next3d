@@ -6,9 +6,9 @@
   ],
   "scripts": {
     "build": "npx lerna run build",
-    "test:core": "npx lerna run test --scope=@next3d/core",
+    "test:core": "npx lerna run test --scope=next3d",
     "dev:docs": "npx lerna run dev --scope=@next3d/doc",
-    "dev:core": "npx lerna run dev --scope=@next3d/core",
+    "dev:core": "npx lerna run dev --scope=next3d",
     "dev": "npx lerna run dev",
     "release": "npx lerna publish --no-private"
   },

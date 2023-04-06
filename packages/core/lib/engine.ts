@@ -46,6 +46,7 @@ export class Engine {
       format: 'depth32float',
     };
     const { device, context, format } = await initGPU(this.canvas);
+
     // const { depthFormat, depthTexture } = await initDepthStencil(
     //   device,
     //   this.canvas
@@ -71,15 +72,19 @@ export class Engine {
     this.renderDepthView = this.renderDepthTexture.createView();
   }
 
-  async loop(renderFunction: () => void) {
-    function realRenderFunction() {
-      renderFunction();
-      requestAnimationFrame(realRenderFunction);
-    }
-
+  async loop(frameRenderFunction: () => void) {
     await this.init();
+    console.log('engine init complete.');
+
     await this.scene.init();
-    requestAnimationFrame(realRenderFunction);
+    console.log('scene init complete.');
+    requestAnimationFrame(function renderFrame() {
+      console.log('start frame render');
+
+      frameRenderFunction();
+      console.log('end frame render');
+      // requestAnimationFrame(renderFrame);
+    });
   }
 }
 

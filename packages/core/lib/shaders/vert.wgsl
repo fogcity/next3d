@@ -1,6 +1,6 @@
 @group(0) @binding(0) var<storage> modelViews : array<mat4x4<f32>>;
 @group(0) @binding(1) var<uniform> cameraProjection : mat4x4<f32>;
-@group(0) @binding(2) var<uniform> lightProjection : mat4x4<f32>;
+@group(0) @binding(2) var<storage> lightProjection : array<mat4x4<f32>>;
 @group(0) @binding(3) var<storage> colors : array<vec4<f32>>;
 
 struct VertexOutput {
@@ -32,7 +32,7 @@ fn main(
     output.fragUV = uv;
     output.fragColor = colors[index];
 
-    let posFromLight: vec4<f32> = transpose(lightProjection) * modelview * pos;
+    let posFromLight: vec4<f32> = transpose(lightProjection[0]) * modelview * pos;
      // Convert shadowPos XY to (0, 1) to fit texture UV
     output.shadowPos = vec3<f32>(posFromLight.xy * vec2<f32>(0.5, -0.5) + vec2<f32>(0.5, 0.5), posFromLight.z);
     return output;

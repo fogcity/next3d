@@ -1,10 +1,6 @@
-import { Matrix } from "./math/matrix";
+import { Matrix } from './math/matrix';
 
-export const createMappedBuffer = (
-  data: Matrix,
-  usage: GPUBufferUsageFlags,
-  device: GPUDevice
-) => {
+export const createMappedBuffer = (data: Matrix, usage: GPUBufferUsageFlags, device: GPUDevice) => {
   const arr = data.array();
   const desc = {
     size: (data.byteLength * 4 + 3) & ~3,
@@ -13,36 +9,21 @@ export const createMappedBuffer = (
   };
   const buffer = device.createBuffer(desc);
   const writeArray =
-    arr instanceof Uint16Array
-      ? new Uint16Array(buffer.getMappedRange())
-      : new Float32Array(buffer.getMappedRange());
+    arr instanceof Uint16Array ? new Uint16Array(buffer.getMappedRange()) : new Float32Array(buffer.getMappedRange());
   writeArray.set(arr);
   buffer.unmap();
   return buffer;
 };
 
 export const createMappedUniformBuffer = (data: Matrix, device: GPUDevice) => {
-  return createMappedBuffer(
-    data,
-    GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
-    device
-  );
+  return createMappedBuffer(data, GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST, device);
 };
 
 export const createMappedVertexBuffer = (data: Matrix, device: GPUDevice) => {
-  return createMappedBuffer(
-    data,
-    GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
-    device
-  );
+  return createMappedBuffer(data, GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST, device);
 };
 
-export const createBuffer = (
-  label: string,
-  size: number,
-  usage: GPUBufferUsageFlags,
-  device: GPUDevice
-) => {
+export const createBuffer = (label: string, size: number, usage: GPUBufferUsageFlags, device: GPUDevice) => {
   return device.createBuffer({
     label,
     size,
@@ -50,70 +31,36 @@ export const createBuffer = (
   });
 };
 
-export const createUniformBuffer = (
-  label: string,
-  size: number,
-  device: GPUDevice
-) => {
-  return createBuffer(
-    label,
-    size,
-    GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
-    device
-  );
+export const createUniformBuffer = (label: string, size: number, device: GPUDevice) => {
+  return createBuffer(label, size, GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST, device);
 };
 
-export const createStorageBuffer = (
-  label: string,
-  size: number,
-  device: GPUDevice
-) => {
-  return createBuffer(
-    label,
-    size,
-    GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST,
-    device
-  );
+export const createStorageBuffer = (label: string, size: number, device: GPUDevice) => {
+  return createBuffer(label, size, GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST, device);
 };
-export const createIndexBuffer = (
-  label: string,
-  size: number,
-  device: GPUDevice
-) => {
-  return createBuffer(
-    label,
-    size,
-    GPUBufferUsage.INDEX | GPUBufferUsage.COPY_DST,
-    device
-  );
+export const createIndexBuffer = (label: string, size: number, device: GPUDevice) => {
+  return createBuffer(label, size, GPUBufferUsage.INDEX | GPUBufferUsage.COPY_DST, device);
 };
-export const createVertexBuffer = (
-  label: string,
-  size: number,
-  device: GPUDevice
-) => {
-  return createBuffer(
-    label,
-    size,
-    GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
-    device
-  );
+export const createVertexBuffer = (label: string, size: number, device: GPUDevice) => {
+  return createBuffer(label, size, GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST, device);
 };
 
 export const createBindingGroup = (
   label: string,
-  buffers: (GPUBuffer|GPUTextureView|GPUSampler)[],
+  entries: (GPUBuffer | GPUTextureView | GPUSampler)[],
   layout: GPUBindGroupLayout,
-  device: GPUDevice
+  device: GPUDevice,
 ) => {
   return device.createBindGroup({
     label,
     layout,
-    entries: buffers.map((v, i) => ({
+    entries: entries.map((v, i) => ({
       binding: i,
-      resource: {
-        buffer: v,
-      },
+      resource: v.label
+        ? {
+            buffer: v,
+          }
+        : v,
     })) as Iterable<GPUBindGroupEntry>,
   });
 };

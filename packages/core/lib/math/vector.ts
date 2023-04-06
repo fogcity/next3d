@@ -1,12 +1,41 @@
 import { DType, mat4 } from './matrix';
+// type Vec = {
+//   data: Float32Array;
+//   getByteLength: () => number;
+//   equils: (v: Vec) => boolean;
+//   add: (v: Vec) => Vec;
+// };
+// const vec = (x: number, y: number, z: number = 0, w: number = 0): Vec => {
+//   const data = new Float32Array([x, y, z, w]);
+//   const getByteLength = () => {
+//     return data.byteLength;
+//   };
+//   return {
+//     data,
+//     getByteLength,
+//     equils(v: Vec) {
+//       let e = false;
+//       if (v.getByteLength() == getByteLength()) {
+//         if (this.data.toString() == v.data.toString()) e = true;
+//       }
+//       return e;
+//     },
+//     add(v: Vec) {
+//       this.data[0] += v.data[0];
+//       this.data[1] += v.data[1];
+//       this.data[2] += v.data[2];
+//       return this;
+//     },
+//   };
+// };
 
 export class Vector {
   data: Float32Array;
   ndim: number = 4;
-  dtype: DType = 'f32';
+
   byteLength: number;
-  constructor(x: number, y: number, z: number = 0, w: number = 1, dtype: DType = 'f32') {
-    if (dtype == 'f32') this.data = new Float32Array([x, y, z, w]);
+  constructor(x: number, y: number, z: number = 0, w: number = 0) {
+    this.data = new Float32Array([x, y, z, w]);
   }
   offset() {
     return this.data.byteLength;
@@ -15,7 +44,7 @@ export class Vector {
     return this.data;
   }
   set(data: number[]) {
-    if (this.dtype == 'f32') this.data = new Float32Array(data);
+    this.data = new Float32Array(data);
   }
   equils(v: Vector) {
     let e = false;
@@ -64,11 +93,10 @@ export class Vector {
     return this.data[0] * v.data[0] + this.data[1] * v.data[1] + this.data[2] * v.data[2];
   }
   cross(v: Vector) {
-    return vec4(
+    return vec3(
       this.data[1] * v.data[2] - this.data[2] * v.data[1],
       this.data[0] * v.data[2] - this.data[2] * v.data[0],
       this.data[0] * v.data[1] - this.data[1] * v.data[0],
-      1,
     );
   }
   cos(v: Vector) {
@@ -79,12 +107,9 @@ export class Vector {
   }
 }
 
-export function vec2(x: number, y: number, dtype: DType = 'f32') {
-  return new Vector(x, y, 0, 1, dtype);
+export function vec2(x: number, y: number) {
+  return new Vector(x, y);
 }
-export function vec3(x: number, y: number, z: number, dtype: DType = 'f32') {
-  return new Vector(x, y, z, 1, dtype);
-}
-export function vec4(x: number, y: number, z: number, w: number = 1, dtype: DType = 'f32') {
-  return new Vector(x, y, z, w, dtype);
+export function vec3(x: number, y: number, z: number) {
+  return new Vector(x, y, z);
 }

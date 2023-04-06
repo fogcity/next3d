@@ -1,9 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { createBox, createSphere, vec3, createEngine, createScene, createPerspectiveCamera, createPointLight } from "../lib";
+import React, { useEffect, useState } from 'react';
+import {
+  createBox,
+  createSphere,
+  vec3,
+  createEngine,
+  createScene,
+  createPerspectiveCamera,
+  createPointLight,
+} from '../lib';
 
-import { memo } from "react";
-import { createGround } from "../lib/meshes";
-import { scale, translate } from "../lib/math/transform";
+import { memo } from 'react';
+import { createGround } from '../lib/meshes';
+import { scale, translate } from '../lib/math/transform';
 
 function App() {
   // const [fov, setFov] = useState("150");
@@ -13,66 +21,60 @@ function App() {
   // const [f, setF] = useState(99);
   useEffect(() => {
     (async () => {
-      const canvas = document.getElementById(
-        "webgpu-canvas"
-      ) as HTMLCanvasElement;
+      const canvas = document.getElementById('webgpu-canvas') as HTMLCanvasElement;
 
       if (!canvas) {
-        console.error("canvas is not exist.");
+        console.error('canvas is not exist.');
       }
 
-      const engine = createEngine(canvas);
+      const engine = createEngine(canvas, {});
       const scene = createScene(engine);
 
       const camera = createPerspectiveCamera(
-        "camera",
+        'camera',
         { target: vec3(0, 0, 1), position: vec3(0, 0, -1), up: vec3(0, 1, 0) },
-        scene
+        scene,
       );
-      const g = createGround("ground1", scene, {
-        width: 5, height: 5
-      });
-     
-      
-      g.transform = translate(0, -2, 0).mul(g.transform)
-
-
-      const box = createBox("box", scene, {
-        width: 2, height: 2, depth: 2
+      const g = createGround('ground1', scene, {
+        width: 5,
+        height: 5,
       });
 
-      box.transform = translate(-4, 1, 2).mul(box.transform)
+      g.transform = translate(0, -2, 0).mul(g.transform);
+
+      const box = createBox('box', scene, {
+        width: 2,
+        height: 2,
+        depth: 2,
+      });
+
+      box.transform = translate(-4, 1, 2).mul(box.transform);
 
       const light = createPointLight(
-        "light",
+        'light',
         { color: vec3(1, 1, 0), position: vec3(-1, 2, -1), intensity: 5, radius: 15 },
-        scene
+        scene,
       );
 
-
       await engine.loop(() => {
-    
         scene.render();
       });
-
     })();
   }, []);
   return (
     <>
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "1em",
-        }}
-      >
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '1em',
+        }}>
         <canvas
-          id="webgpu-canvas"
-          width="512"
-          height="512
-        ."
-        ></canvas>
+          id='webgpu-canvas'
+          width='512'
+          height='512
+        .'></canvas>
       </div>
       {/* <div className="inputs">
         <div>

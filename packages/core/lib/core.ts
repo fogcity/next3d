@@ -1,20 +1,19 @@
-import vertShaderCode from "./shaders/vert.wgsl?raw";
-import fragShaderCode from "./shaders/frag.wgsl?raw";
-import { createShaderModule } from "./shaders/index";
+import vertShaderCode from './shaders/vert.wgsl?raw';
+import fragShaderCode from './shaders/frag.wgsl?raw';
+import { createShaderModule } from './shaders/index';
 
 export const initGPU = async (canvas: HTMLCanvasElement) => {
-  if (!("gpu" in navigator)) {
-    throw new Error("WebGPU is not supported. Enable chrome://flags/#enable-unsafe-webgpu flag.");
+  if (!('gpu' in navigator)) {
+    throw new Error('WebGPU is not supported. Enable chrome://flags/#enable-unsafe-webgpu flag.');
   }
   const gpu: GPU = navigator.gpu;
 
   const adapter = await gpu.requestAdapter({
-    powerPreference: "high-performance",
+    powerPreference: 'high-performance',
   });
 
   if (!adapter) {
-    throw new Error("Failed to get GPU adapter.");
-
+    throw new Error('Failed to get GPU adapter.');
   }
 
   const device = await adapter.requestDevice({
@@ -22,32 +21,27 @@ export const initGPU = async (canvas: HTMLCanvasElement) => {
     requiredLimits: {},
   });
   if (!device) {
-    throw new Error("Failed to get GPU device.");
-   
+    throw new Error('Failed to get GPU device.');
   }
 
   // Get a context to display our rendered image on the canvas
 
-  const context = canvas.getContext("webgpu");
+  const context = canvas.getContext('webgpu');
 
   if (!context) {
-    throw new Error("webgpu is not supported.");
-
+    throw new Error('webgpu is not supported.');
   }
   const format = gpu.getPreferredCanvasFormat();
   context.configure({
     device,
     format,
-    alphaMode: "opaque",
+    alphaMode: 'opaque',
   });
   return { gpu, adapter, device, context, format };
 };
 
-export const initDepthStencil = async (
-  device: GPUDevice,
-  canvas: HTMLCanvasElement
-) => {
-  const depthFormat = <GPUTextureFormat>"depth24plus-stencil8";
+export const initDepthStencil = async (device: GPUDevice, canvas: HTMLCanvasElement) => {
+  const depthFormat = <GPUTextureFormat>'depth24plus-stencil8';
   const depthTextureDesc: GPUTextureDescriptor = {
     size: {
       width: canvas.width,
@@ -62,24 +56,26 @@ export const initDepthStencil = async (
 };
 
 export const createPipline = async (
-  label:string,
+  label: string,
   device: GPUDevice,
   options: {
-    format?: GPUTextureFormat,
-    vertShaderCode:string
-    fragShaderCode?:string
+    format?: GPUTextureFormat;
+    vertShaderCode?: string;
+    fragShaderCode?: string;
     layout?: GPUPipelineLayout;
-    primitive:GPUPrimitiveState;
+    primitive: GPUPrimitiveState;
     depthStencil: GPUDepthStencilState;
-  }
+  },
 ) => {
-  const vsm = vertShaderCode && await createShaderModule(vertShaderCode, device);
-  const fsm = fragShaderCode && await createShaderModule(fragShaderCode, device);
-  // Vertex attribute state and shader stage
+  const { vertShaderCode, fragShaderCode, format, layout, primitive, depthStencil } = options;
+  const vsm = vertShaderCode && (await createShaderModule(vertShaderCode, device));
 
-  const vertexState =vsm && {
+  const fsm = fragShaderCode && (await createShaderModule(fragShaderCode, device));
+
+  // Vertex attribute state and shader stage
+  const vertexState = vertShaderCode && {
     module: vsm,
-    entryPoint: "main",
+    entryPoint: 'main',
     buffers: [
       {
         arrayStride: 8 * 4, // 3 position 3normol 2 uv,
@@ -88,44 +84,42 @@ export const createPipline = async (
             // position
             shaderLocation: 0,
             offset: 0,
-            format: "float32x3",
+            format: 'float32x3',
           },
           {
             // normal
             shaderLocation: 1,
             offset: 3 * 4,
-            format: "float32x3",
+            format: 'float32x3',
           },
           {
             // uv
             shaderLocation: 2,
             offset: 6 * 4,
-            format: "float32x2",
+            format: 'float32x2',
           },
         ],
       },
     ],
   };
 
-  const fragmentState = fsm && {
+  const fragmentState = fragShaderCode && {
     module: fsm,
-    entryPoint: "main",
+    entryPoint: 'main',
     targets: [
       {
-        format: options?.format,
+        format: format,
       },
     ],
   };
 
-  const pipeline = await device.createRenderPipelineAsync(<
-    GPURenderPipelineDescriptor
-  >{
+  const pipeline = await device.createRenderPipelineAsync(<GPURenderPipelineDescriptor>{
     label,
-    layout: options.layout || "auto",
+    layout: layout || 'auto',
     vertex: vertexState,
     fragment: fragmentState,
-    primitive:options.primitive,
-    depthStencil:options.depthStencil
+    primitive: primitive,
+    depthStencil: depthStencil,
   });
 
   return { pipeline };
