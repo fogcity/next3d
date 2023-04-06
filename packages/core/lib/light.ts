@@ -7,20 +7,29 @@ export type LightOptions = {
   position: Vector;
   intensity?: number;
   radius?: number;
+  render?: boolean;
 };
 const defaulLightOptions = {
   position: vec3(0, 0, 0),
   color: color3(1, 1, 1),
   intensity: 1,
   radius: 5,
+  render: false,
 };
 export abstract class Light {
   radius: number;
   position: Vector;
   color: Vector;
   intensity: number;
+  render: boolean;
+  constructor(public name: string, options: LightOptions, scene: Scene) {
+    for (const key in defaulLightOptions) {
+      if (Object.prototype.hasOwnProperty.call(options, key)) {
+        this[key] = options[key];
+      } else this[key] = defaulLightOptions[key];
+    }
+    console.log('this', this);
 
-  constructor(public name: string, scene: Scene) {
     scene.addLight(this);
   }
   array() {
@@ -38,12 +47,7 @@ export abstract class Light {
 }
 export class PointLight extends Light {
   constructor(public name: string, options: LightOptions, scene: Scene) {
-    super(name, scene);
-    for (const key in defaulLightOptions) {
-      if (Object.prototype.hasOwnProperty.call(options, key)) {
-        this[key] = options[key];
-      } else this[key] = defaulLightOptions[key];
-    }
+    super(name, options, scene);
   }
 }
 

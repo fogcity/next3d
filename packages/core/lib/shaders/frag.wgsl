@@ -35,8 +35,9 @@ fn main(
         }
     }
     shadow = shadow / 9.0;
+
     if(lightNumber > 0){
-      // Loop Point Light
+      // 循环计算frag光照颜色
       for(var i:u32 = 0; i < lightNumber; i += 8) {
            
             var pointLightPosition = vec3(pointLight[i],pointLight[i+1],pointLight[i+2]);
@@ -46,17 +47,22 @@ fn main(
             
             var L = pointLightPosition - fragPosition;
             var distance = length(L);
-
             if(distance < pointLightRadius) {
-
                 var diffuse = max(dot(normalize(L), fragNormal), 0.0);
                 var distanceFactor = pow(1.0 - distance / pointLightRadius, 2.0);
                 var lightFactor = pointLightColor * pointLightIntensity * diffuse * distanceFactor;
-                // lightResult += min(shadow * lightFactor, 1.0);
-
+                 lightResult += lightFactor;
             }
      }
    }
+            
+            var L = vec3(pointLight[0],pointLight[1],pointLight[2]) - fragPosition;
+            var distance = length(L);
 
-    return vec4<f32>(objectColor * lightResult, 1.0);
+            if(distance < 0.1) {
+                return vec4<f32>(1.0,1.0,1.0,1.0);
+            } else {
+                return vec4<f32>(objectColor * lightResult, 1.0);
+            }
+    
 }

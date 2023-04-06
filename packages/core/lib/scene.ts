@@ -16,6 +16,7 @@ import vertShaderCode from './shaders/vert.wgsl?raw';
 import fragShaderCode from './shaders/frag.wgsl?raw';
 import shadowShaderCode from './shaders/shadow.wgsl?raw';
 import { vec3 } from './math/vector';
+import { createBox, createSphere } from './meshes/index';
 type MeshBuffer = {
   vertex: GPUBuffer;
   index: GPUBuffer;
@@ -72,7 +73,7 @@ export class Scene {
     this.colorBuffer = createStorageBuffer('colorBuffer', 4 * 4 * this.getMeshesCount(), device);
 
     if (this.shadow) {
-      this.lightProjectionBuffer = createUniformBuffer('lightProjectionBuffer', 4 * 4 * 4, device);
+      this.lightProjectionBuffer = createStorageBuffer('lightProjectionBuffer', 4 * 4 * 4 * this.lights.length, device);
     }
   }
 
@@ -80,8 +81,7 @@ export class Scene {
     this.transforms = new Float32Array(this.getMeshesCount() * 16);
     this.colors = new Float32Array(this.getMeshesCount() * 4);
   }
-  initShadowPipline() {}
-  initRenderPipline() {}
+
   async init() {
     const { shadowDepthView, primitive, depthStencil, device, format } = this.engine;
 
@@ -100,12 +100,14 @@ export class Scene {
 
       this.shadowPipeline = shadowPipeline;
       console.log('shadow pipeline init complete');
+
       this.shadowBindingGroup = createBindingGroup(
         'shadowVertexShaderBindingGroup',
         [this.modelViewBuffer, this.lightProjectionBuffer],
         shadowPipeline.getBindGroupLayout(0),
         device,
       );
+
       console.log('shadow pipline vertex groups bind complete');
     }
 
@@ -174,6 +176,8 @@ export class Scene {
         const light = this.lights[i];
         queue.writeBuffer(this.lightBuffer, i * 8 * 4, light.array());
         cameraLight.position = light.position;
+        console.log('cameraLight.getViewProjectionMatrix().array()', cameraLight.getViewProjectionMatrix().array());
+
         queue.writeBuffer(this.lightProjectionBuffer, 0, cameraLight.getViewProjectionMatrix().array());
       }
 
@@ -193,16 +197,19 @@ export class Scene {
       };
       const shadowPassEncoder = commandEncoder.beginRenderPass(shadowPassDescriptor);
       shadowPassEncoder.setPipeline(this.shadowPipeline);
+
       // setBindGroups
       shadowPassEncoder.setBindGroup(0, this.shadowBindingGroup);
 
-      this.meshBuffers.map((buffer, i) => {
+      for (const [i, buffer] of this.meshBuffers.entries()) {
         shadowPassEncoder.setVertexBuffer(0, buffer.vertex);
         shadowPassEncoder.setIndexBuffer(buffer.index, 'uint16');
         shadowPassEncoder.drawIndexed(this.meshes[i].geometry.indexCount, 1, 0, 0, i);
-      });
+      }
 
       shadowPassEncoder.end();
+
+      console.log('shadow pass end');
     }
 
     const renderPassColorAttachment: GPURenderPassColorAttachment = {
@@ -217,9 +224,9 @@ export class Scene {
       depthClearValue: 1,
       depthLoadOp: 'clear',
       depthStoreOp: 'store',
-      stencilClearValue: 0,
-      stencilLoadOp: 'clear',
-      stencilStoreOp: 'store',
+      // stencilClearValue: 0,
+      // stencilLoadOp: 'clear',
+      // stencilStoreOp: 'store',
     };
 
     const renderPassDesc: GPURenderPassDescriptor = {
@@ -236,14 +243,14 @@ export class Scene {
 
     renderpassEncoder.setBindGroup(1, this.fragmentShaderBindingGroup);
 
-    this.meshBuffers.map((buffer, i) => {
+    for (const [i, buffer] of this.meshBuffers.entries()) {
       renderpassEncoder.setVertexBuffer(0, buffer.vertex);
       renderpassEncoder.setIndexBuffer(buffer.index, 'uint16');
       renderpassEncoder.drawIndexed(this.meshes[i].geometry.indexCount, 1, 0, 0, i);
-    });
+    }
 
     renderpassEncoder.end();
-
+    console.log('render pass end');
     queue.submit([commandEncoder.finish()]);
   }
 
@@ -257,6 +264,14 @@ export class Scene {
 
   addLight(light: Light) {
     this.lights.push(light);
+    if (light.render) {
+      const lightSphere = createSphere('light', this, {
+        r: 0.05,
+      });
+      const lp = light.position.array();
+      lightSphere.transform = translate(...lp).mul(lightSphere.transform);
+      this.addMesh(lightSphere);
+    }
   }
 
   removeLight(name: string) {
