@@ -8,7 +8,7 @@ fn main(
     @location(1) normal : vec3<f32>,
     @location(2) uv : vec2<f32>,
 ) -> @builtin(position) vec4<f32> {
-    let modelview = modelViews[index];
+    let modelview = transpose(modelViews[index]);
     let pos = vec4(position, 1.0);
-    return lightProjection[0] * modelview * pos;
+    return transpose(lightProjection[0]) * modelview * pos;
 }

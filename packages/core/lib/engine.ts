@@ -72,7 +72,7 @@ export class Engine {
     this.renderDepthView = this.renderDepthTexture.createView();
   }
 
-  async loop(frameRenderFunction: () => void) {
+  async loop(frameRenderFunction: () => void,frames?:number) {
     await this.init();
     console.log('engine init complete.');
 

@@ -165,17 +165,15 @@ export class Scene {
     queue.writeBuffer(this.cameraProjectionBuffer, 0, this.camera.getViewProjectionMatrix().array());
     console.log('camera render complete');
 
-    const cameraLight = createPerspectiveCamera(
-      'camera',
-      { target: vec3(0, 0, 1), position: vec3(0, 0, -1), up: vec3(0, 1, 0) },
-      this,
-    );
-
     if (this.lights.length > 0)
       for (let i = 0; i < this.lights.length; i++) {
         const light = this.lights[i];
         queue.writeBuffer(this.lightBuffer, i * 8 * 4, light.array());
-        cameraLight.position = light.position;
+        const cameraLight = createPerspectiveCamera(
+          'cameraLight',
+          { target: vec3(0, 0, 0), position:light.position, up: vec3(0, 0, 1) },
+          this,
+        );
 
         queue.writeBuffer(this.lightProjectionBuffer, 0, cameraLight.getViewProjectionMatrix().array());
       }
@@ -263,14 +261,14 @@ export class Scene {
 
   addLight(light: Light) {
     this.lights.push(light);
-    // if (light.render) {
-    //   const lightSphere = createSphere('light', this, {
-    //     r: 0.05,
-    //   });
-    //   const lp = light.position.array();
-    //   lightSphere.transform = translate(...lp).mul(lightSphere.transform);
-    //   this.addMesh(lightSphere);
-    // }
+    if (light.render) {
+      const lightSphere = createSphere('light', this, {
+        r: 0.1,
+      });
+      const lp = light.position.array();
+      lightSphere.transform = translate(...lp).mul(lightSphere.transform);
+      this.addMesh(lightSphere);
+    }
   }
 
   removeLight(name: string) {

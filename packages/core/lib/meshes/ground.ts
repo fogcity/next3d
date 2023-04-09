@@ -25,7 +25,7 @@ class GroundMesh extends Mesh {
       } else this[key] = defaulGroundOptions[key];
     }
     this.geometry = createGroundGeometry();
-    this.transform = scale(this.width, this.height, 1);
+    this.transform = scale(this.width, 1, this.height);
   }
 }
 

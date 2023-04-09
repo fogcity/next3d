@@ -32,32 +32,34 @@ function App() {
 
       const camera = createPerspectiveCamera(
         'camera',
-        { target: vec3(0, 0, 1), position: vec3(0, 0, -3), up: vec3(0, 1, 0) },
+        { target: vec3(0, 0, 0), position: vec3(0, 4, 0), up: vec3(0, 0, 1) },
         scene,
       );
       const g = createGround('ground1', scene, {
         width: 10,
+        height:10
       });
 
-      g.transform = translate(0, -3, 0).mul(g.transform);
+      g.transform = translate(0, 0, 0).mul(g.transform);
 
       const box = createBox('box', scene, {
-        width: 1,
+        width: 0.5,
         height: 0.5,
         depth: 0.5,
       });
 
-      box.transform = translate(-1.5, -2, 0).mul(box.transform);
+      box.transform = translate(-2, 2, 0).mul(box.transform);
 
       const light = createPointLight(
         'light',
-        { color: vec3(1, 1, 1), render: true, position: vec3(0, 4, 1), intensity: 10, radius: 10 },
+        { color: vec3(1, 1, 1), render: true, position: vec3(0, 5,0), intensity: 2, radius: 10 },
         scene,
       );
 
       await engine.loop(() => {
-        light.position = light.position.add(vec3(0, -0.01, 0));
+     
         scene.render();
+        light.position.add(vec3(0.001,0,0))
       });
     })();
   }, []);

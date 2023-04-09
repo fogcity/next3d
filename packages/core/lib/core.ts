@@ -71,7 +71,8 @@ export const createPipline = async (
   const vsm = vertShaderCode && (await createShaderModule(vertShaderCode, device));
 
   const fsm = fragShaderCode && (await createShaderModule(fragShaderCode, device));
-
+  console.log(fsm);
+  
   // Vertex attribute state and shader stage
   const vertexState = vertShaderCode && {
     module: vsm,
