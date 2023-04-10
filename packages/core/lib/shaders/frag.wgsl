@@ -45,14 +45,5 @@ fn main(
             }
      }
    }
-            
-            var L = vec3(pointLight[0],pointLight[1],pointLight[2]) - fragPosition;
-            var distance = length(L);
-
-            if(distance < 0.1) {
-                return vec4<f32>(1.0,1.0,1.0,1.0);
-            } else {
-                return vec4<f32>(objectColor * lightResult, 1.0);
-            }
-    
+       return vec4<f32>(objectColor * lightResult, 1.0);
 }

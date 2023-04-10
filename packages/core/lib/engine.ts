@@ -87,21 +87,27 @@ export class Engine {
     // create depthTextureView
     this.shadowDepthView = this.shadowDepthTexture.createView();
     this.renderDepthView = this.renderDepthTexture.createView();
+    this.onEngineInit();
   }
 
-  async loop(frameRenderFunction: () => void, frames?: number) {
+  async loop(frameRenderFunction: () => void, frame?: number) {
     await this.init();
-    this.onEngineInit();
-
     await this.scene.init();
-    const renderFrame = () => {
+
+    const render = () => {
       this.onFrameRenderStart();
       frameRenderFunction();
       this.onFrameRenderEnd();
-      requestAnimationFrame(renderFrame);
+      frame || requestAnimationFrame(render);
     };
 
-    requestAnimationFrame(renderFrame);
+    if (frame) {
+      for (let i = 0; i < frame; i++) {
+        requestAnimationFrame(render);
+      }
+    } else {
+      requestAnimationFrame(render);
+    }
   }
 }
 

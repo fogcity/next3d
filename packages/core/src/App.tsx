@@ -33,6 +33,9 @@ function App() {
         onLightsUpdated: m => {
           console.log(m);
         },
+        onCameraUpdated: m => {
+          // console.log('onCameraUpdated', m);
+        },
       });
 
       const camera = createPerspectiveCamera(
@@ -63,8 +66,9 @@ function App() {
 
       await engine.loop(() => {
         scene.render();
-        light.position.add(vec3(0.001, 0, 0));
-      });
+
+        light.position.add(vec3(0, 0, -0.1));
+      }, 4);
     })();
   }, []);
   return (
