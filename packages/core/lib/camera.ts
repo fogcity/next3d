@@ -58,6 +58,7 @@ export abstract class Camera {
     scene.setCamera(this);
   }
   abstract getViewProjectionMatrix(): Matrix;
+  abstract projection(): Matrix;
   view() {
     return lookAt(this.position, this.target, this.up);
   }

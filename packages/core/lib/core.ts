@@ -123,5 +123,5 @@ export const createPipline = async (
     depthStencil: depthStencil,
   });
 
-  return { pipeline };
+  return  pipeline ;
 };

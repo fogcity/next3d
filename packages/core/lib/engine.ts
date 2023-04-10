@@ -5,16 +5,27 @@ type EngineOptions = Partial<{
   antialias: boolean;
   preserveDrawingBuffer: boolean;
   stencil: boolean;
+  onFrameRenderStart: () => any;
+  onFrameRenderEnd: () => any;
+  onEngineInit: () => any;
 }>;
-
+const defaultEngineOptions = {
+  antialias: false,
+  preserveDrawingBuffer: false,
+  stencil: false,
+  onFrameRenderStart: () => {},
+  onFrameRenderEnd: () => {},
+  onEngineInit: () => {},
+};
 export class Engine {
   scene: Scene;
   device: GPUDevice;
   context: GPUCanvasContext;
   format: GPUTextureFormat;
-
   queue: GPUQueue;
-
+  onFrameRenderStart: () => any;
+  onFrameRenderEnd: () => any;
+  onEngineInit: () => any;
   primitive: GPUPrimitiveState;
   depthStencil: GPUDepthStencilState;
   renderDepthTexture: GPUTexture;
@@ -22,7 +33,13 @@ export class Engine {
   shadowDepthView: GPUTextureView;
   renderDepthView: GPUTextureView;
 
-  constructor(public canvas: HTMLCanvasElement, options?: EngineOptions) {}
+  constructor(public canvas: HTMLCanvasElement, options?: EngineOptions) {
+    for (const key in defaultEngineOptions) {
+      if (Object.prototype.hasOwnProperty.call(options || {}, key)) {
+        this[key] = options[key];
+      } else this[key] = defaultEngineOptions[key];
+    }
+  }
 
   createDefaultScene() {
     const scene = createScene(this);
@@ -74,16 +91,16 @@ export class Engine {
 
   async loop(frameRenderFunction: () => void, frames?: number) {
     await this.init();
-    console.log('engine init complete.');
+    this.onEngineInit();
 
     await this.scene.init();
-    console.log('scene init complete.');
-    requestAnimationFrame(function renderFrame() {
-      console.log('start frame render');
+
+    requestAnimationFrame(() => {
+      this.onFrameRenderStart();
 
       frameRenderFunction();
-      console.log('end frame render');
-      requestAnimationFrame(renderFrame);
+      this.onFrameRenderEnd();
+      // requestAnimationFrame(renderFrame);
     });
   }
 }

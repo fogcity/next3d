@@ -51,6 +51,8 @@ export const createBindingGroup = (
   layout: GPUBindGroupLayout,
   device: GPUDevice,
 ) => {
+  console.log(label, entries);
+
   return device.createBindGroup({
     label,
     layout,

@@ -32,7 +32,7 @@ function App() {
 
       const camera = createPerspectiveCamera(
         'camera',
-        { target: vec3(0, 0, 0), position: vec3(0, 4, 0), up: vec3(0, 0, 1) },
+        { target: vec3(0, 0, 1), position: vec3(0, 0, -2), up: vec3(0, 1, 0) },
         scene,
       );
       const g = createGround('ground1', scene, {
@@ -40,7 +40,7 @@ function App() {
         height: 10,
       });
 
-      g.transform = translate(0, 0, 0).mul(g.transform);
+      g.transform = translate(0, -1, 0).mul(g.transform);
 
       const box = createBox('box', scene, {
         width: 0.5,
