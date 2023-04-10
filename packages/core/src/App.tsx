@@ -67,8 +67,8 @@ function App() {
       await engine.loop(() => {
         scene.render();
 
-        light.position.add(vec3(0, 0, -0.1));
-      }, 4);
+        light.position.addInPlace(vec3(0, 0, -0.1));
+      }, 80);
     })();
   }, []);
   return (

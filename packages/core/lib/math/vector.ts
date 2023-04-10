@@ -3,11 +3,10 @@ import { DType, mat4 } from './matrix';
 export class Vector {
   private data: Float32Array;
   ndim: number = 4;
-  byteLength: number;
   constructor(x: number, y: number, z: number = 0, w: number = 0) {
     this.data = new Float32Array([x, y, z, w]);
   }
-  offset() {
+  getOffset() {
     return this.data.byteLength;
   }
   toArray() {
@@ -23,23 +22,41 @@ export class Vector {
     }
     return e;
   }
-  mul(v: Vector) {
+  mulInPlace(v: Vector) {
     this.data[0] *= v.data[0];
     this.data[1] *= v.data[1];
     this.data[2] *= v.data[2];
     return this;
   }
-  add(v: Vector) {
+  mul(v: Vector) {
+    const a = this.data[0] * v.data[0];
+    const b = this.data[1] * v.data[1];
+    const c = this.data[2] * v.data[2];
+    return vec3(a, b, c);
+  }
+  addInPlace(v: Vector) {
     this.data[0] += v.data[0];
     this.data[1] += v.data[1];
     this.data[2] += v.data[2];
     return this;
   }
-  sub(v: Vector) {
+  add(v: Vector) {
+    const a = this.data[0] + v.data[0];
+    const b = this.data[1] + v.data[1];
+    const c = this.data[2] + v.data[2];
+    return vec3(a, b, c);
+  }
+  subInPlace(v: Vector) {
     this.data[0] -= v.data[0];
     this.data[1] -= v.data[1];
     this.data[2] -= v.data[2];
     return this;
+  }
+  sub(v: Vector) {
+    const a = this.data[0] - v.data[0];
+    const b = this.data[1] - v.data[1];
+    const c = this.data[2] - v.data[2];
+    return vec3(a, b, c);
   }
   times(t: number) {
     this.data[0] *= t;

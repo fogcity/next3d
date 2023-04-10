@@ -3,7 +3,7 @@ import { Matrix } from './math/matrix';
 export const createMappedBuffer = (data: Matrix, usage: GPUBufferUsageFlags, device: GPUDevice) => {
   const arr = data.toArray();
   const desc = {
-    size: (data.byteLength * 4 + 3) & ~3,
+    size: (data.getOffset() * 4 + 3) & ~3,
     usage,
     mappedAtCreation: true,
   };

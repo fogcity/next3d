@@ -93,21 +93,25 @@ export class Engine {
   async loop(frameRenderFunction: () => void, frame?: number) {
     await this.init();
     await this.scene.init();
-
-    const render = () => {
+    let frameId = 0;
+    let current = 1;
+    const render = (timestamp: DOMHighResTimeStamp) => {
       this.onFrameRenderStart();
       frameRenderFunction();
       this.onFrameRenderEnd();
-      frame || requestAnimationFrame(render);
-    };
-
-    if (frame) {
-      for (let i = 0; i < frame; i++) {
+      if (frame) {
+        if (current < frame) {
+          frameId = requestAnimationFrame(render);
+        } else {
+          cancelAnimationFrame(frameId);
+        }
+      } else {
         requestAnimationFrame(render);
       }
-    } else {
-      requestAnimationFrame(render);
-    }
+      current++;
+    };
+
+    requestAnimationFrame(render);
   }
 }
 
