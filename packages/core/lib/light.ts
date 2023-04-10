@@ -32,14 +32,14 @@ export abstract class Light {
 
     scene.addLight(this);
   }
-  array() {
+  toArray() {
     return new Float32Array([
-      this.position.array()[0],
-      this.position.array()[1],
-      this.position.array()[2],
-      this.color.array()[0],
-      this.color.array()[1],
-      this.color.array()[2],
+      this.position.toArray()[0],
+      this.position.toArray()[1],
+      this.position.toArray()[2],
+      this.color.toArray()[0],
+      this.color.toArray()[1],
+      this.color.toArray()[2],
       this.intensity,
       this.radius,
     ]);

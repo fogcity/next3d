@@ -22,6 +22,7 @@ type MeshBuffer = {
   index: GPUBuffer;
 };
 type SceneOptions = {
+  label?: string;
   shadow: boolean;
 };
 const defaultSceneOptions = {
@@ -46,6 +47,7 @@ export class Scene {
   lightProjectionBuffer: GPUBuffer;
   colorBuffer: GPUBuffer;
   shadow: boolean;
+  label: string;
   viewProjectionMatrix: Matrix;
   constructor(public engine: Engine, options: SceneOptions = defaultSceneOptions) {
     engine.addScene(this);
@@ -155,27 +157,27 @@ export class Scene {
     console.log('meshes & geometry render complete');
 
     for (const [i, mesh] of this.meshes.entries()) {
-      this.transforms.set(mesh.transform.array(), i * 16);
-      this.colors.set(mesh.color.array(), i * 4);
+      this.transforms.set(mesh.transform.toArray(), i * 16);
+      this.colors.set(mesh.color.toArray(), i * 4);
     }
     queue.writeBuffer(this.modelViewBuffer, 0, this.transforms);
     queue.writeBuffer(this.colorBuffer, 0, this.colors);
     console.log('transforms & colors render complete');
 
-    queue.writeBuffer(this.cameraProjectionBuffer, 0, this.camera.getViewProjectionMatrix().array());
+    queue.writeBuffer(this.cameraProjectionBuffer, 0, this.camera.getViewProjectionMatrix().toArray());
     console.log('camera render complete');
 
     if (this.lights.length > 0)
       for (let i = 0; i < this.lights.length; i++) {
         const light = this.lights[i];
-        queue.writeBuffer(this.lightBuffer, i * 8 * 4, light.array());
+        queue.writeBuffer(this.lightBuffer, i * 8 * 4, light.toArray());
         const cameraLight = createPerspectiveCamera(
           'cameraLight',
-          { target: vec3(0, 0, 0), position:light.position, up: vec3(0, 0, 1) },
+          { target: vec3(0, 0, 0), position: light.position, up: vec3(0, 0, 1) },
           this,
         );
 
-        queue.writeBuffer(this.lightProjectionBuffer, 0, cameraLight.getViewProjectionMatrix().array());
+        queue.writeBuffer(this.lightProjectionBuffer, 0, cameraLight.getViewProjectionMatrix().toArray());
       }
 
     console.log('lights render complete');
@@ -265,7 +267,7 @@ export class Scene {
       const lightSphere = createSphere('light', this, {
         r: 0.1,
       });
-      const lp = light.position.array();
+      const lp = light.position.toArray();
       lightSphere.transform = translate(...lp).mul(lightSphere.transform);
       this.addMesh(lightSphere);
     }

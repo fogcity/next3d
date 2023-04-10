@@ -1,38 +1,8 @@
 import { DType, mat4 } from './matrix';
-// type Vec = {
-//   data: Float32Array;
-//   getByteLength: () => number;
-//   equils: (v: Vec) => boolean;
-//   add: (v: Vec) => Vec;
-// };
-// const vec = (x: number, y: number, z: number = 0, w: number = 0): Vec => {
-//   const data = new Float32Array([x, y, z, w]);
-//   const getByteLength = () => {
-//     return data.byteLength;
-//   };
-//   return {
-//     data,
-//     getByteLength,
-//     equils(v: Vec) {
-//       let e = false;
-//       if (v.getByteLength() == getByteLength()) {
-//         if (this.data.toString() == v.data.toString()) e = true;
-//       }
-//       return e;
-//     },
-//     add(v: Vec) {
-//       this.data[0] += v.data[0];
-//       this.data[1] += v.data[1];
-//       this.data[2] += v.data[2];
-//       return this;
-//     },
-//   };
-// };
 
 export class Vector {
-  data: Float32Array;
+  private data: Float32Array;
   ndim: number = 4;
-
   byteLength: number;
   constructor(x: number, y: number, z: number = 0, w: number = 0) {
     this.data = new Float32Array([x, y, z, w]);
@@ -40,7 +10,7 @@ export class Vector {
   offset() {
     return this.data.byteLength;
   }
-  array() {
+  toArray() {
     return this.data;
   }
   set(data: number[]) {

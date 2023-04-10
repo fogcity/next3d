@@ -11,7 +11,7 @@ export class Color {
   offset() {
     return this.data.byteLength;
   }
-  array() {
+  toArray() {
     return this.data;
   }
   set(data: number[]) {

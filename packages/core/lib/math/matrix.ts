@@ -1,17 +1,17 @@
-import { Vector } from "./vector";
-function createTypedArray(data: number[], type: DType = "f32") {
+import { Vector } from './vector';
+function createTypedArray(data: number[], type: DType = 'f32') {
   switch (type) {
-    case "f32":
+    case 'f32':
     default:
       return new Float32Array(data);
   }
 }
-export type DType = "f32" | "f16" | "u16" | "u8" | "u32";
+export type DType = 'f32' | 'f16' | 'u16' | 'u8' | 'u32';
 export class Matrix {
   private data: Float32Array;
   byteLength: number;
   size: number;
-  constructor(data: number[] | number[][], public dType: DType = "f32") {
+  constructor(data: number[] | number[][], public dType: DType = 'f32') {
     this.data = createTypedArray(data.flat(), dType);
     this.byteLength = this.data.byteLength;
     this.size = this.data.length;
@@ -19,7 +19,7 @@ export class Matrix {
   offset() {
     return this.data.byteLength;
   }
-  array() {
+  toArray() {
     return this.data;
   }
   inverses() {}
@@ -106,47 +106,15 @@ export class Matrix {
       this.data[13] * target.data[7] +
       this.data[14] * target.data[11] +
       this.data[15] * target.data[15];
-    const result = [
-      v1,
-      v2,
-      v3,
-      v4,
-      v5,
-      v6,
-      v7,
-      v8,
-      v9,
-      v10,
-      v11,
-      v12,
-      v13,
-      v14,
-      v15,
-      v16,
-    ];
+    const result = [v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16];
     return mat4(result);
   }
   aplly(target: Vector) {
-    const v1 =
-      target.data[0] * this.data[0] +
-      target.data[1] * this.data[1] +
-      target.data[2] * this.data[2] +
-      target.data[3] * this.data[3];
-    const v2 =
-      target.data[0] * this.data[4] +
-      target.data[1] * this.data[5] +
-      target.data[2] * this.data[6] +
-      target.data[3] * this.data[7];
-    const v3 =
-      target.data[0] * this.data[8] +
-      target.data[1] * this.data[9] +
-      target.data[2] * this.data[10] +
-      target.data[3] * this.data[11];
-    const v4 =
-      target.data[0] * this.data[12] +
-      target.data[1] * this.data[13] +
-      target.data[2] * this.data[14] +
-      target.data[3] * this.data[15];
+    const t = target.toArray();
+    const v1 = t[0] * this.data[0] + t[1] * this.data[1] + t[2] * this.data[2] + t[3] * this.data[3];
+    const v2 = t[0] * this.data[4] + t[1] * this.data[5] + t[2] * this.data[6] + t[3] * this.data[7];
+    const v3 = t[0] * this.data[8] + t[1] * this.data[9] + t[2] * this.data[10] + t[3] * this.data[11];
+    const v4 = t[0] * this.data[12] + t[1] * this.data[13] + t[2] * this.data[14] + t[3] * this.data[15];
     const result = [v1, v2, v3, v4];
     target.set(result);
   }
