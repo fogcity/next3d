@@ -5,8 +5,8 @@ type EngineOptions = Partial<{
   antialias: boolean;
   preserveDrawingBuffer: boolean;
   stencil: boolean;
-  onFrameRenderStart: () => any;
-  onFrameRenderEnd: () => any;
+  onFrameRenderStart: (frame: number, duration: DOMHighResTimeStamp) => any;
+  onFrameRenderEnd: (frame: number, duration: DOMHighResTimeStamp) => any;
   onEngineInit: () => any;
 }>;
 const defaultEngineOptions = {
@@ -23,8 +23,8 @@ export class Engine {
   context: GPUCanvasContext;
   format: GPUTextureFormat;
   queue: GPUQueue;
-  onFrameRenderStart: () => any;
-  onFrameRenderEnd: () => any;
+  onFrameRenderStart: (frame: number, duration: DOMHighResTimeStamp) => any;
+  onFrameRenderEnd: (frame: number, duration: DOMHighResTimeStamp) => any;
   onEngineInit: () => any;
   primitive: GPUPrimitiveState;
   depthStencil: GPUDepthStencilState;
@@ -94,13 +94,13 @@ export class Engine {
     await this.init();
     await this.scene.init();
     let frameId = 0;
-    let current = 1;
-    const render = (timestamp: DOMHighResTimeStamp) => {
-      this.onFrameRenderStart();
+    let currentFrame = 1;
+    const render = (duration: DOMHighResTimeStamp) => {
+      this.onFrameRenderStart(currentFrame, duration);
       frameRenderFunction();
-      this.onFrameRenderEnd();
+      this.onFrameRenderEnd(currentFrame, duration);
       if (frame) {
-        if (current < frame) {
+        if (currentFrame < frame) {
           frameId = requestAnimationFrame(render);
         } else {
           cancelAnimationFrame(frameId);
@@ -108,9 +108,8 @@ export class Engine {
       } else {
         requestAnimationFrame(render);
       }
-      current++;
+      currentFrame++;
     };
-
     requestAnimationFrame(render);
   }
 }
