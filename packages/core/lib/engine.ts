@@ -37,7 +37,6 @@ export class Engine {
   async init() {
     this.primitive = {
       topology: 'triangle-list',
-      frontFace: 'cw',
       cullMode: 'back',
     };
     this.depthStencil = {
@@ -57,22 +56,23 @@ export class Engine {
     this.context = context;
     this.format = format;
     const size = { width: this.canvas.width, height: this.canvas.height };
-    this.renderDepthTexture = device.createTexture({
-      size,
-      format: 'depth32float',
-      usage: GPUTextureUsage.RENDER_ATTACHMENT,
-    });
+
     this.shadowDepthTexture = device.createTexture({
       size: [2048, 2048],
       usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
       format: 'depth32float',
+    });
+    this.renderDepthTexture = device.createTexture({
+      size,
+      format: 'depth32float',
+      usage: GPUTextureUsage.RENDER_ATTACHMENT,
     });
     // create depthTextureView
     this.shadowDepthView = this.shadowDepthTexture.createView();
     this.renderDepthView = this.renderDepthTexture.createView();
   }
 
-  async loop(frameRenderFunction: () => void,frames?:number) {
+  async loop(frameRenderFunction: () => void, frames?: number) {
     await this.init();
     console.log('engine init complete.');
 
@@ -83,7 +83,7 @@ export class Engine {
 
       frameRenderFunction();
       console.log('end frame render');
-      // requestAnimationFrame(renderFrame);
+      requestAnimationFrame(renderFrame);
     });
   }
 }

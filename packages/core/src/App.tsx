@@ -37,7 +37,7 @@ function App() {
       );
       const g = createGround('ground1', scene, {
         width: 10,
-        height:10
+        height: 10,
       });
 
       g.transform = translate(0, 0, 0).mul(g.transform);
@@ -52,14 +52,13 @@ function App() {
 
       const light = createPointLight(
         'light',
-        { color: vec3(1, 1, 1), render: true, position: vec3(0, 5,0), intensity: 2, radius: 10 },
+        { color: vec3(1, 1, 1), render: true, position: vec3(0, 5, 0), intensity: 2, radius: 10 },
         scene,
       );
 
       await engine.loop(() => {
-     
         scene.render();
-        light.position.add(vec3(0.001,0,0))
+        light.position.add(vec3(0.001, 0, 0));
       });
     })();
   }, []);

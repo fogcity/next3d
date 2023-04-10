@@ -154,7 +154,7 @@ export class Scene {
       queue.writeBuffer(buffer.vertex, 0, this.meshes[i].geometry.vertex);
       queue.writeBuffer(buffer.index, 0, this.meshes[i].geometry.index);
     }
-    console.log('meshes & geometry render complete');
+    console.log('meshes & geometry updated');
 
     for (const [i, mesh] of this.meshes.entries()) {
       this.transforms.set(mesh.transform.toArray(), i * 16);
@@ -162,25 +162,25 @@ export class Scene {
     }
     queue.writeBuffer(this.modelViewBuffer, 0, this.transforms);
     queue.writeBuffer(this.colorBuffer, 0, this.colors);
-    console.log('transforms & colors render complete');
+    console.log('transforms & colors updated');
 
     queue.writeBuffer(this.cameraProjectionBuffer, 0, this.camera.getViewProjectionMatrix().toArray());
-    console.log('camera render complete');
+    console.log('camera updated');
 
     if (this.lights.length > 0)
       for (let i = 0; i < this.lights.length; i++) {
         const light = this.lights[i];
         queue.writeBuffer(this.lightBuffer, i * 8 * 4, light.toArray());
-        const cameraLight = createPerspectiveCamera(
+        const lightViewCamera = createPerspectiveCamera(
           'cameraLight',
           { target: vec3(0, 0, 0), position: light.position, up: vec3(0, 0, 1) },
           this,
         );
 
-        queue.writeBuffer(this.lightProjectionBuffer, 0, cameraLight.getViewProjectionMatrix().toArray());
+        queue.writeBuffer(this.lightProjectionBuffer, 0, lightViewCamera.getViewProjectionMatrix().toArray());
       }
 
-    console.log('lights render complete');
+    console.log('lights updated');
 
     const commandEncoder = device.createCommandEncoder();
 
@@ -195,9 +195,9 @@ export class Scene {
         },
       };
       const shadowPassEncoder = commandEncoder.beginRenderPass(shadowPassDescriptor);
+
       shadowPassEncoder.setPipeline(this.shadowPipeline);
 
-      // setBindGroups
       shadowPassEncoder.setBindGroup(0, this.shadowBindingGroup);
 
       for (const [i, buffer] of this.meshBuffers.entries()) {
@@ -210,47 +210,50 @@ export class Scene {
 
       console.log('shadow pass end');
     }
+    {
+      const renderPassColorAttachment: GPURenderPassColorAttachment = {
+        view: context.getCurrentTexture().createView(),
+        clearValue: { r: 0, g: 0, b: 0, a: 1 },
+        loadOp: 'clear',
+        storeOp: 'store',
+      };
 
-    const renderPassColorAttachment: GPURenderPassColorAttachment = {
-      view: context.getCurrentTexture().createView(),
-      clearValue: { r: 0, g: 0, b: 0, a: 1 },
-      loadOp: 'clear',
-      storeOp: 'store',
-    };
+      const renderPassDepthAttachment: GPURenderPassDepthStencilAttachment = {
+        view: renderDepthView,
+        depthClearValue: 1,
+        depthLoadOp: 'clear',
+        depthStoreOp: 'store',
+        // stencilClearValue: 0,
+        // stencilLoadOp: 'clear',
+        // stencilStoreOp: 'store',
+      };
 
-    const renderPassDepthAttachment: GPURenderPassDepthStencilAttachment = {
-      view: renderDepthView,
-      depthClearValue: 1,
-      depthLoadOp: 'clear',
-      depthStoreOp: 'store',
-      // stencilClearValue: 0,
-      // stencilLoadOp: 'clear',
-      // stencilStoreOp: 'store',
-    };
+      const renderPassDesc: GPURenderPassDescriptor = {
+        colorAttachments: [renderPassColorAttachment],
+        depthStencilAttachment: renderPassDepthAttachment,
+      };
 
-    const renderPassDesc: GPURenderPassDescriptor = {
-      colorAttachments: [renderPassColorAttachment],
-      depthStencilAttachment: renderPassDepthAttachment,
-    };
+      const renderpassEncoder = commandEncoder.beginRenderPass(renderPassDesc);
 
-    const renderpassEncoder = commandEncoder.beginRenderPass(renderPassDesc);
+      renderpassEncoder.setPipeline(this.renderPipeline);
 
-    renderpassEncoder.setPipeline(this.renderPipeline);
+      // setBindGroups
+      renderpassEncoder.setBindGroup(0, this.vertexShaderBindingGroup);
 
-    // setBindGroups
-    renderpassEncoder.setBindGroup(0, this.vertexShaderBindingGroup);
+      renderpassEncoder.setBindGroup(1, this.fragmentShaderBindingGroup);
 
-    renderpassEncoder.setBindGroup(1, this.fragmentShaderBindingGroup);
+      for (const [i, buffer] of this.meshBuffers.entries()) {
+        renderpassEncoder.setVertexBuffer(0, buffer.vertex);
+        renderpassEncoder.setIndexBuffer(buffer.index, 'uint16');
+        renderpassEncoder.drawIndexed(this.meshes[i].geometry.indexCount, 1, 0, 0, i);
+      }
 
-    for (const [i, buffer] of this.meshBuffers.entries()) {
-      renderpassEncoder.setVertexBuffer(0, buffer.vertex);
-      renderpassEncoder.setIndexBuffer(buffer.index, 'uint16');
-      renderpassEncoder.drawIndexed(this.meshes[i].geometry.indexCount, 1, 0, 0, i);
+      renderpassEncoder.end();
     }
-
-    renderpassEncoder.end();
     console.log('render pass end');
+    console.log('render start');
     queue.submit([commandEncoder.finish()]);
+    console.log('render end');
   }
 
   addMesh(mesh: Mesh) {
@@ -263,14 +266,14 @@ export class Scene {
 
   addLight(light: Light) {
     this.lights.push(light);
-    if (light.render) {
-      const lightSphere = createSphere('light', this, {
-        r: 0.1,
-      });
-      const lp = light.position.toArray();
-      lightSphere.transform = translate(...lp).mul(lightSphere.transform);
-      this.addMesh(lightSphere);
-    }
+    // if (light.render) {
+    //   const lightSphere = createSphere('light', this, {
+    //     r: 0.1,
+    //   });
+    //   const lp = light.position.toArray();
+    //   lightSphere.transform = translate(...lp).mul(lightSphere.transform);
+    //   this.addMesh(lightSphere);
+    // }
   }
 
   removeLight(name: string) {

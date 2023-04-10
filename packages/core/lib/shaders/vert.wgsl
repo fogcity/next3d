@@ -24,7 +24,7 @@ fn main(
     let posFromCamera: vec4<f32> = transpose(cameraProjection) * modelview * pos;
 
     var output : VertexOutput;
-    output.Position =  posFromCamera;
+    output.Position = posFromCamera;
     output.fragPosition = (modelview * pos).xyz;
     output.fragNormal =  (modelview * vec4<f32>(normal, 0.0)).xyz;
     output.fragUV = uv;
