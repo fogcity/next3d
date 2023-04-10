@@ -94,14 +94,14 @@ export class Engine {
     this.onEngineInit();
 
     await this.scene.init();
-
-    requestAnimationFrame(() => {
+    const renderFrame = () => {
       this.onFrameRenderStart();
-
       frameRenderFunction();
       this.onFrameRenderEnd();
-      // requestAnimationFrame(renderFrame);
-    });
+      requestAnimationFrame(renderFrame);
+    };
+
+    requestAnimationFrame(renderFrame);
   }
 }
 

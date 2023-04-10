@@ -22,8 +22,8 @@ type MeshBuffer = {
   index: GPUBuffer;
 };
 
-type SceneOptions = {
-  label?: string;
+type SceneOptions = Partial<{
+  label: string;
   shadow: boolean;
   onBufferInit: () => any;
   onCreate: () => any;
@@ -34,9 +34,9 @@ type SceneOptions = {
   onRenderStart: () => any;
   onRenderEnd: () => any;
   onMeshesUpdated: (m: Float32Array[]) => any;
-  onCameraUpdated?: (m: Float32Array) => any;
-  onLightsUpdated?: (m: Float32Array[]) => any;
-};
+  onCameraUpdated: (m: Float32Array) => any;
+  onLightsUpdated: (m: Float32Array[]) => any;
+}>;
 const defaultSceneOptions = {
   label: '',
   shadow: true,
@@ -89,8 +89,6 @@ export class Scene {
     engine.addScene(this);
 
     for (const key in defaultSceneOptions) {
-      console.log(key, options);
-
       if (Object.prototype.hasOwnProperty.call(options || {}, key)) {
         this[key] = options[key];
       } else this[key] = defaultSceneOptions[key];
@@ -186,7 +184,6 @@ export class Scene {
     this.onInit();
   }
   render() {
-    // write datas to buffers
     const { queue, device, context, renderDepthView, shadowDepthView } = this.engine;
 
     for (const [i, buffer] of this.meshBuffers.entries()) {

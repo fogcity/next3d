@@ -41,7 +41,7 @@ fn main(
                 var diffuse = max(dot(normalize(L), fragNormal), 0.0);
                 var distanceFactor = pow(1.0 - distance / pointLightRadius, 2.0);
                 var lightFactor = pointLightColor * pointLightIntensity * diffuse * distanceFactor;
-                 lightResult +=  min(shadow * diffuse, 1.0);
+                 lightResult +=  min(diffuse, 1.0);
             }
      }
    }

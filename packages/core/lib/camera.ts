@@ -55,6 +55,8 @@ export abstract class Camera {
   target: Vector;
   up: Vector;
   constructor(public name: string, scene: Scene) {
+    console.log('set new Cameras');
+
     scene.setCamera(this);
   }
   abstract getViewProjectionMatrix(): Matrix;

@@ -28,8 +28,6 @@ export abstract class Light {
         this[key] = options[key];
       } else this[key] = defaulLightOptions[key];
     }
-    console.log('this', this);
-
     scene.addLight(this);
   }
   toArray() {

@@ -12,6 +12,7 @@ import {
 import { memo } from 'react';
 import { createGround } from '../lib/meshes';
 import { scale, translate } from '../lib/math/transform';
+import { log } from 'console';
 
 function App() {
   // const [fov, setFov] = useState("150");
@@ -28,11 +29,15 @@ function App() {
       }
 
       const engine = createEngine(canvas, {});
-      const scene = createScene(engine);
+      const scene = createScene(engine, {
+        onLightsUpdated: m => {
+          console.log(m);
+        },
+      });
 
       const camera = createPerspectiveCamera(
         'camera',
-        { target: vec3(0, 0, 1), position: vec3(0, 0, -2), up: vec3(0, 1, 0) },
+        { target: vec3(0, 0, 0), position: vec3(0, 0, -2), up: vec3(0, 1, 0) },
         scene,
       );
       const g = createGround('ground1', scene, {
