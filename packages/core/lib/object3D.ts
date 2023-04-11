@@ -4,4 +4,5 @@ export class Object3D {
   constructor(public name: string, options: Object3DOptions) {
     this.id = useObject3DId();
   }
+  translate() {}
 }

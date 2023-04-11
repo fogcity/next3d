@@ -9,10 +9,11 @@ function createTypedArray(data: number[], type: DType = 'f32') {
 export type DType = 'f32' | 'f16' | 'u16' | 'u8' | 'u32';
 export class Matrix {
   private data: Float32Array;
-  size: number;
   constructor(data: number[] | number[][], public dType: DType = 'f32') {
     this.data = createTypedArray(data.flat(), dType);
-    this.size = this.data.length;
+  }
+  getSize() {
+    return this.data.length;
   }
   getOffset() {
     return this.data.byteLength;

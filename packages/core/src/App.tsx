@@ -48,7 +48,7 @@ function App() {
         height: 10,
       });
 
-      g.transform = translate(0, -1, 0).mul(g.transform);
+      g.transform = translate(0, -3, 0).mul(g.transform);
 
       const box = createBox('box', scene, {
         width: 0.5,
@@ -56,18 +56,18 @@ function App() {
         depth: 0.5,
       });
 
-      box.transform = translate(-2, 2, 0).mul(box.transform);
+      box.transform = translate(-2, -1, 0).mul(box.transform);
 
       const light = createPointLight(
         'light',
-        { color: vec3(1, 1, 1), render: true, position: vec3(0, 5, 0), intensity: 2, radius: 10 },
+        { color: vec3(1, 1, 1), render: true, position: vec3(3, 0, 3), intensity: 2, radius: 15 },
         scene,
       );
 
       await engine.loop(() => {
         scene.render();
 
-        light.position.addInPlace(vec3(0, 0, -0.1));
+        light.position.addInPlace(vec3(-0.1, 0, 0));
       }, 80);
     })();
   }, []);

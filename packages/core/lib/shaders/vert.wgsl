@@ -21,7 +21,9 @@ fn main(
 ) -> VertexOutput {
     let modelview = transpose(modelViews[index]);
     let pos = vec4<f32>(position, 1.0);
+
     let posFromCamera: vec4<f32> = transpose(cameraProjection) * modelview * pos;
+    let posFromLight: vec4<f32> = transpose(lightProjection[0]) * modelview * pos;
 
     var output : VertexOutput;
     output.Position = posFromCamera;
@@ -30,7 +32,7 @@ fn main(
     output.fragUV = uv;
     output.fragColor = colors[index];
 
-    let posFromLight: vec4<f32> = transpose(lightProjection[0]) * modelview * pos;
+
      // Convert shadowPos XY to (0, 1) to fit texture UV
     output.shadowPos = vec3<f32>(posFromLight.xy * vec2<f32>(0.5, -0.5) + vec2<f32>(0.5, 0.5), posFromLight.z);
     return output;
