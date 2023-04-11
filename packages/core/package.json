@@ -1,6 +1,6 @@
 {
   "name": "next3d",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha.0",
   "description": "🚀 The next generation 3D tools helps you create the best web 3D app.",
   "files": [
     "dist"
