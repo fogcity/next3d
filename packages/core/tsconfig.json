@@ -21,5 +21,6 @@
     "esModuleInterop": true,
   },
   "include": ["lib/.d.ts", "lib"],
+  "exclude": ["lib/a.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
