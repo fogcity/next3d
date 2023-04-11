@@ -45,7 +45,7 @@ fn main(
             if(distance <= pointLightRadius) {
 
                 // 如果在阴影中，则反射黑色，否则反射本来的漫反射
-                var diffuse = max(dot(normalize(L), fragNormal), 0.0);
+                var diffuse = shadow * max(dot(normalize(L), fragNormal), 0.0);
                 // 计算距离衰减
                 var diffuseWithDistance = pow(1.0 - distance / pointLightRadius, 2.0);
                 // 计算光强效果
