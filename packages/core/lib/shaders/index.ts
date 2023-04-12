@@ -2,7 +2,7 @@ export async function createShaderModule(code: string, device: GPUDevice) {
   const sm = device.createShaderModule({ code });
 
   if ('compilationInfo' in sm) {
-    const compilationInfo = await sm.getCompilationInfo();
+    const compilationInfo = await sm.compilationInfo();
     if (compilationInfo.messages.length > 0) {
       let hadError = false;
       console.log('Shader compilation log:');
