@@ -35,7 +35,7 @@ fn main(
     output.fragColor = colors[index];
 
 
-     // Convert shadowPos XY to (0, 1) to fit texture UV
+     // 修复uv坐标
     output.shadowPos = vec3<f32>(posFromLight.xy * vec2<f32>(0.5, -0.5) + vec2<f32>(0.5, 0.5), posFromLight.z);
     return output;
 }

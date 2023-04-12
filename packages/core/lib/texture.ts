@@ -3,7 +3,7 @@ function createTexture(
   format: GPUTextureFormat,
   sampleCount: number,
   usage: GPUTextureUsageFlags,
-  device: GPUDevice
+  device: GPUDevice,
 ) {
   return device.createTexture({
     size,
@@ -17,15 +17,9 @@ export function attachmentTexture(
   size: GPUExtent3DStrict,
   format: GPUTextureFormat,
   device: GPUDevice,
-  sampleCount: number = 4
+  sampleCount: number = 4,
 ) {
-  return createTexture(
-    size,
-    format,
-    sampleCount,
-    GPUTextureUsage.RENDER_ATTACHMENT,
-    device
-  );
+  return createTexture(size, format, sampleCount, GPUTextureUsage.RENDER_ATTACHMENT, device);
 }
 
 export async function bigmap(img: RequestInfo | URL) {
@@ -36,18 +30,16 @@ export async function bigmap(img: RequestInfo | URL) {
 }
 export function linearSamplar(device: GPUDevice) {
   return device.createSampler({
-    magFilter: "linear",
-    minFilter: "linear",
+    magFilter: 'linear',
+    minFilter: 'linear',
   });
 }
 export function bitmapTexture(bitmap: ImageBitmap, device: GPUDevice) {
   return createTexture(
     [bitmap.width, bitmap.height],
-    "rgba8unorm",
+    'rgba8unorm',
     1,
-    GPUTextureUsage.TEXTURE_BINDING |
-      GPUTextureUsage.COPY_DST |
-      GPUTextureUsage.RENDER_ATTACHMENT,
-    device
+    GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT,
+    device,
   );
 }

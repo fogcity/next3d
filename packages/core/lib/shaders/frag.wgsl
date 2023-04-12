@@ -23,13 +23,23 @@ fn main(
     let lightNumber = arrayLength(&pointLight);
     
 
-    // 对比深度，判断是否在阴影中
-    var shadow = textureSampleCompare(
+   // add shadow factor
+    var visibility : f32 = 0.0;
+    // apply Percentage-closer filtering (PCF)
+    // sample nearest 9 texels to smooth result
+    let size = f32(textureDimensions(shadowMap).x);
+    for (var y : i32 = -1 ; y <= 1 ; y = y + 1) {
+        for (var x : i32 = -1 ; x <= 1 ; x = x + 1) {
+            let offset = vec2<f32>(f32(x) / size, f32(y) / size);
+            visibility = visibility + textureSampleCompare(
                 shadowMap, 
                 shadowSampler,
-                shadowPos.xy , 
-                shadowPos.z
-            ); 
+                shadowPos.xy + offset, 
+                shadowPos.z - 0.005  // apply a small bias to avoid acne
+            );
+        }
+    }
+    visibility = visibility / 9.0;
 
     if(lightNumber > 0){
       // 循环光照组计算颜色
@@ -59,5 +69,7 @@ fn main(
             }
      }
    }
-       return vec4<f32>((objectColor *( lightResult*shadow+ambientLight)), 1.0);
+
+  
+       return vec4<f32>((objectColor *( lightResult*visibility+ambientLight)), 1.0);
 }

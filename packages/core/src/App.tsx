@@ -30,14 +30,7 @@ function App() {
       }
 
       const engine = createEngine(canvas, {});
-      const scene = createScene(engine, {
-        onLightsUpdated: m => {
-          console.log(m);
-        },
-        onCameraUpdated: m => {
-          // console.log('onCameraUpdated', m);
-        },
-      });
+      const scene = createScene(engine, {});
 
       const camera = createPerspectiveCamera(
         'camera',
