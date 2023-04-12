@@ -55,27 +55,62 @@ export abstract class Camera extends Node {
   position: Vector;
   target: Vector;
   up: Vector;
-
+  moving: boolean;
+  lastMovingInfo: {
+    x: number;
+    y: number;
+  };
   constructor(public name: string, scene: Scene) {
     super(name, scene);
     scene.setCamera(this);
   }
   abstract getViewProjectionMatrix(): Matrix;
-  abstract projection(): Matrix;
+  abstract getProjectionMatrix(): Matrix;
   view() {
     return lookAt(this.position, this.target, this.up);
   }
   attachControl(canvas: HTMLCanvasElement) {
     const d = this.target.sub(this.position).times(1 / 10);
     canvas.addEventListener('wheel', e => {
-      console.log(e);
       if (!this.target.sub(this.position).equils(d)) {
+        console.log(e);
         if ((e as any).wheelDelta > 0) this.position.subInPlace(d);
         else this.position.addInPlace(d);
       }
     });
-    canvas.addEventListener('d', e => {});
-    canvas.addEventListener('wheel', e => {});
+    canvas.addEventListener('mousedown', e => {
+      this.moving = true;
+      this.lastMovingInfo = {
+        x: e.clientX,
+        y: e.clientY,
+      };
+    });
+    canvas.addEventListener('mouseup', e => {
+      this.moving = false;
+    });
+    canvas.addEventListener('mousemove', e => {
+      if (this.moving && this.lastMovingInfo) {
+        const x = e.clientX - this.lastMovingInfo.x;
+        console.log([e.clientX, this.lastMovingInfo.x]);
+
+        const left = x >= 0;
+        console.log(left);
+
+        const y = e.clientY - this.lastMovingInfo.y;
+        const bottom = y >= 0;
+        if (x != 0) {
+          this.position.addInPlace(vec3(((left ? -1 : 1) * 1) / 10, 0, 0));
+
+          this.target.addInPlace(vec3(((left ? -1 : 1) * 1) / 10, 0, 0));
+        }
+
+        if (y != 0) {
+          this.position.addInPlace(vec3(0, ((bottom ? -1 : 1) * 1) / 10, 0));
+
+          this.target.addInPlace(vec3(0, ((bottom ? -1 : 1) * 1) / 10, 0));
+        }
+      }
+    });
   }
 }
 
@@ -87,7 +122,7 @@ export class OrthographicCamera extends Camera {
   n: int;
   f: int;
   getViewProjectionMatrix(): Matrix {
-    return this.projection().mul(this.view());
+    return this.getProjectionMatrix().mul(this.view());
   }
 
   constructor(public name: string, options: OrthographicCameraOptions, scene: Scene) {
@@ -98,7 +133,7 @@ export class OrthographicCamera extends Camera {
       } else this[key] = defaulOrthographicCameraOptions[key];
     }
   }
-  projection() {
+  getProjectionMatrix() {
     return orthographic(this.l, this.r, this.b, this.t, this.n, this.f);
   }
 }
@@ -115,11 +150,11 @@ export class PerspectiveCamera extends Camera {
       } else this[key] = defaulPerspectiveCameraOptions[key];
     }
   }
-  projection() {
+  getProjectionMatrix() {
     return perspective(this.n, this.f, this.fov, this.aspectRatio);
   }
   getViewProjectionMatrix(): Matrix {
-    return this.projection().mul(this.view());
+    return this.getProjectionMatrix().mul(this.view());
   }
 }
 

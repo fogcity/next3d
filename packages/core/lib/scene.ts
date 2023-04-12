@@ -229,7 +229,7 @@ export class Scene {
         const light = this.lights[i];
         queue.writeBuffer(this.lightBuffer, i * 8 * 4, light.toArray());
         const lightViewProjection = this.camera
-          .projection()
+          .getProjectionMatrix()
           .mul(lookAt(light.position, this.camera.target, vec3(0, 1, 0)))
           .toArray();
 

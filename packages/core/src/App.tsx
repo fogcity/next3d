@@ -13,7 +13,7 @@ import { memo } from 'react';
 import { createGround } from '../lib/meshes';
 import { scale, translate } from '../lib/math/transform';
 import { log } from 'console';
-import { createColor } from '../lib/color';
+import { createColor, createRandomColor } from '../lib/color';
 
 function App() {
   // const [fov, setFov] = useState("150");
@@ -49,10 +49,10 @@ function App() {
       g.transform = translate(0, -3, 0).mul(g.transform);
 
       const box = createBox('box', scene, {
-        width: 0.5,
-        height: 0.5,
-        depth: 0.5,
-        color: createColor(1, 0, 0),
+        width: Math.random(),
+        height: Math.random(),
+        depth: Math.random(),
+        color: createRandomColor(),
       });
 
       box.transform = translate(-2, -1, 0).mul(box.transform);
