@@ -1,18 +1,9 @@
 {
   "name": "@next3d/monorepo",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "build": "npx lerna run build",
-    "test:core": "npx lerna run test --scope=next3d",
-    "dev:docs": "npx lerna run dev --scope=next3d-doc",
-    "dev:core": "npx lerna run dev --scope=next3d",
-    "dev": "npx lerna run dev",
-    "release": "npx lerna publish --no-private"
-  },
-  "devDependencies": {
-    "lerna": "^6.5.1"
+    "dev:core": "pnpm run -C packages/core dev",
+    "build:core": "pnpm run -C packages/core build",
+    "preview:core": "pnpm run -C packages/core preview"
   }
 }
