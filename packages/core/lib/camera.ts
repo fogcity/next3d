@@ -3,6 +3,7 @@ import { lookAt, orthographic, perspective } from './math/transform';
 import { Scene } from './scene';
 import { Matrix } from './math/matrix';
 import { int } from './types';
+import { Node } from './node';
 type CameraOptions = {
   position?: Vector;
   target: Vector;
@@ -48,21 +49,33 @@ const defaulPerspectiveCameraOptions = {
   aspectRatio: 1,
 };
 
-export abstract class Camera {
+export abstract class Camera extends Node {
   angularSensibility: number;
   moveSensibility: number;
   position: Vector;
   target: Vector;
   up: Vector;
-  constructor(public name: string, scene: Scene) {
-    console.log('set new Cameras');
 
+  constructor(public name: string, scene: Scene) {
+    super(name, scene);
     scene.setCamera(this);
   }
   abstract getViewProjectionMatrix(): Matrix;
   abstract projection(): Matrix;
   view() {
     return lookAt(this.position, this.target, this.up);
+  }
+  attachControl(canvas: HTMLCanvasElement) {
+    const d = this.target.sub(this.position).times(1 / 10);
+    canvas.addEventListener('wheel', e => {
+      console.log(e);
+      if (!this.target.sub(this.position).equils(d)) {
+        if ((e as any).wheelDelta > 0) this.position.subInPlace(d);
+        else this.position.addInPlace(d);
+      }
+    });
+    canvas.addEventListener('d', e => {});
+    canvas.addEventListener('wheel', e => {});
   }
 }
 

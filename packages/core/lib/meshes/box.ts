@@ -1,32 +1,26 @@
-import { createBoxGeometry } from '../geometry/index';
+import { Geometry, createBoxGeometry } from '../geometry/index';
 import { Scene } from '../scene';
 import { scale } from '../math/transform';
 import { float } from '../types';
-import { Mesh } from './mesh';
-type BoxOptions = {
+import { Mesh, MeshOptions } from './mesh';
+
+type BoxOptions = MeshOptions & {
   width?: float;
   height?: float;
   depth?: float;
 };
 
-const defaulBoxOptions = {
-  width: 1,
-  height: 1,
-  depth: 1,
-};
 class BoxMesh extends Mesh {
-  width: float;
-  height: float;
-  depth: float;
+  width: float = 1;
+  height: float = 1;
+  depth: float = 1;
   constructor(name: string, scene: Scene, options?: BoxOptions) {
     super(name, scene);
 
-    for (const key in defaulBoxOptions) {
-      if (Object.prototype.hasOwnProperty.call(options || {}, key)) {
-        this[key] = options[key];
-      } else this[key] = defaulBoxOptions[key];
+    for (const key in options) {
+      this[key] = options[key];
     }
-    this.geometry = createBoxGeometry();
+    this.geometry = Geometry.Box;
     this.transform = scale(this.width, this.height, this.depth);
   }
 }

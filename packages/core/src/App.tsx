@@ -13,6 +13,7 @@ import { memo } from 'react';
 import { createGround } from '../lib/meshes';
 import { scale, translate } from '../lib/math/transform';
 import { log } from 'console';
+import { createColor } from '../lib/color';
 
 function App() {
   // const [fov, setFov] = useState("150");
@@ -43,9 +44,13 @@ function App() {
         { target: vec3(0, 0, 0), position: vec3(0, 0, -2), up: vec3(0, 1, 0) },
         scene,
       );
+
+      camera.attachControl(canvas);
+
       const g = createGround('ground1', scene, {
         width: 10,
         height: 10,
+        color: createColor(1, 1, 0.4),
       });
 
       g.transform = translate(0, -3, 0).mul(g.transform);
@@ -54,21 +59,24 @@ function App() {
         width: 0.5,
         height: 0.5,
         depth: 0.5,
+        color: createColor(1, 0, 0),
       });
 
       box.transform = translate(-2, -1, 0).mul(box.transform);
 
-      const light = createPointLight(
-        'light',
-        { color: vec3(1, 1, 1), render: true, position: vec3(3, 0, 3), intensity: 2, radius: 15 },
-        scene,
-      );
+      const light = createPointLight('light', scene, {
+        color: vec3(1, 1, 1),
+        render: false,
+        position: vec3(3, 0, 3),
+        intensity: 1,
+        radius: 30,
+      });
 
       await engine.loop(() => {
         scene.render();
 
-        light.position.addInPlace(vec3(-0.1, 0, 0));
-      }, 80);
+        light.position.addInPlace(vec3(-0.01, 0, 0));
+      }, 800);
     })();
   }, []);
   return (

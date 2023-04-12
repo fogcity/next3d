@@ -1,7 +1,8 @@
-import { Color, color3 } from './color';
+import { createColor } from './color';
 import { Scene } from './scene';
 import { FloatArray } from './types';
 import { vec3, Vector } from './math/vector';
+import { Node } from './node';
 export type LightOptions = {
   color?: Vector;
   position: Vector;
@@ -11,22 +12,22 @@ export type LightOptions = {
 };
 const defaulLightOptions = {
   position: vec3(0, 0, 0),
-  color: color3(1, 1, 1),
+  color: createColor(1, 1, 1),
   intensity: 1,
   radius: 5,
   render: false,
 };
-export abstract class Light {
+export abstract class Light extends Node {
   radius: number;
   position: Vector;
   color: Vector;
   intensity: number;
-  render: boolean;
-  constructor(public name: string, options: LightOptions, scene: Scene) {
-    for (const key in defaulLightOptions) {
-      if (Object.prototype.hasOwnProperty.call(options, key)) {
-        this[key] = options[key];
-      } else this[key] = defaulLightOptions[key];
+  render: boolean = false;
+  enabled: boolean = true;
+  constructor(public name: string, scene: Scene, options?: LightOptions) {
+    super(name, scene);
+    for (const key in options) {
+      this[key] = options[key];
     }
     scene.addLight(this);
   }
@@ -44,11 +45,16 @@ export abstract class Light {
   }
 }
 export class PointLight extends Light {
-  constructor(public name: string, options: LightOptions, scene: Scene) {
-    super(name, options, scene);
+  constructor(public name: string, scene: Scene, options: LightOptions) {
+    super(name, scene, options);
+  }
+}
+export class SpotLight extends Light {
+  constructor(public name: string, scene: Scene, options: LightOptions) {
+    super(name, scene, options);
   }
 }
 
-export function createPointLight(name: string, options: LightOptions, scene: Scene) {
-  return new PointLight(name, options, scene);
+export function createPointLight(name: string, scene: Scene, options: LightOptions) {
+  return new PointLight(name, scene, options);
 }

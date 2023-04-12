@@ -5,6 +5,7 @@ import {
   createUniformBuffer,
   createVertexBuffer,
 } from './buffer';
+import { Node } from './node';
 import { Camera, createPerspectiveCamera } from './camera';
 import { createPipline } from './core';
 import { Engine } from './engine';
@@ -54,10 +55,16 @@ const defaultSceneOptions = {
   onRenderEnd: () => {},
 };
 
+/**
+ * 场景有点像舞台，所有网格mesh都放置在舞台上以供查看，并且放置了摄像机camera和灯光light以使其可见。
+ * 当然，让场景成为用户良好体验的不仅仅是网格、相机和灯光，例如用户ui界面。
+ * 还有一些特殊效果可以使环境更加逼真。想要重叠两个或多个场景也是可以的。
+ */
 export class Scene {
   camera?: Camera;
   lights?: Light[] = [];
   meshes?: Mesh[] = [];
+
   renderPipeline: GPURenderPipeline;
   shadowPipeline: GPURenderPipeline;
   vertexShaderBindingGroup: GPUBindGroup;
@@ -66,6 +73,7 @@ export class Scene {
   transforms: Float32Array;
   colors: Float32Array;
   lightBuffer: GPUBuffer;
+  optionsBuffer: GPUBuffer;
   meshBuffers: MeshBuffer[];
   modelViewBuffer: GPUBuffer;
   cameraProjectionBuffer: GPUBuffer;
@@ -84,6 +92,7 @@ export class Scene {
   colorBuffer: GPUBuffer;
   shadow: boolean;
   label: string;
+  nodes: Node[] = [];
   viewProjectionMatrix: Matrix;
   constructor(public engine: Engine, options?: SceneOptions) {
     engine.addScene(this);
@@ -108,6 +117,9 @@ export class Scene {
 
     this.modelViewBuffer = createStorageBuffer('modelBuffer', 16 * 4 * this.getMeshesCount(), device);
     this.cameraProjectionBuffer = createUniformBuffer('cameraProjectionBuffer', 16 * 4, device);
+    this.optionsBuffer = createStorageBuffer('optionsBuffer', 8 * 4, device);
+    device.queue.writeBuffer(this.optionsBuffer, 8 * 4, new Float32Array(8).fill(0));
+
     this.lightBuffer = createStorageBuffer('lightBuffer', 8 * 4 * this.lights.length, device);
     this.colorBuffer = createStorageBuffer('colorBuffer', 4 * 4 * this.getMeshesCount(), device);
 
@@ -143,7 +155,13 @@ export class Scene {
 
     this.vertexShaderBindingGroup = createBindingGroup(
       'renderVertexShaderBindingGroup',
-      [this.modelViewBuffer, this.cameraProjectionBuffer, this.lightProjectionBuffer, this.colorBuffer],
+      [
+        this.modelViewBuffer,
+        this.cameraProjectionBuffer,
+        this.lightProjectionBuffer,
+        this.colorBuffer,
+        this.optionsBuffer,
+      ],
       renderPipeline.getBindGroupLayout(0),
       device,
     );
@@ -156,6 +174,7 @@ export class Scene {
         device.createSampler({
           compare: 'less',
         }),
+        this.optionsBuffer,
       ],
       renderPipeline.getBindGroupLayout(1),
       device,
@@ -289,7 +308,9 @@ export class Scene {
     queue.submit([commandEncoder.finish()]);
     this.onRenderEnd();
   }
-
+  addNode(node: Node) {
+    this.nodes.push(node);
+  }
   addMesh(mesh: Mesh) {
     this.meshes.push(mesh);
   }

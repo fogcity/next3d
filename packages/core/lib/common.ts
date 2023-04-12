@@ -1,4 +1,4 @@
 let id = 0;
-function useObject3DId() {
+export function useNodeId() {
   return ++id;
 }
