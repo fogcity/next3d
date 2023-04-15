@@ -1,4 +1,4 @@
-import { initDepthStencil, initGPU } from './core';
+import { initDepthStencil, initGPU } from './core/index';
 import { createScene, Scene } from './scene';
 
 type EngineOptions = Partial<{

@@ -19,7 +19,6 @@ const defaulLightOptions = {
 };
 export abstract class Light extends Node {
   radius: number;
-  position: Vector;
   color: Vector;
   intensity: number;
   render: boolean = false;

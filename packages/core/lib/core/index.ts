@@ -1,6 +1,6 @@
 import vertShaderCode from './shaders/vert.wgsl?raw';
 import fragShaderCode from './shaders/frag.wgsl?raw';
-import { createShaderModule } from './shaders/index';
+import { createShaderModule } from '../shaders/index';
 
 export const initGPU = async (canvas: HTMLCanvasElement) => {
   if (!('gpu' in navigator)) {

@@ -52,7 +52,6 @@ const defaulPerspectiveCameraOptions = {
 export abstract class Camera extends Node {
   angularSensibility: number;
   moveSensibility: number;
-  position: Vector;
   target: Vector;
   up: Vector;
   moving: boolean;

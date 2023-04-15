@@ -1,4 +1,4 @@
-import { Matrix } from './math/matrix';
+import { Matrix } from '../math/matrix';
 
 export const createMappedBuffer = (data: Matrix, usage: GPUBufferUsageFlags, device: GPUDevice) => {
   const arr = data.toArray();

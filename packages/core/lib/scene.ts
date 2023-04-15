@@ -4,10 +4,10 @@ import {
   createStorageBuffer,
   createUniformBuffer,
   createVertexBuffer,
-} from './buffer';
+} from './core/buffer';
 import { Node } from './node';
 import { Camera, createPerspectiveCamera } from './camera';
-import { createDepthStencil, createPipline, createPrimitive } from './core';
+import { createDepthStencil, createPipline, createPrimitive } from './core/index';
 import { Engine } from './engine';
 import { Light } from './light';
 import { Matrix } from './math/matrix';
