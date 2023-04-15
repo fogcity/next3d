@@ -124,3 +124,15 @@ export const createPipline = async (
 
   return pipeline;
 };
+
+export const createPrimitive = (state?: GPUPrimitiveState): GPUPrimitiveState => ({
+  topology: 'triangle-list',
+  cullMode: 'back',
+  ...state,
+});
+export const createDepthStencil = (state?: GPUDepthStencilState): GPUDepthStencilState => ({
+  depthWriteEnabled: true,
+  depthCompare: 'less',
+  format: 'depth32float',
+  ...state,
+});

@@ -26,8 +26,7 @@ export class Engine {
   onFrameRenderStart: (frame: number, duration: DOMHighResTimeStamp) => any;
   onFrameRenderEnd: (frame: number, duration: DOMHighResTimeStamp) => any;
   onEngineInit: () => any;
-  primitive: GPUPrimitiveState;
-  depthStencil: GPUDepthStencilState;
+
   renderDepthTexture: GPUTexture;
   shadowDepthTexture: GPUTexture;
   shadowDepthView: GPUTextureView;
@@ -52,21 +51,9 @@ export class Engine {
   }
 
   async init() {
-    this.primitive = {
-      topology: 'triangle-list',
-      cullMode: 'back',
-    };
-    this.depthStencil = {
-      depthWriteEnabled: true,
-      depthCompare: 'less',
-      format: 'depth32float',
-    };
+
     const { device, context, format } = await initGPU(this.canvas);
 
-    // const { depthFormat, depthTexture } = await initDepthStencil(
-    //   device,
-    //   this.canvas
-    // );
 
     this.device = device;
     this.queue = device.queue;

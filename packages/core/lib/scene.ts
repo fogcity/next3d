@@ -7,7 +7,7 @@ import {
 } from './buffer';
 import { Node } from './node';
 import { Camera, createPerspectiveCamera } from './camera';
-import { createPipline } from './core';
+import { createDepthStencil, createPipline, createPrimitive } from './core';
 import { Engine } from './engine';
 import { Light } from './light';
 import { Matrix } from './math/matrix';
@@ -137,12 +137,13 @@ export class Scene {
   }
 
   async init() {
-    const { shadowDepthView, primitive, depthStencil, device, format } = this.engine;
+    const { shadowDepthView, device, format } = this.engine;
 
     this.initBuffers(device);
 
     this.initDatas();
-
+    const primitive = createPrimitive()
+    const depthStencil = createDepthStencil()
     const renderPipeline = await createPipline('render pipeline', device, {
       format,
       vertShaderCode: vertShaderCode,
