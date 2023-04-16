@@ -1,5 +1,5 @@
-import { i, mat4, Matrix } from './matrix';
-import { vec3, Vector } from './vector';
+import {  mat4, Matrix4 } from './matrix';
+import {  Vector4 } from './vector';
 
 export function radians(angle: number) {
   return (angle * Math.PI) / 180;
@@ -39,8 +39,17 @@ export function rotate(x: number, y?: number, z?: number) {
   return r;
 }
 
-export function scale(x: number, y?: number, z?: number) {
+export function scale(x?: number, y?: number, z?: number) {
   return mat4([x || 1, 0, 0, 0, 0, y || 1, 0, 0, 0, 0, z || 1, 0, 0, 0, 0, 1]);
+}
+export function scaleX(x: number) {
+  return mat4([x || 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+}
+export function scaleY(y: number) {
+  return mat4([1, 0, 0, 0, 0, y || 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+}
+export function scaleZ(z: number) {
+  return mat4([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, z || 1, 0, 0, 0, 0, 1]);
 }
 
 export function reflect(x?: boolean, y?: boolean, z?: boolean) {
@@ -53,7 +62,7 @@ export function reflect(x?: boolean, y?: boolean, z?: boolean) {
  * @param up Direction
  * @returns View Matrix Mat4x4
  */
-export function lookAt(position: Vector, target: Vector, up: Vector) {
+export function lookAt(position: Vector4, target: Vector4, up: Vector4) {
   // 相当于物体相对于相机相对于原点的运动
   // 先平移相机到原点
   const ap = position.toArray();

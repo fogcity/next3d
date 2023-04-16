@@ -1,25 +1,25 @@
-import { createColor } from './color';
+import { Color, color } from './math/color';
 import { Scene } from './scene';
 import { FloatArray } from './types';
-import { vec3, Vector } from './math/vector';
+import { vec4, Vector4 } from './math/vector';
 import { Node } from './node';
 export type LightOptions = {
-  color?: Vector;
-  position: Vector;
+  color?: Color;
+  position: Vector4;
   intensity?: number;
   radius?: number;
   render?: boolean;
 };
 const defaulLightOptions = {
-  position: vec3(0, 0, 0),
-  color: createColor(1, 1, 1),
+  position: vec4(0, 0, 0),
+  color: color(1, 1, 1),
   intensity: 1,
   radius: 5,
   render: false,
 };
 export abstract class Light extends Node {
   radius: number;
-  color: Vector;
+  color: Color;
   intensity: number;
   render: boolean = false;
   enabled: boolean = true;
@@ -32,9 +32,7 @@ export abstract class Light extends Node {
   }
   toArray() {
     return new Float32Array([
-      this.position.toArray()[0],
-      this.position.toArray()[1],
-      this.position.toArray()[2],
+      ...this.position.toVector3().toArray(),
       this.color.toArray()[0],
       this.color.toArray()[1],
       this.color.toArray()[2],

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   createBox,
   createSphere,
-  vec3,
+  vec4,
   createEngine,
   createScene,
   createPerspectiveCamera,
@@ -11,9 +11,7 @@ import {
 
 import { memo } from 'react';
 import { createGround } from '../lib/meshes';
-import { scale, translate } from '../lib/math/transform';
-import { log } from 'console';
-import { createColor, createRandomColor } from '../lib/color';
+import { color, randomColor } from '../lib/math/color';
 
 function App() {
   // const [fov, setFov] = useState("150");
@@ -34,7 +32,7 @@ function App() {
 
       const camera = createPerspectiveCamera(
         'camera',
-        { target: vec3(0, 0, 0), position: vec3(0, 0, -2), up: vec3(0, 1, 0) },
+        { target: vec4(0, 0, 0), position: vec4(0, 0, -2), up: vec4(0, 1, 0) },
         scene,
       );
 
@@ -43,24 +41,24 @@ function App() {
       const g = createGround('ground1', scene, {
         width: 10,
         height: 10,
-        color: createColor(1, 1, 0.4),
+        color: color(1, 1, 0.4),
       });
 
-      g.transform = translate(0, -3, 0).mul(g.transform);
+      g.translate(0, -3, 0);
 
       const box = createBox('box', scene, {
         width: Math.random(),
         height: Math.random(),
         depth: Math.random(),
-        color: createRandomColor(),
+        color: randomColor(),
       });
 
-      box.transform = translate(-2, -1, 0).mul(box.transform);
+      box.translate(-2, -1, 0);
 
       const light = createPointLight('light', scene, {
-        color: vec3(1, 1, 1),
+        color: color(1, 1, 1),
         render: false,
-        position: vec3(3, 0, 3),
+        position: vec4(3, 0, 3),
         intensity: 1,
         radius: 30,
       });
@@ -68,7 +66,7 @@ function App() {
       await engine.loop(() => {
         scene.render();
 
-        light.position.addInPlace(vec3(-0.01, 0, 0));
+        light.translate(-0.01, 0, 0);
       }, 800);
     })();
   }, []);

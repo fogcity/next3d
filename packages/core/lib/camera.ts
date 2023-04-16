@@ -1,13 +1,13 @@
-import { vec3, Vector } from './math/vector';
+import { vec4, Vector4 } from './math/vector';
 import { lookAt, orthographic, perspective } from './math/transform';
 import { Scene } from './scene';
-import { Matrix } from './math/matrix';
+import { Matrix4 } from './math/matrix';
 import { int } from './types';
 import { Node } from './node';
 type CameraOptions = {
-  position?: Vector;
-  target: Vector;
-  up?: Vector;
+  position?: Vector4;
+  target: Vector4;
+  up?: Vector4;
 };
 
 type OrthographicCameraOptions = CameraOptions &
@@ -28,9 +28,9 @@ type PerspectiveCameraOptions = CameraOptions &
     aspectRatio: number;
   }>;
 const defaulCameraOptions = {
-  position: vec3(0, 0, 0),
-  target: vec3(0, 0, 1),
-  up: vec3(0, 1, 0),
+  position: vec4(0, 0, 0),
+  target: vec4(0, 0, 1),
+  up: vec4(0, 1, 0),
 };
 const defaulOrthographicCameraOptions = {
   ...defaulCameraOptions,
@@ -52,8 +52,8 @@ const defaulPerspectiveCameraOptions = {
 export abstract class Camera extends Node {
   angularSensibility: number;
   moveSensibility: number;
-  target: Vector;
-  up: Vector;
+  target: Vector4;
+  up: Vector4;
   moving: boolean;
   lastMovingInfo: {
     x: number;
@@ -63,13 +63,13 @@ export abstract class Camera extends Node {
     super(name, scene);
     scene.setCamera(this);
   }
-  abstract getViewProjectionMatrix(): Matrix;
-  abstract getProjectionMatrix(): Matrix;
+  abstract getViewProjectionMatrix(): Matrix4;
+  abstract getProjectionMatrix(): Matrix4;
   view() {
     return lookAt(this.position, this.target, this.up);
   }
   attachControl(canvas: HTMLCanvasElement) {
-    const d = this.target.sub(this.position).times(1 / 10);
+    const d = this.target.sub(this.position).scale(1 / 10);
     canvas.addEventListener('wheel', e => {
       if (!this.target.sub(this.position).equils(d)) {
         console.log(e);
@@ -98,15 +98,15 @@ export abstract class Camera extends Node {
         const y = e.clientY - this.lastMovingInfo.y;
         const bottom = y >= 0;
         if (x != 0) {
-          this.position.addInPlace(vec3(((left ? -1 : 1) * 1) / 10, 0, 0));
+          this.position.addInPlace(vec4(((left ? -1 : 1) * 1) / 10, 0, 0));
 
-          this.target.addInPlace(vec3(((left ? -1 : 1) * 1) / 10, 0, 0));
+          this.target.addInPlace(vec4(((left ? -1 : 1) * 1) / 10, 0, 0));
         }
 
         if (y != 0) {
-          this.position.addInPlace(vec3(0, ((bottom ? -1 : 1) * 1) / 10, 0));
+          this.position.addInPlace(vec4(0, ((bottom ? -1 : 1) * 1) / 10, 0));
 
-          this.target.addInPlace(vec3(0, ((bottom ? -1 : 1) * 1) / 10, 0));
+          this.target.addInPlace(vec4(0, ((bottom ? -1 : 1) * 1) / 10, 0));
         }
       }
     });
@@ -120,7 +120,7 @@ export class OrthographicCamera extends Camera {
   t: int;
   n: int;
   f: int;
-  getViewProjectionMatrix(): Matrix {
+  getViewProjectionMatrix(): Matrix4 {
     return this.getProjectionMatrix().mul(this.view());
   }
 
@@ -152,7 +152,7 @@ export class PerspectiveCamera extends Camera {
   getProjectionMatrix() {
     return perspective(this.n, this.f, this.fov, this.aspectRatio);
   }
-  getViewProjectionMatrix(): Matrix {
+  getViewProjectionMatrix(): Matrix4 {
     return this.getProjectionMatrix().mul(this.view());
   }
 }

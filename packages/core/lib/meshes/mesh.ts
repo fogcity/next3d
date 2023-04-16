@@ -1,4 +1,4 @@
-import { Color, createColor } from '../color';
+import { Color, createColor } from '../math/color';
 import { Geometry } from '../geometry/index';
 import { Material } from '../material';
 import { Matrix } from '../math/matrix';
@@ -11,7 +11,6 @@ export type MeshOptions = {
   color?: Color;
 };
 export class Mesh extends Node {
-  transform: Matrix;
   material: Material;
   geometry: Geometry;
   color: Color;

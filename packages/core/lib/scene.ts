@@ -10,13 +10,13 @@ import { Camera, createPerspectiveCamera } from './camera';
 import { createDepthStencil, createPipline, createPrimitive } from './core/index';
 import { Engine } from './engine';
 import { Light } from './light';
-import { Matrix } from './math/matrix';
+import { Matrix4 } from './math/matrix';
 import { Mesh } from './meshes/mesh';
 import { lookAt, translate } from './math/transform';
 import vertShaderCode from './shaders/vert.wgsl?raw';
 import fragShaderCode from './shaders/frag.wgsl?raw';
 import shadowShaderCode from './shaders/shadow.wgsl?raw';
-import { vec3 } from './math/vector';
+import { vec4 } from './math/vector';
 import { createBox, createSphere } from './meshes/index';
 type MeshBuffer = {
   vertex: GPUBuffer;
@@ -93,7 +93,7 @@ export class Scene {
   shadow: boolean;
   label: string;
   nodes: Node[] = [];
-  viewProjectionMatrix: Matrix;
+  viewProjectionMatrix: Matrix4;
   constructor(public engine: Engine, options?: SceneOptions) {
     engine.addScene(this);
 
@@ -231,7 +231,7 @@ export class Scene {
         queue.writeBuffer(this.lightBuffer, i * 8 * 4, light.toArray());
         const lightViewProjection = this.camera
           .getProjectionMatrix()
-          .mul(lookAt(light.position, this.camera.target, vec3(0, 1, 0)))
+          .mul(lookAt(light.position, this.camera.target, vec4(0, 1, 0)))
           .toArray();
 
         lightViewProjections.push(lightViewProjection);
