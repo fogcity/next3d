@@ -1,6 +1,6 @@
-import { Matrix } from '../math/matrix';
+import { Matrix4 } from '../math/matrix';
 
-export const createMappedBuffer = (data: Matrix, usage: GPUBufferUsageFlags, device: GPUDevice) => {
+export const createMappedBuffer = (data: Matrix4, usage: GPUBufferUsageFlags, device: GPUDevice) => {
   const arr = data.toArray();
   const desc = {
     size: (data.getOffset() * 4 + 3) & ~3,
@@ -15,11 +15,11 @@ export const createMappedBuffer = (data: Matrix, usage: GPUBufferUsageFlags, dev
   return buffer;
 };
 
-export const createMappedUniformBuffer = (data: Matrix, device: GPUDevice) => {
+export const createMappedUniformBuffer = (data: Matrix4, device: GPUDevice) => {
   return createMappedBuffer(data, GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST, device);
 };
 
-export const createMappedVertexBuffer = (data: Matrix, device: GPUDevice) => {
+export const createMappedVertexBuffer = (data: Matrix4, device: GPUDevice) => {
   return createMappedBuffer(data, GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST, device);
 };
 

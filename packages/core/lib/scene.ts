@@ -7,7 +7,7 @@ import {
 } from './core/buffer';
 import { Node } from './node';
 import { Camera, createPerspectiveCamera } from './camera';
-import { createDepthStencil, createPipline, createPrimitive } from './core/index';
+import { createDepthStencil, createPipline, createPrimitive } from './core/platform';
 import { Engine } from './engine';
 import { Light } from './light';
 import { Matrix4 } from './math/matrix';

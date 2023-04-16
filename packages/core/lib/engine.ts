@@ -1,4 +1,4 @@
-import { initDepthStencil, initGPU } from './core/index';
+import { initDepthStencil, initGPU } from './core/platform';
 import { createScene, Scene } from './scene';
 
 type EngineOptions = Partial<{
@@ -80,6 +80,7 @@ export class Engine {
   async loop(frameRenderFunction: () => void, frame?: number) {
     await this.init();
     await this.scene.init();
+  
     let frameId = 0;
     let currentFrame = 1;
     const render = (duration: DOMHighResTimeStamp) => {
