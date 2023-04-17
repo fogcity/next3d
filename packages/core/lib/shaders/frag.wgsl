@@ -1,7 +1,7 @@
 @group(1) @binding(0) var<storage> pointLight : array<f32>;
 @group(1) @binding(1) var shadowMap: texture_depth_2d;
 @group(1) @binding(2) var shadowSampler: sampler_comparison;
-@group(1) @binding(3) var<storage> options : array<f32>;
+
 
 @fragment
 fn main(
@@ -11,7 +11,7 @@ fn main(
     @location(3) shadowPos: vec3<f32>,
     @location(4) fragColor: vec4<f32>
 ) -> @location(0) vec4<f32> {
-    let useShadow = options[0];
+
     let objectColor = fragColor.rgb;
     
     // 环境光处理，初始化光照结果为环境光
@@ -71,5 +71,5 @@ fn main(
    }
 
   
-       return vec4<f32>((objectColor *( lightResult+ambientLight)), 1.0);
+       return vec4<f32>((objectColor *( lightResult*visibility+ambientLight)), 1.0);
 }

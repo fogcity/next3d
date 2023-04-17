@@ -79,13 +79,14 @@ function App() {
       const light = createPointLight('light', scene, {
         color: color(1, 1, 1),
         render: false,
-        position: vec4(0, 3, 0),
-        intensity: 3,
-        radius: 80,
+        position: vec4(-5, 3, -5),
+        intensity: 2.5,
+        radius: 70,
       });
 
       await engine.loop(() => {
         scene.render();
+        light.translate(0.05, 0, 0.05);
       }, 500);
     })();
   }, []);

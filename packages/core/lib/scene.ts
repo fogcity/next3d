@@ -73,7 +73,6 @@ export class Scene {
   transforms: Float32Array;
   colors: Float32Array;
   lightBuffer: GPUBuffer;
-  optionsBuffer: GPUBuffer;
   meshBuffers: MeshBuffer[];
   modelViewBuffer: GPUBuffer;
   cameraProjectionBuffer: GPUBuffer;
@@ -117,8 +116,6 @@ export class Scene {
 
     this.modelViewBuffer = createStorageBuffer('modelBuffer', 16 * 4 * this.getMeshesCount(), device);
     this.cameraProjectionBuffer = createUniformBuffer('cameraProjectionBuffer', 16 * 4, device);
-    this.optionsBuffer = createStorageBuffer('optionsBuffer', 8 * 4, device);
-    device.queue.writeBuffer(this.optionsBuffer, 8 * 4, new Float32Array(8).fill(0));
 
     this.lightBuffer = createStorageBuffer('lightBuffer', 8 * 4 * this.lights.length, device);
     this.colorBuffer = createStorageBuffer('colorBuffer', 4 * 4 * this.getMeshesCount(), device);
@@ -156,13 +153,7 @@ export class Scene {
 
     this.vertexShaderBindingGroup = createBindingGroup(
       'renderVertexShaderBindingGroup',
-      [
-        this.modelViewBuffer,
-        this.cameraProjectionBuffer,
-        this.lightProjectionBuffer,
-        this.colorBuffer,
-        this.optionsBuffer,
-      ],
+      [this.modelViewBuffer, this.cameraProjectionBuffer, this.lightProjectionBuffer, this.colorBuffer],
       renderPipeline.getBindGroupLayout(0),
       device,
     );
@@ -175,7 +166,6 @@ export class Scene {
         device.createSampler({
           compare: 'less',
         }),
-        this.optionsBuffer,
       ],
       renderPipeline.getBindGroupLayout(1),
       device,
@@ -229,6 +219,7 @@ export class Scene {
       for (let i = 0; i < this.lights.length; i++) {
         const light = this.lights[i];
         queue.writeBuffer(this.lightBuffer, i * 8 * 4, light.toArray());
+
         const lightViewProjection = this.camera
           .getProjectionMatrix()
           .mul(lookAt(light.getPosition(), vec4(), vec4(0, 0, -1)))

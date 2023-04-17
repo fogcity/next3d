@@ -12,10 +12,10 @@ export class Node {
   scene: Scene;
   transform: Matrix4 = Matrix4.I();
   private position: Vector4 = vec4(0, 0, 0);
-  constructor(public name: string, scene: Scene, options?: NodeOptions) {
+  constructor(public name: string, scene?: Scene, options?: NodeOptions) {
     this.id = useNodeId();
 
-    scene.addNode(this);
+    scene && scene.addNode(this);
   }
   translate(x: number, y: number, z: number) {
     const m = translate(x, y, z);

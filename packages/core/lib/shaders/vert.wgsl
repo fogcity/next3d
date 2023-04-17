@@ -2,7 +2,7 @@
 @group(0) @binding(1) var<uniform> cameraProjection : mat4x4<f32>;
 @group(0) @binding(2) var<storage> lightProjection : array<mat4x4<f32>>;
 @group(0) @binding(3) var<storage> colors : array<vec4<f32>>;
-@group(0) @binding(4) var<storage> options : array<f32>;
+
 
 struct VertexOutput {
     @builtin(position) Position : vec4<f32>,
@@ -20,7 +20,7 @@ fn main(
     @location(1) normal : vec3<f32>,
     @location(2) uv : vec2<f32>,
 ) -> VertexOutput {
-     let useShadow = options[0];
+
     let modelview = transpose(modelViews[index]);
     let pos = vec4<f32>(position, 1.0);
 

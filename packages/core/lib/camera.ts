@@ -61,7 +61,7 @@ export abstract class Camera extends Node {
   };
   constructor(public name: string, scene: Scene) {
     super(name, scene);
-    scene.setCamera(this);
+    scene && scene.setCamera(this);
   }
   abstract getViewProjectionMatrix(): Matrix4;
   abstract getProjectionMatrix(): Matrix4;
@@ -115,9 +115,9 @@ export class PerspectiveCamera extends Camera {
   }
 }
 
-export function createPerspectiveCamera(name: string, options: PerspectiveCameraOptions, scene: Scene) {
+export function createPerspectiveCamera(name: string, options: PerspectiveCameraOptions, scene?: Scene) {
   return new PerspectiveCamera(name, options, scene);
 }
-export function createOrthographicCamera(name: string, options: OrthographicCameraOptions, scene: Scene) {
+export function createOrthographicCamera(name: string, options: OrthographicCameraOptions, scene?: Scene) {
   return new OrthographicCamera(name, options, scene);
 }
