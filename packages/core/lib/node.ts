@@ -10,29 +10,33 @@ export class Node {
   parent: Node;
   children: Node;
   scene: Scene;
-   transform:Matrix4
-   position:Vector4
+  transform: Matrix4 = Matrix4.I();
+  private position: Vector4 = vec4(0, 0, 0);
   constructor(public name: string, scene: Scene, options?: NodeOptions) {
     this.id = useNodeId();
+
     scene.addNode(this);
   }
-  translate(x:number,y:number,z:number) {
-    const m = translate(x,y,z)
-    m.apply(this.position)
+  translate(x: number, y: number, z: number) {
+    const m = translate(x, y, z);
+    this.applyTransform(m);
   }
-  
-  rotate(x:number,y:number,z:number) {
-    const m = rotate(x,y,z)
-    m.apply(this.position)
+
+  rotate(x: number, y: number, z: number) {
+    const m = rotate(x, y, z);
+    this.applyTransform(m);
   }
-  getPosition(){
-   return Matrix4.Apply(this.transform,this.position)
+  applyTransform(m: Matrix4) {
+    this.transform = m.mul(this.transform);
   }
-  getOriginPosition(){
-    return this.position
+  getPosition() {
+    return Matrix4.Apply(this.transform, this.position);
+  }
+  getOriginPosition() {
+    return this.position;
   }
   getTransform() {
-    return this.transform
+    return this.transform;
   }
   getModelViewMatrix() {}
   getEngine() {

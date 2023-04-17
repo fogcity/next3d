@@ -47,14 +47,27 @@ function App() {
       g.translate(0, -3, 0);
 
       const box = createBox('box', scene, {
-        width: Math.random(),
-        height: Math.random(),
-        depth: Math.random(),
+        width: 0.2,
+        height: 0.2,
+        depth: 0.2,
+        color: randomColor(),
+      });
+      const box1 = createBox('box', scene, {
+        width: 0.2,
+        height: 0.2,
+        depth: 0.2,
+        color: randomColor(),
+      });
+      const box2 = createBox('box', scene, {
+        width: 0.2,
+        height: 0.2,
+        depth: 0.2,
         color: randomColor(),
       });
 
       box.translate(-2, -1, 0);
-
+      box1.translate(2, -1, 0);
+      box2.translate(0.5, -1, 0);
       const light = createPointLight('light', scene, {
         color: color(1, 1, 1),
         render: false,
@@ -66,8 +79,8 @@ function App() {
       await engine.loop(() => {
         scene.render();
 
-        light.translate(-0.01, 0, 0);
-      }, 800);
+        light.translate(-0.1, 0, 0);
+      }, 100);
     })();
   }, []);
   return (

@@ -66,51 +66,9 @@ export abstract class Camera extends Node {
   abstract getViewProjectionMatrix(): Matrix4;
   abstract getProjectionMatrix(): Matrix4;
   view() {
-    return lookAt(this.position, this.target, this.up);
+    return lookAt(this.getPosition(), this.target, this.up);
   }
-  attachControl(canvas: HTMLCanvasElement) {
-    const d = this.target.sub(this.position).scale(1 / 10);
-    canvas.addEventListener('wheel', e => {
-      if (!this.target.sub(this.position).equils(d)) {
-        console.log(e);
-        if ((e as any).wheelDelta > 0) this.position.subInPlace(d);
-        else this.position.addInPlace(d);
-      }
-    });
-    canvas.addEventListener('mousedown', e => {
-      this.moving = true;
-      this.lastMovingInfo = {
-        x: e.clientX,
-        y: e.clientY,
-      };
-    });
-    canvas.addEventListener('mouseup', e => {
-      this.moving = false;
-    });
-    canvas.addEventListener('mousemove', e => {
-      if (this.moving && this.lastMovingInfo) {
-        const x = e.clientX - this.lastMovingInfo.x;
-        console.log([e.clientX, this.lastMovingInfo.x]);
-
-        const left = x >= 0;
-        console.log(left);
-
-        const y = e.clientY - this.lastMovingInfo.y;
-        const bottom = y >= 0;
-        if (x != 0) {
-          this.position.addInPlace(vec4(((left ? -1 : 1) * 1) / 10, 0, 0));
-
-          this.target.addInPlace(vec4(((left ? -1 : 1) * 1) / 10, 0, 0));
-        }
-
-        if (y != 0) {
-          this.position.addInPlace(vec4(0, ((bottom ? -1 : 1) * 1) / 10, 0));
-
-          this.target.addInPlace(vec4(0, ((bottom ? -1 : 1) * 1) / 10, 0));
-        }
-      }
-    });
-  }
+  attachControl(canvas: HTMLCanvasElement) {}
 }
 
 export class OrthographicCamera extends Camera {

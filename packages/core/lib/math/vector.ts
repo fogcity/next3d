@@ -1,4 +1,3 @@
-
 abstract class Vector {
   private data: Float32Array;
 
@@ -8,12 +7,14 @@ abstract class Vector {
   toArray() {
     return this.data;
   }
+  setFrom(m: ArrayLike<number>) {
+    this.data = Float32Array.from(m);
+  }
 }
 export class Vector4 extends Vector {
-  constructor(public x: number = 0, public y: number = 0, public z: number = 0, public w: number = 0) {
+  constructor(public x: number = 0, public y: number = 0, public z: number = 0, public w: number = 1) {
     super();
-    let d = this.toArray();
-    d = Float32Array.of(x, y, z, w);
+    this.setFrom(Float32Array.of(x, y, z, w));
   }
   toVector3() {
     return new Vector3(this.x, this.y, this.z);
@@ -30,13 +31,6 @@ export class Vector4 extends Vector {
     d[1] = y;
     d[2] = z;
     d[3] = w;
-  }
-  setFrom(v: ArrayLike<number>) {
-    const d = this.toArray();
-    d[0] = v[0];
-    d[1] = v[1];
-    d[2] = v[2];
-    d[3] = v[3];
   }
   equils(v: Vector4) {
     let e = false;
@@ -137,10 +131,9 @@ export class Vector4 extends Vector {
 export class Vector3 extends Vector {
   constructor(public x: number = 0, public y: number = 0, public z: number = 0) {
     super();
-    let d = this.toArray();
-    d = Float32Array.of(x, y, z);
+    this.setFrom(Float32Array.of(x, y, z));
   }
-  toVector4(w: number = 0) {
+  toVector4(w: number = 1) {
     return vec4(this.x, this.y, this.z, w);
   }
   toVector2() {
@@ -156,12 +149,7 @@ export class Vector3 extends Vector {
     d[1] = y;
     d[2] = z;
   }
-  setFrom(v: ArrayLike<number>) {
-    const d = this.toArray();
-    d[0] = v[0];
-    d[1] = v[1];
-    d[2] = v[2];
-  }
+
   equils(v: Vector3) {
     let e = false;
     if (v.getOffset() == this.getOffset()) {
@@ -261,10 +249,9 @@ export class Vector3 extends Vector {
 export class Vector2 extends Vector {
   constructor(public x: number = 0, public y: number = 0) {
     super();
-    let d = this.toArray();
-    d = Float32Array.of(x, y);
+    this.setFrom(Float32Array.of(x, y));
   }
-  toVector4(z: number = 0, w: number = 0) {
+  toVector4(z: number = 0, w: number = 1) {
     return vec4(this.x, this.y, z, w);
   }
   toVector3(z: number = 0) {
@@ -279,11 +266,7 @@ export class Vector2 extends Vector {
     d[0] = x;
     d[1] = y;
   }
-  setFrom(v: ArrayLike<number>) {
-    const d = this.toArray();
-    d[0] = v[0];
-    d[1] = v[1];
-  }
+
   equils(v: Vector2) {
     let e = false;
     if (v.getOffset() == this.getOffset()) {
@@ -381,6 +364,6 @@ export function vec2(x: number = 0, y: number = 0) {
 export function vec3(x: number = 0, y: number = 0, z: number = 0) {
   return new Vector3(x, y, z);
 }
-export function vec4(x: number = 0, y: number = 0, z: number = 0, w: number = 0) {
+export function vec4(x: number = 0, y: number = 0, z: number = 0, w: number = 1) {
   return new Vector4(x, y, z, w);
 }

@@ -1,5 +1,5 @@
-import {  mat4, Matrix4 } from './matrix';
-import {  Vector4 } from './vector';
+import { mat4, Matrix4 } from './matrix';
+import { Vector4 } from './vector';
 
 export function radians(angle: number) {
   return (angle * Math.PI) / 180;
@@ -65,7 +65,9 @@ export function reflect(x?: boolean, y?: boolean, z?: boolean) {
 export function lookAt(position: Vector4, target: Vector4, up: Vector4) {
   // 相当于物体相对于相机相对于原点的运动
   // 先平移相机到原点
+
   const ap = position.toArray();
+
   const tv = translate(-ap[0], -ap[1], -ap[2]);
 
   // 再旋转相机坐标系到原坐标系

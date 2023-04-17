@@ -142,8 +142,8 @@ export class Scene {
     this.initBuffers(device);
 
     this.initDatas();
-    const primitive = createPrimitive()
-    const depthStencil = createDepthStencil()
+    const primitive = createPrimitive();
+    const depthStencil = createDepthStencil();
     const renderPipeline = await createPipline('render pipeline', device, {
       format,
       vertShaderCode: vertShaderCode,
@@ -231,7 +231,7 @@ export class Scene {
         queue.writeBuffer(this.lightBuffer, i * 8 * 4, light.toArray());
         const lightViewProjection = this.camera
           .getProjectionMatrix()
-          .mul(lookAt(light.position, this.camera.target, vec4(0, 1, 0)))
+          .mul(lookAt(light.getPosition(), this.camera.target, vec4(0, 1, 0)))
           .toArray();
 
         lightViewProjections.push(lightViewProjection);

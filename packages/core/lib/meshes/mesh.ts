@@ -1,12 +1,13 @@
-import { Color, createColor } from '../math/color';
+import { Color, color } from '../math/color';
 import { Geometry } from '../geometry/index';
 import { Material } from '../material';
-import { Matrix } from '../math/matrix';
+import { Matrix4 } from '../math/matrix';
 import { Scene } from '../scene';
 import { translate } from '../math/transform';
 import { Node } from '../node';
+import { vec4 } from '../math/vector';
 export type MeshOptions = {
-  transform?: Matrix;
+  transform?: Matrix4;
   material?: Material;
   color?: Color;
 };
@@ -16,7 +17,7 @@ export class Mesh extends Node {
   color: Color;
   constructor(public name: string, scene: Scene) {
     super(name, scene);
-    this.color = createColor(1, 1, 1);
+    this.color = color(1, 1, 1);
     scene.addMesh(this);
   }
 }

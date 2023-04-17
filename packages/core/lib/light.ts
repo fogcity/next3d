@@ -10,17 +10,11 @@ export type LightOptions = {
   radius?: number;
   render?: boolean;
 };
-const defaulLightOptions = {
-  position: vec4(0, 0, 0),
-  color: color(1, 1, 1),
-  intensity: 1,
-  radius: 5,
-  render: false,
-};
+
 export abstract class Light extends Node {
-  radius: number;
-  color: Color;
-  intensity: number;
+  radius: number = 5;
+  color: Color = color(1, 1, 1);
+  intensity: number = 1;
   render: boolean = false;
   enabled: boolean = true;
   constructor(public name: string, scene: Scene, options?: LightOptions) {
@@ -32,7 +26,7 @@ export abstract class Light extends Node {
   }
   toArray() {
     return new Float32Array([
-      ...this.position.toVector3().toArray(),
+      ...this.getPosition().toVector3().toArray(),
       this.color.toArray()[0],
       this.color.toArray()[1],
       this.color.toArray()[2],

@@ -16,14 +16,13 @@ abstract class Matrix {
     return this.data;
   }
   setFrom(m: ArrayLike<number>) {
-    let d = this.toArray();
-    d = Float32Array.from(m);
+    this.data = Float32Array.from(m);
   }
 }
 export class Matrix4 extends Matrix {
-  toMatrix3(){
-    const d = this.toArray()
-    return mat3([...d.slice(0,3),...d.slice(3,6),...d.slice(6,9)])
+  toMatrix3() {
+    const d = this.toArray();
+    return mat3([...d.slice(0, 3), ...d.slice(3, 6), ...d.slice(6, 9)]);
   }
   setOf(
     e1: number,
@@ -91,6 +90,8 @@ export class Matrix4 extends Matrix {
   }
   apply(target: Vector4) {
     const d = this.toArray();
+    console.log(target);
+
     const t = target.toArray();
     const v1 = t[0] * d[0] + t[1] * d[1] + t[2] * d[2] + t[3] * d[3];
     const v2 = t[0] * d[4] + t[1] * d[5] + t[2] * d[6] + t[3] * d[7];
@@ -98,7 +99,29 @@ export class Matrix4 extends Matrix {
     const v4 = t[0] * d[12] + t[1] * d[13] + t[2] * d[14] + t[3] * d[15];
     target.setOf(v1, v2, v3, v4);
   }
-
+  static Transpose(matrix: Matrix): Matrix4 {
+    const d = matrix.toArray();
+    const nd = new Float32Array(16);
+    nd[0] = d[0];
+    nd[1] = d[4];
+    nd[2] = d[8];
+    nd[3] = d[12];
+    nd[4] = d[1];
+    nd[5] = d[5];
+    nd[6] = d[9];
+    nd[7] = d[13];
+    nd[8] = d[2];
+    nd[9] = d[6];
+    nd[10] = d[10];
+    nd[11] = d[14];
+    nd[12] = d[3];
+    nd[13] = d[7];
+    nd[14] = d[11];
+    nd[15] = d[15];
+    const r = mat4();
+    r.setFrom(nd);
+    return r;
+  }
   transpose() {
     const d = this.toArray();
     const nd = new Float32Array(16);
@@ -121,14 +144,16 @@ export class Matrix4 extends Matrix {
     this.setFrom(nd);
     return this;
   }
-  static Apply(m: Matrix4, v: Vector4) {
-    const t = v.toArray();
+  static Apply(matrix: Matrix4, vector: Vector4) {
+    const m = matrix.toArray();
+    const t = vector.toArray();
+
     const v1 = t[0] * m[0] + t[1] * m[1] + t[2] * m[2] + t[3] * m[3];
+
     const v2 = t[0] * m[4] + t[1] * m[5] + t[2] * m[6] + t[3] * m[7];
     const v3 = t[0] * m[8] + t[1] * m[9] + t[2] * m[10] + t[3] * m[11];
     const v4 = t[0] * m[12] + t[1] * m[13] + t[2] * m[14] + t[3] * m[15];
-    const result = [v1, v2, v3, v4];
-    return vec4(v1, v2, v3);
+    return vec4(v1, v2, v3, v4);
   }
   static Muls(ms: Matrix4[]) {
     return ms.reverse().reduce((a, v) => {
@@ -141,9 +166,9 @@ export class Matrix4 extends Matrix {
   }
 }
 export class Matrix3 extends Matrix {
-  toMatrix4(){
-    const d = this.toArray()
-    return mat4([...d.slice(0,3),0,...d.slice(3,6),0,...d.slice(6,9),0,0,0,0,1])
+  toMatrix4() {
+    const d = this.toArray();
+    return mat4([...d.slice(0, 3), 0, ...d.slice(3, 6), 0, ...d.slice(6, 9), 0, 0, 0, 0, 1]);
   }
   setOf(
     e1: number,
@@ -223,15 +248,15 @@ export class Matrix3 extends Matrix {
     nd[6] = d[2];
     nd[7] = d[5];
     nd[8] = d[8];
-   
+
     this.setFrom(nd);
     return this;
   }
   static Apply(m: Matrix3, v: Vector3) {
     const t = v.toArray();
-    const v1 = t[0] * m[0] + t[1] * m[1] + t[2] * m[2]
-    const v2 = t[0] * m[3] + t[1] * m[4] + t[2] * m[5] 
-    const v3 = t[0] * m[6] + t[1] * m[7] + t[2] * m[8] 
+    const v1 = t[0] * m[0] + t[1] * m[1] + t[2] * m[2];
+    const v2 = t[0] * m[3] + t[1] * m[4] + t[2] * m[5];
+    const v3 = t[0] * m[6] + t[1] * m[7] + t[2] * m[8];
 
     return vec3(v1, v2, v3);
   }
@@ -243,7 +268,7 @@ export class Matrix3 extends Matrix {
     }, Matrix3.I());
   }
   static I() {
-    return new Matrix3([1, 0, 0, 0, 1, 0,  0, 0, 1]);
+    return new Matrix3([1, 0, 0, 0, 1, 0, 0, 0, 1]);
   }
 }
 export function mat4(m?: number[] | number[][]) {
