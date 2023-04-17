@@ -2,8 +2,8 @@ import { Geometry, createSphereGeometry } from '../geometry/index';
 import { Scene } from '../scene';
 import { scale, translate } from '../math/transform';
 import { float, int } from '../types';
-import { Mesh } from './mesh';
-type SphereOptions = {
+import { Mesh, MeshOptions } from './mesh';
+type SphereOptions = MeshOptions & {
   r: number;
 };
 

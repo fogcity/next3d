@@ -14,10 +14,10 @@ export type MeshOptions = {
 export class Mesh extends Node {
   material: Material;
   geometry: Geometry;
-  color: Color;
+  color: Color = color(1, 1, 1);
   constructor(public name: string, scene: Scene) {
     super(name, scene);
-    this.color = color(1, 1, 1);
+
     scene.addMesh(this);
   }
 }

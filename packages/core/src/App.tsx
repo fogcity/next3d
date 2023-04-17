@@ -32,7 +32,7 @@ function App() {
 
       const camera = createPerspectiveCamera(
         'camera',
-        { target: vec4(0, 0, 0), position: vec4(0, 0, -2), up: vec4(0, 1, 0) },
+        { fov: 70, target: vec4(0, 0, 0), position: vec4(0, 5, -5), up: vec4(0, 1, 1) },
         scene,
       );
 
@@ -41,46 +41,52 @@ function App() {
       const g = createGround('ground1', scene, {
         width: 10,
         height: 10,
-        color: color(1, 1, 0.4),
+        color: color(0.55, 0.55, 0.55),
       });
 
       g.translate(0, -3, 0);
-
+      const red = color(1, 0, 0);
       const box = createBox('box', scene, {
         width: 0.2,
         height: 0.2,
         depth: 0.2,
-        color: randomColor(),
+        color: red,
       });
       const box1 = createBox('box', scene, {
         width: 0.2,
         height: 0.2,
-        depth: 0.2,
-        color: randomColor(),
+        depth: 0.4,
+        color: red,
       });
       const box2 = createBox('box', scene, {
         width: 0.2,
-        height: 0.2,
+        height: 0.3,
         depth: 0.2,
-        color: randomColor(),
+        color: red,
       });
+      const box3 = createBox('box', scene, {
+        width: 0.4,
+        height: 0.2,
+        depth: 0.4,
+        color: red,
+      });
+      box.translate(-1, -1, 1);
+      box1.translate(1, -1, 1);
 
-      box.translate(-2, -1, 0);
-      box1.translate(2, -1, 0);
-      box2.translate(0.5, -1, 0);
+      box2.translate(-1, -1, -1);
+      box3.translate(1, -1, -1);
+
       const light = createPointLight('light', scene, {
         color: color(1, 1, 1),
         render: false,
-        position: vec4(3, 0, 3),
-        intensity: 1,
-        radius: 30,
+        position: vec4(0, 3, 0),
+        intensity: 3,
+        radius: 80,
       });
 
       await engine.loop(() => {
         scene.render();
-
-        light.translate(-0.1, 0, 0);
-      }, 100);
+      }, 500);
     })();
   }, []);
   return (
@@ -94,8 +100,8 @@ function App() {
         }}>
         <canvas
           id='webgpu-canvas'
-          width='512'
-          height='512
+          width='600'
+          height='600
         .'></canvas>
       </div>
       {/* <div className="inputs">

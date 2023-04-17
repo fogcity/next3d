@@ -71,5 +71,5 @@ fn main(
    }
 
   
-       return vec4<f32>((objectColor *( lightResult*visibility+ambientLight)), 1.0);
+       return vec4<f32>((objectColor *( lightResult+ambientLight)), 1.0);
 }
