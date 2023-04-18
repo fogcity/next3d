@@ -12,6 +12,7 @@ import {
 import { memo } from 'react';
 import { createGround } from '../lib/meshes';
 import { color, randomColor } from '../lib/math/color';
+import { createOrthographicCamera } from '../lib/camera';
 
 function App() {
   // const [fov, setFov] = useState("150");
@@ -32,36 +33,48 @@ function App() {
 
       const camera = createPerspectiveCamera(
         'camera',
-        { fov: 70, target: vec4(0, 0, 0), position: vec4(0, 5, -5), up: vec4(0, 1, 1) },
+        { fov: 120, target: vec4(0, 0, 0), position: vec4(0, 5, -5), up: vec4(0, 1, 1) },
         scene,
       );
-
-      camera.attachControl(canvas);
-
+      // const camera = createOrthographicCamera(
+      //   'c2',
+      //   {
+      //     position: vec4(0, 5, -5),
+      //     up: vec4(0, 1, 1),
+      //     target: vec4(0, 0, 0),
+      //     l: -30,
+      //     r: 30,
+      //     n: -30,
+      //     f: 30,
+      //     b: -30,
+      //     t: 30,
+      //   },
+      //   scene,
+      // );
       const g = createGround('ground1', scene, {
-        width: 10,
-        height: 10,
+        width: 100,
+        height: 100,
         color: color(0.55, 0.55, 0.55),
       });
 
-      g.translate(0, -3, 0);
+      g.translate(0, -2, 0);
       const red = color(1, 0, 0);
       const box = createBox('box', scene, {
-        width: 0.2,
-        height: 0.2,
-        depth: 0.2,
+        width: 1,
+        height: 1,
+        depth: 1,
         color: red,
       });
       const box1 = createBox('box', scene, {
-        width: 0.2,
+        width: 0.4,
         height: 0.2,
         depth: 0.4,
         color: red,
       });
       const box2 = createBox('box', scene, {
-        width: 0.2,
-        height: 0.3,
-        depth: 0.2,
+        width: 0.5,
+        height: 0.8,
+        depth: 0.8,
         color: red,
       });
       const box3 = createBox('box', scene, {
@@ -70,23 +83,26 @@ function App() {
         depth: 0.4,
         color: red,
       });
-      box.translate(-1, -1, 1);
-      box1.translate(1, -1, 1);
+      box.translate(-2, -1, 2);
+      box1.translate(2, -1, 2);
 
-      box2.translate(-1, -1, -1);
-      box3.translate(1, -1, -1);
+      box2.translate(-2, -1, -2);
+      box3.translate(2, -1, -2);
 
       const light = createPointLight('light', scene, {
         color: color(1, 1, 1),
         render: false,
         position: vec4(-5, 3, -5),
-        intensity: 2.5,
-        radius: 70,
+        intensity: 4,
+        radius: 1000,
       });
 
       await engine.loop(() => {
         scene.render();
         light.translate(0.05, 0, 0.05);
+        box2.rotate(0, 1, 0);
+
+        console.log(box2.getTransform().toArray());
       }, 500);
     })();
   }, []);

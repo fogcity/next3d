@@ -20,7 +20,7 @@ function rotateX(angle: number) {
 
 function rotateY(angle: number) {
   const [s, c] = triangle(angle);
-  return mat4([c, 0, 0, s, 0, 1, 0, 0, -s, 0, 0, c, 0, 0, 0, 1]);
+  return mat4([c, 0, s, 0, 0, 1, 0, 0, -s, 0, c, 0, 0, 0, 0, 1]);
 }
 
 function rotateZ(angle: number) {
@@ -29,12 +29,17 @@ function rotateZ(angle: number) {
 }
 
 export function rotate(x: number, y?: number, z?: number) {
-  const r = rotateX(x);
-  if (y) {
-    r.mul(rotateY(y));
+  let r = Matrix4.I();
+  if (x) {
+    r = rotateX(x).mul(r);
   }
+
+  if (y) {
+    r = rotateY(y).mul(r);
+  }
+
   if (z) {
-    r.mul(rotateZ(z));
+    r = rotateZ(z).mul(r);
   }
   return r;
 }
@@ -88,8 +93,8 @@ export function lookAt(position: Vector4, target: Vector4, up: Vector4) {
 export function orthographic(l: number, r: number, b: number, t: number, n: number, f: number) {
   // 把世界坐标区域缩放到对应技术平台的标准NDC
   // 这里是webgpu的左手坐标系的z位0-1的区域
-  const translateMat = translate(-(r + l) / 2, -(t + b) / 2, -n);
-  const scaleMat = scale(2 / (r - l), 2 / (t - b), 1 / f);
+  const translateMat = translate(-(r + l) / 2, -(t + b) / 2, -(f + n) / 2);
+  const scaleMat = scale(2 / (r - l), 2 / (t - b), 2 / (f - n));
   return scaleMat.mul(translateMat);
 }
 

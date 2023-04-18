@@ -111,6 +111,7 @@ export class Vector4 extends Vector {
     d[2] /= n;
     return this;
   }
+
   dot(v: Vector4) {
     const d = this.toArray();
     const t = v.toArray();
@@ -119,7 +120,7 @@ export class Vector4 extends Vector {
   cross(v: Vector4) {
     const d = this.toArray();
     const t = v.toArray();
-    return vec4(d[1] * t[2] - d[2] * t[1], d[0] * t[2] - d[2] * t[0], d[0] * t[1] - d[1] * t[0]);
+    return vec4(d[1] * t[2] - d[2] * t[1], d[2] * t[0] - d[0] * t[2], d[0] * t[1] - d[1] * t[0]);
   }
   getCosAngleWith(v: Vector4) {
     return (this.dot(v) / this.getNorm()) * v.getNorm();

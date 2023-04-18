@@ -6,7 +6,7 @@ import {
   createVertexBuffer,
 } from './core/buffer';
 import { Node } from './node';
-import { Camera, createPerspectiveCamera } from './camera';
+import { Camera, createOrthographicCamera, createPerspectiveCamera } from './camera';
 import { createDepthStencil, createPipline, createPrimitive } from './core/platform';
 import { Engine } from './engine';
 import { Light } from './light';
@@ -219,11 +219,18 @@ export class Scene {
       for (let i = 0; i < this.lights.length; i++) {
         const light = this.lights[i];
         queue.writeBuffer(this.lightBuffer, i * 8 * 4, light.toArray());
-
-        const lightViewProjection = this.camera
-          .getProjectionMatrix()
-          .mul(lookAt(light.getPosition(), vec4(), vec4(0, 0, -1)))
-          .toArray();
+        const camera = createOrthographicCamera('c2', {
+          position: light.getPosition(),
+          up: vec4(0, 1, 0),
+          target: vec4(0, 0, 0),
+          l: -100,
+          r: 100,
+          n: -100,
+          f: 100,
+          b: -100,
+          t: 100,
+        });
+        const lightViewProjection = camera.getViewProjectionMatrix().toArray();
 
         lightViewProjections.push(lightViewProjection);
         queue.writeBuffer(this.lightProjectionBuffer, i * 16 * 4, lightViewProjection);

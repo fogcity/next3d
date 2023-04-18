@@ -51,9 +51,7 @@ export class Engine {
   }
 
   async init() {
-
     const { device, context, format } = await initGPU(this.canvas);
-
 
     this.device = device;
     this.queue = device.queue;
@@ -62,7 +60,7 @@ export class Engine {
     const size = { width: this.canvas.width, height: this.canvas.height };
 
     this.shadowDepthTexture = device.createTexture({
-      size: [2048, 2048],
+      size: [5096, 5096],
       usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
       format: 'depth32float',
     });
@@ -80,7 +78,7 @@ export class Engine {
   async loop(frameRenderFunction: () => void, frame?: number) {
     await this.init();
     await this.scene.init();
-  
+
     let frameId = 0;
     let currentFrame = 1;
     const render = (duration: DOMHighResTimeStamp) => {
