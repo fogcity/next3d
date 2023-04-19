@@ -13,6 +13,8 @@ import { memo } from 'react';
 import { createGround } from '../lib/meshes';
 import { color, randomColor } from '../lib/math/color';
 import { createOrthographicCamera } from '../lib/camera';
+import { scaleZ, translate } from '../lib/math/transform';
+import { log } from 'console';
 
 function App() {
   // const [fov, setFov] = useState("150");
@@ -20,6 +22,11 @@ function App() {
   // const [cx, setCX] = useState(0);
   // const [n, setN] = useState(1);
   // const [f, setF] = useState(99);
+  const [pll, setPll] = useState(1);
+  const [plx, setPlx] = useState(-5);
+  const [ply, setPly] = useState(0);
+  const [plz, setPlz] = useState(-3);
+
   useEffect(() => {
     (async () => {
       const canvas = document.getElementById('webgpu-canvas') as HTMLCanvasElement;
@@ -36,29 +43,31 @@ function App() {
         { fov: 120, target: vec4(0, 0, 0), position: vec4(0, 5, -5), up: vec4(0, 1, 1) },
         scene,
       );
+      const d = 100;
       // const camera = createOrthographicCamera(
       //   'c2',
       //   {
-      //     position: vec4(0, 5, -5),
-      //     up: vec4(0, 1, 1),
+      //     position: vec4(0, 10, 0),
+      //     up: vec4(0, 0, 1),
       //     target: vec4(0, 0, 0),
-      //     l: -30,
-      //     r: 30,
-      //     n: -30,
-      //     f: 30,
-      //     b: -30,
-      //     t: 30,
+      //     l: -d,
+      //     r: d,
+      //     n: -d,
+      //     f: d,
+      //     b: -d,
+      //     t: d,
       //   },
       //   scene,
       // );
+
       const g = createGround('ground1', scene, {
-        width: 100,
-        height: 100,
-        color: color(0.55, 0.55, 0.55),
+        width: 20,
+        height: 20,
+        color: color(0.35, 0.35, 0.35),
       });
 
       g.translate(0, -2, 0);
-      const red = color(1, 0, 0);
+      const red = color(0.95, 0, 0);
       const box = createBox('box', scene, {
         width: 1,
         height: 1,
@@ -71,12 +80,7 @@ function App() {
         depth: 0.4,
         color: red,
       });
-      const box2 = createBox('box', scene, {
-        width: 0.5,
-        height: 0.8,
-        depth: 0.8,
-        color: red,
-      });
+
       const box3 = createBox('box', scene, {
         width: 0.4,
         height: 0.2,
@@ -86,57 +90,89 @@ function App() {
       box.translate(-2, -1, 2);
       box1.translate(2, -1, 2);
 
-      box2.translate(-2, -1, -2);
       box3.translate(2, -1, -2);
 
       const light = createPointLight('light', scene, {
         color: color(1, 1, 1),
         render: false,
-        position: vec4(-5, 3, -5),
-        intensity: 4,
-        radius: 1000,
+        position: vec4(plx, ply, plz),
+        intensity: pll,
+        radius: 80,
       });
 
-      await engine.loop(() => {
-        scene.render();
-        light.translate(0.05, 0, 0.05);
-        box2.rotate(0, 1, 0);
+      await engine.loop(currentFrame => {
+        console.log(light.getPosition());
 
-        console.log(box2.getTransform().toArray());
-      }, 500);
+        scene.render();
+      }, 1000);
     })();
   }, []);
+  const itemStyle = { display: 'flex', gap: '1em' };
   return (
     <>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '1em',
+          position: 'relative',
         }}>
-        <canvas
-          id='webgpu-canvas'
-          width='600'
-          height='600
-        .'></canvas>
+        <div
+          style={{
+            position: 'absolute',
+            background: 'white',
+            top: 1,
+            right: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '1em',
+            borderRadius: '4px',
+          }}>
+          <div style={itemStyle}>
+            <div>Point Light color</div> <input id='plc' type='color' />
+          </div>
+          <div style={itemStyle}>
+            <div>Point Light x</div>
+            <input
+              id='plx'
+              type='range'
+              min='-5'
+              max='5'
+              step='0.02'
+              onChange={e => {
+                setPlx(Number(e.target.value));
+              }}
+              value={plx}
+            />
+          </div>
+          <div style={itemStyle}>
+            <span>Point Light y</span>
+            <input id='ply' type='range' min='-5' max='5' step='0.01' />
+          </div>
+          <div style={itemStyle}>
+            <span>Point Light z</span>
+            <input id='plz' type='range' min='-5' max='5' step='0.01' />
+          </div>
+          <div style={itemStyle}>
+            <span>Point Light Intensity</span>
+            <input
+              id='pll'
+              type='range'
+              min='0'
+              max='10'
+              step='0.05'
+              value={pll}
+              onChange={e => {
+                setPll(Number(e.target.value));
+              }}
+            />
+          </div>
+          <div style={itemStyle}>
+            <span>Point Light Radius</span>
+            <input id='plr' type='range' min='0' max='50' step='0.1' />
+          </div>
+        </div>
+        <canvas id='webgpu-canvas' width='512' height='512' style={{}}></canvas>
       </div>
       {/* <div className="inputs">
-        <div>
-          <span>Point Light color</span> <input id="plc" type="color" />
-        </div>
-        <div>
-          <span>Point Light x</span>
-          <input id="plx" type="range" min="-5" max="5" step="0.01" value="0" />
-        </div>
-        <div>
-          <span>Point Light y</span>
-          <input id="ply" type="range" min="-5" max="5" step="0.01" value="0" />
-        </div>
-        <div>
-          <span>Point Light z</span>
-          <input id="plz" type="range" min="-5" max="5" step="0.01" value="0" />
-        </div>
+    
         <div>
           <span>Point Light Intensity</span>
           <input id="pli" type="range" min="0" max="10" step="0.05" value="1" />

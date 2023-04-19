@@ -8,7 +8,7 @@ import {
 import { Node } from './node';
 import { Camera, createOrthographicCamera, createPerspectiveCamera } from './camera';
 import { createDepthStencil, createPipline, createPrimitive } from './core/platform';
-import { Engine } from './engine';
+import { Engine } from './core/engine';
 import { Light } from './light';
 import { Matrix4 } from './math/matrix';
 import { Mesh } from './meshes/mesh';
@@ -230,11 +230,12 @@ export class Scene {
           b: -100,
           t: 100,
         });
-        const lightViewProjection = camera.getViewProjectionMatrix().toArray();
 
+        const lightViewProjection = camera.getViewProjectionMatrix().toArray();
         lightViewProjections.push(lightViewProjection);
         queue.writeBuffer(this.lightProjectionBuffer, i * 16 * 4, lightViewProjection);
       }
+
     this.onLightsUpdated?.(lightViewProjections);
 
     const commandEncoder = device.createCommandEncoder();

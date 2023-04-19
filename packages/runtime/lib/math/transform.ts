@@ -90,24 +90,36 @@ export function lookAt(position: Vector4, target: Vector4, up: Vector4) {
   const rotate = mat4([anx[0], anx[1], anx[2], 0, ant[0], ant[1], ant[2], 0, ang[0], ang[1], ang[2], 0, 0, 0, 0, 1]);
   return rotate.mul(tv);
 }
-export function orthographic(l: number, r: number, b: number, t: number, n: number, f: number) {
-  // 把世界坐标区域缩放到对应技术平台的标准NDC
-  // 这里是webgpu的左手坐标系的z位0-1的区域
-  const translateMat = translate(-(r + l) / 2, -(t + b) / 2, -(f + n) / 2);
-  const scaleMat = scale(2 / (r - l), 2 / (t - b), 2 / (f - n));
+
+/**
+ * 正交投影矩阵
+ * @param l 最大可视左x坐标
+ * @param r 最大可视右x坐标
+ * @param b 最大可视下y坐标
+ * @param t 最大可视上y坐标
+ * @param zn 最大可视最近z坐标
+ * @param zf 最大可视最远z坐标
+ * @returns Matrix4
+ */
+export function orthographic(l: number, r: number, b: number, t: number, zn: number, zf: number) {
+  // 把世界坐标区域平移到WEBGPU NDC中心对齐
+  const translateMat = translate(-(r + l) / 2, -(t + b) / 2, -zn);
+  // 再缩放到单位1的长方体
+  const scaleMat = scale(2 / (r - l), 2 / (t - b), 1 / (zf - zn));
+  // 级联完成世界坐标到裁剪坐标的转换
   return scaleMat.mul(translateMat);
 }
 
-export function perspective(n: number, f: number, fov: number = 150, aspectRatio: number = 1) {
-  const t = Math.tan(radians(fov / 2)) * n;
+export function perspective(zn: number, zf: number, fov: number = 150, aspectRatio: number = 1) {
+  const t = Math.tan(radians(fov / 2)) * zn;
   const r = aspectRatio * t;
   const l = -r;
   const b = -t;
   // 先把视锥体压缩成透视正交体
-  const frustumToOrthMat = mat4([n, 0, 0, 0, 0, n, 0, 0, 0, 0, n + f, -n * f, 0, 0, 1, 0]);
+  const frustumToOrthMat = mat4([zn, 0, 0, 0, 0, zn, 0, 0, 0, 0, zn + zf, -zn * zf, 0, 0, 1, 0]);
 
   // 再用正交投影
-  const orth = orthographic(l, r, b, t, n, f);
+  const orth = orthographic(l, r, b, t, zn, zf);
 
   return orth.mul(frustumToOrthMat);
 }

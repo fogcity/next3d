@@ -16,7 +16,7 @@ fn main(
     
     // 环境光处理，初始化光照结果为环境光
     let ambientColor = vec3(1.0, 1.0, 1.0);
-    let ambientIntensity = 0.2;
+    let ambientIntensity = 0.1;
     let ambientLight = ambientColor * ambientIntensity;
     var lightResult = vec3(0.0, 0.0, 0.0);
 
@@ -64,12 +64,11 @@ fn main(
                 var diffuseWithDistanceAndIntensity = pointLightColor * pointLightIntensity * diffuse * diffuseWithDistance;
                 // 该片源累加每个点光源的结果
                 lightResult += diffuseWithDistanceAndIntensity;
-                
-               
             }
      }
    }
 
-  
-       return vec4<f32>((objectColor *( lightResult*visibility+ambientLight)), 1.0);
+           return vec4<f32>((objectColor *( lightResult*visibility+ambientLight)), 1.0); 
+
+       
 }

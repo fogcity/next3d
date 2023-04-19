@@ -1,5 +1,5 @@
-import { initDepthStencil, initGPU } from './core/platform';
-import { createScene, Scene } from './scene';
+import { initDepthStencil, initGPU } from './platform';
+import { createScene, Scene } from '../scene';
 
 type EngineOptions = Partial<{
   antialias: boolean;
@@ -75,7 +75,7 @@ export class Engine {
     this.onEngineInit();
   }
 
-  async loop(frameRenderFunction: () => void, frame?: number) {
+  async loop(frameRenderFunction: (currentFrame: number) => void, frame?: number) {
     await this.init();
     await this.scene.init();
 
@@ -83,7 +83,8 @@ export class Engine {
     let currentFrame = 1;
     const render = (duration: DOMHighResTimeStamp) => {
       this.onFrameRenderStart(currentFrame, duration);
-      frameRenderFunction();
+      frameRenderFunction(currentFrame);
+
       this.onFrameRenderEnd(currentFrame, duration);
       if (frame) {
         if (currentFrame < frame) {

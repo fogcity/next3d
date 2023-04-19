@@ -88,7 +88,8 @@ export class Matrix4 extends Matrix {
     const result = [v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16];
     return mat4(result);
   }
-  apply(target: Vector4) {
+
+  apply(target: Vector4, lh: false) {
     const d = this.toArray();
     console.log(target);
 
