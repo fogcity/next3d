@@ -10,13 +10,12 @@ import { Camera, createOrthographicCamera, createPerspectiveCamera } from './cam
 import { createDepthStencil, createPipline, createPrimitive } from './core/platform';
 import { Engine } from './core/engine';
 import { Light } from './light';
-import { Matrix4 } from './math/matrix';
+import { Matrix4, vec4 } from './math';
 import { Mesh } from './meshes/mesh';
-import { lookAt, translate } from './math/transform';
+
 import vertShaderCode from './shaders/vert.wgsl?raw';
 import fragShaderCode from './shaders/frag.wgsl?raw';
 import shadowShaderCode from './shaders/shadow.wgsl?raw';
-import { vec4 } from './math/vector';
 import { createBox, createSphere } from './meshes/index';
 type MeshBuffer = {
   vertex: GPUBuffer;

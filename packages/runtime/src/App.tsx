@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import {
   createBox,
-  createSphere,
+  color,
   vec4,
   createEngine,
   createScene,
   createPerspectiveCamera,
   createPointLight,
+  createGround,
 } from '../lib';
 
 import { memo } from 'react';
-import { createGround } from '../lib/meshes';
-import { color, randomColor } from '../lib/math/color';
-import { createOrthographicCamera } from '../lib/camera';
-import { scaleZ, translate } from '../lib/math/transform';
-import { log } from 'console';
 
 function App() {
   // const [fov, setFov] = useState("150");

@@ -1,6 +1,6 @@
-export { createEngine } from './core/engine';
-export { createScene } from './scene';
-export { createPerspectiveCamera } from './camera';
-export { createPointLight } from './light';
-export { vec4 } from './math/vector';
-export { createBox, createSphere } from './meshes';
+export * from './core/engine';
+export * from './scene';
+export * from './camera';
+export * from './light';
+export * from './math';
+export * from './meshes';

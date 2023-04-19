@@ -1,7 +1,5 @@
 import { useNodeId } from './core/common';
-import { Matrix4 } from './math/matrix';
-import { rotate, translate } from './math/transform';
-import { vec4, Vector4 } from './math/vector';
+import { vec4, Vector4, Matrix4, rotate, translate } from './math';
 import { Scene } from './scene';
 
 export type NodeOptions = {};

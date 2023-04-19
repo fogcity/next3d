@@ -1,5 +1,5 @@
-import { mat4, Matrix4 } from './matrix';
-import { Vector4 } from './vector';
+import { mat4, Matrix4 } from './matrix4';
+import { Vector4 } from './vector4';
 
 export function radians(angle: number) {
   return (angle * Math.PI) / 180;

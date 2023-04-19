@@ -1,7 +1,6 @@
-import { vec4, Vector4 } from './math/vector';
 import { lookAt, orthographic, perspective } from './math/transform';
 import { Scene } from './scene';
-import { Matrix4 } from './math/matrix';
+import { Matrix4, vec4, Vector4 } from './math';
 import { int } from './types';
 import { Node } from './node';
 type CameraOptions = {
