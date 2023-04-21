@@ -31,7 +31,7 @@ function App() {
         console.error('canvas is not exist.');
       }
 
-      const engine = createEngine(canvas, {});
+      const engine = createEngine({});
       const scene = createScene(engine, {});
 
       const camera = createPerspectiveCamera(
