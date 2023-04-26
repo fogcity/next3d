@@ -1,7 +1,7 @@
 import { lookAt, orthographic, perspective } from '../../../../core/math/transform';
 import { Scene } from '../../scene/scene';
 import { Matrix4, vec4, Vector4 } from '../../../../core/math';
-import { int } from '../../../../types';
+import { number } from '../../../../types';
 import { Node } from '../../scene/node';
 type CameraOptions = {
   position?: Vector4;
@@ -70,12 +70,12 @@ export abstract class Camera extends Node {
 }
 
 export class OrthographicCamera extends Camera {
-  l: int;
-  r: int;
-  b: int;
-  t: int;
-  n: int;
-  f: int;
+  l: number;
+  r: number;
+  b: number;
+  t: number;
+  n: number;
+  f: number;
   getViewProjectionMatrix(): Matrix4 {
     return this.getProjectionMatrix().mul(this.view());
   }
@@ -93,10 +93,10 @@ export class OrthographicCamera extends Camera {
   }
 }
 export class PerspectiveCamera extends Camera {
-  n: int;
-  f: int;
-  fov: int = 150;
-  aspectRatio: int = 1;
+  n: number;
+  f: number;
+  fov: number = 150;
+  aspectRatio: number = 1;
   constructor(public name: string, options: PerspectiveCameraOptions, scene: Scene) {
     super(name, scene);
     for (const key in defaulPerspectiveCameraOptions) {

@@ -1,16 +1,16 @@
 import { Geometry, createGroundGeometry } from '../geometry/index';
 import { Scene } from '../../scene/scene';
 import { scale } from '../../../../core/math/transform';
-import { float } from '../../../../types';
+import { number } from '../../../../types';
 import { Mesh, MeshOptions } from './mesh';
 type GroundOptions = MeshOptions & {
-  width?: float;
-  height?: float;
+  width?: number;
+  height?: number;
 };
 
 class GroundMesh extends Mesh {
-  width: float = 1;
-  height: float = 1;
+  width: number = 1;
+  height: number = 1;
 
   constructor(name: string, scene: Scene, options?: GroundOptions) {
     super(name, scene);

@@ -1,14 +1,13 @@
 import { Geometry, createSphereGeometry } from '../geometry/index';
 import { Scene } from '../../scene/scene';
 import { scale, translate } from '../../../../core/math/transform';
-import { float, int } from '../../../../types';
 import { Mesh, MeshOptions } from './mesh';
 type SphereOptions = MeshOptions & {
   r: number;
 };
 
 class SphereMesh extends Mesh {
-  r: float;
+  r: number;
   constructor(name: string, scene: Scene, options?: SphereOptions) {
     super(name, scene);
     for (const key in options) {

@@ -1,11 +1,14 @@
-import { FloatArray, IndicesArray, int } from '../../../../types';
-
 import * as box from './box';
 import * as sphere from './sphere';
 import * as ground from './ground';
 
 export class Geometry {
-  constructor(public vertex: FloatArray, public index: IndicesArray, public vertexCount: int, public indexCount: int) {}
+  constructor(
+    public vertex: Float32Array,
+    public index: Int32Array | Uint32Array | Uint16Array,
+    public vertexCount: number,
+    public indexCount: number,
+  ) {}
 
   static Box = new Geometry(box.vertex, box.index, box.vertexCount, box.indexCount);
   static Sphere = new Geometry(sphere.vertex, sphere.index, sphere.vertexCount, sphere.indexCount);
