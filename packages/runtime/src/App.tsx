@@ -3,7 +3,7 @@ import {
   createBox,
   color,
   vec4,
-  createEngine,
+  useEngine,
   createScene,
   createPerspectiveCamera,
   createPointLight,
@@ -31,7 +31,8 @@ function App() {
         console.error('canvas is not exist.');
       }
 
-      const engine = createEngine({});
+      const engine = useEngine(canvas);
+      engine.
       const scene = createScene(engine, {});
 
       const camera = createPerspectiveCamera(

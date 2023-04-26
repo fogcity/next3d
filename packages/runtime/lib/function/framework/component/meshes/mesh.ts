@@ -1,10 +1,10 @@
 import { Color, color } from '../../../../core/math/color';
 import { Geometry } from '../geometry/index';
-import { Material } from '../material/material';
+import { Material } from '../material';
 import { Matrix4 } from '../../../../core/math/matrix4';
-import { Scene } from '../../scene/scene';
+import { Scene } from '../../entity/scene/scene';
 
-import { Node } from '../../scene/node';
+import { Node } from '../node';
 
 export type MeshOptions = {
   transform?: Matrix4;

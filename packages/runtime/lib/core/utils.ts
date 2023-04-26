@@ -1,4 +1,5 @@
 let id = 0;
-export function useNodeId() {
+
+export function useEntityId() {
   return ++id;
 }

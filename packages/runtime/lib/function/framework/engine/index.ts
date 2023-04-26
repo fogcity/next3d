@@ -1,6 +1,6 @@
 import { initDepthStencil, initGPU } from '../../../platform/pipline';
 import { ConfigManager } from '../../../resource/ConfigManager';
-import { createScene, Scene } from '../scene/scene';
+import { createScene, Scene } from '../entity/scene/scene';
 
 type EngineOptions = Partial<{
   antialias: boolean;
@@ -29,13 +29,21 @@ export class Engine {
   shadowDepthView: GPUTextureView;
   renderDepthView: GPUTextureView;
   configManager;
-  constructor(public canvas: HTMLCanvasElement, options?: EngineOptions) {
+  private constructor(public canvas: HTMLCanvasElement, options?: EngineOptions) {
     this.configManager = new ConfigManager();
     for (const key in options) {
       this[key] = options[key];
     }
   }
+  private static instance: Engine;
 
+  public static getInstance(canvas: HTMLCanvasElement, options?: EngineOptions) {
+    if (!Engine.instance) {
+      Engine.instance = new Engine(canvas, options);
+    }
+
+    return Engine.instance;
+  }
   addScene(scene: Scene) {
     this.scene = scene;
   }
@@ -91,6 +99,6 @@ export class Engine {
   }
 }
 
-export function createEngine(canvas: HTMLCanvasElement, options?: EngineOptions) {
-  return new Engine(canvas, options);
+export function useEngine(canvas: HTMLCanvasElement, options?: EngineOptions) {
+  return Engine.getInstance(canvas, options);
 }

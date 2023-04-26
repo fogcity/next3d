@@ -1,5 +1,5 @@
 import { Geometry, createBoxGeometry } from '../geometry/index';
-import { Scene } from '../../scene/scene';
+import { Scene } from '../../entity/scene/scene';
 import { scale } from '../../../../core/math/transform';
 import { number } from '../../../../types';
 import { Mesh, MeshOptions } from './mesh';

@@ -1,1 +1,1 @@
-export class Component {}
+export class System {}

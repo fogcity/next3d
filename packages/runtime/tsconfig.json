@@ -20,7 +20,7 @@
     "jsx": "react",
     "esModuleInterop": true,
   },
-  "include": ["lib/.d.ts", "lib"],
+  "include": ["lib/.d.ts", "lib", "lib/function/framework/component/position.ts"],
   "exclude": ["lib/a.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

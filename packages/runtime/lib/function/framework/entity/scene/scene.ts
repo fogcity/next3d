@@ -4,19 +4,19 @@ import {
   createStorageBuffer,
   createUniformBuffer,
   createVertexBuffer,
-} from '../../../platform/buffer';
-import { Node } from './node';
-import { Camera, createOrthographicCamera, createPerspectiveCamera } from '../component/camera';
-import { createDepthStencil, createPipline, createPrimitive } from '../../../platform/pipline';
-import { Engine } from '../engine';
-import { Light } from '../component/light';
-import { Matrix4, vec4 } from '../../../core/math';
-import { Mesh } from '../component/meshes/mesh';
+} from '../../../../platform/buffer';
+import { Node } from '../../component/node';
+import { Camera, createOrthographicCamera, createPerspectiveCamera } from '../../component/camera';
+import { createDepthStencil, createPipline, createPrimitive } from '../../../../platform/pipline';
+import { Engine } from '../../engine';
+import { Light } from '../../component/light';
+import { Matrix4, vec4 } from '../../../../core/math';
+import { Mesh } from '../../component/meshes/mesh';
 
 import vertShaderCode from './shaders/vert.wgsl?raw';
 import fragShaderCode from './shaders/frag.wgsl?raw';
 import shadowShaderCode from './shaders/shadow.wgsl?raw';
-import { createBox, createSphere } from '../component/meshes/index';
+import { createBox, createSphere } from '../../component/meshes/index';
 type MeshBuffer = {
   vertex: GPUBuffer;
   index: GPUBuffer;
