@@ -62,7 +62,7 @@ npm i next3d
 2. Here is a quick react example to get you started, **it's all you need**:
 
 ```jsx
-import { createBox, createSphere, vec4, createEngine, createScene, createPerspectiveCamera, createPointLight,createGround,scale, translate } from "next3d";
+import { createBox, createSphere, vec4, createEngine, useScene, createPerspectiveCamera, createPointLight,createGround,scale, translate } from "next3d";
 import React,{ useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -78,7 +78,7 @@ function App() {
       }
 
       const engine = createEngine(canvas);
-      const scene = createScene(engine);
+      const scene = useScene(engine);
 
       const camera = createPerspectiveCamera(
         "c1",

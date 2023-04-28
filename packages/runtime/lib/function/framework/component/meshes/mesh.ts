@@ -1,5 +1,5 @@
 import { Color, color } from '../../../../core/math/color';
-import { Geometry } from '../geometry/index';
+import { Geometry } from '../geometry';
 import { Material } from '../material';
 import { Matrix4 } from '../../../../core/math/matrix4';
 import { Scene } from '../../entity/scene/scene';

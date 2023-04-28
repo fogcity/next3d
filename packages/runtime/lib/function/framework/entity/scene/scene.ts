@@ -5,7 +5,7 @@ import {
   createUniformBuffer,
   createVertexBuffer,
 } from '../../../../platform/buffer';
-import { Node } from '../../component/node';
+import { Node, NodeComponent } from '../../component/node';
 import { Camera, createOrthographicCamera, createPerspectiveCamera } from '../../component/camera';
 import { createDepthStencil, createPipline, createPrimitive } from '../../../../platform/pipline';
 import { Engine } from '../../engine';
@@ -17,6 +17,7 @@ import vertShaderCode from './shaders/vert.wgsl?raw';
 import fragShaderCode from './shaders/frag.wgsl?raw';
 import shadowShaderCode from './shaders/shadow.wgsl?raw';
 import { createBox, createSphere } from '../../component/meshes/index';
+import { Entity } from '../entity';
 type MeshBuffer = {
   vertex: GPUBuffer;
   index: GPUBuffer;
@@ -307,47 +308,13 @@ export class Scene {
     queue.submit([commandEncoder.finish()]);
     this.onRenderEnd();
   }
-  addNode(node: Node) {
-    this.nodes.push(node);
-  }
-  addMesh(mesh: Mesh) {
-    this.meshes.push(mesh);
-  }
 
-  removeMesh(name: string) {
-    this.meshes = this.meshes.filter(m => m.name != name);
+  addChild(child: Entity) {
+    child.addComponent(new NodeComponent(this));
   }
-
-  addLight(light: Light) {
-    this.lights.push(light);
-    // if (light.render) {
-    //   const lightSphere = createSphere('light', this, {
-    //     r: 0.1,
-    //   });
-    //   const lp = light.position.toArray();
-    //   lightSphere.transform = translate(...lp).mul(lightSphere.transform);
-    //   this.addMesh(lightSphere);
-    // }
-  }
-
-  removeLight(name: string) {
-    this.lights = this.lights.filter(l => l.name != name);
-  }
-
-  setCamera(camera: Camera) {
-    this.camera = camera;
-  }
-
-  addTexture() {}
-  removeTexture() {}
-
-  createSceneUniformBuffer() {}
-  onLoad() {}
-  onClick() {}
-  onPointer() {}
 }
 
-export function createScene(engine: Engine, options?: SceneOptions) {
+export function useScene(engine: Engine, options?: SceneOptions) {
   const scene = new Scene(engine, options);
   return scene;
 }

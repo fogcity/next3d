@@ -1,5 +1,6 @@
 import { Component } from './component';
-
+import { vertex, index, vertexCount, indexCount } from '../../../resource/geometry/ground';
+import * as Box from '../../../resource/geometry/box';
 export class GeometryComponent extends Component {
   constructor(
     public vertex: Float32Array,
@@ -9,5 +10,6 @@ export class GeometryComponent extends Component {
   ) {
     super('geometry');
   }
-  public static Ground = new GeometryComponent();
+  public static Ground = new GeometryComponent(vertex, index, vertexCount, indexCount);
+  public static Box = new GeometryComponent(Box.vertex, Box.index, Box.vertexCount, Box.indexCount);
 }

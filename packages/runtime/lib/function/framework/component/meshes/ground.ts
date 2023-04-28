@@ -1,4 +1,4 @@
-import { Geometry, createGroundGeometry } from '../geometry/index';
+import { Geometry, createGroundGeometry } from '../geometry';
 import { Scene } from '../../entity/scene/scene';
 import { scale } from '../../../../core/math/transform';
 import { number } from '../../../../types';

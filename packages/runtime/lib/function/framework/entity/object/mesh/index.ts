@@ -1,4 +1,4 @@
-import { createWorldObject } from '..';
+import { createWorldObject } from '../worldObject';
 import { GeometryComponent } from '../../../component/geometry';
 import { MaterialComponent } from '../../../component/material';
 
@@ -6,4 +6,6 @@ export function useMesh(geo: GeometryComponent, material: MaterialComponent) {
   const mesh = createWorldObject();
   mesh.addComponent(geo);
   mesh.addComponent(material);
+
+  return mesh;
 }

@@ -1,6 +1,6 @@
 import { initDepthStencil, initGPU } from '../../../platform/pipline';
 import { ConfigManager } from '../../../resource/ConfigManager';
-import { createScene, Scene } from '../entity/scene/scene';
+import { useScene, Scene } from '../entity/scene/scene';
 
 type EngineOptions = Partial<{
   antialias: boolean;

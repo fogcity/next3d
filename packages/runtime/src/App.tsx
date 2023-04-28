@@ -4,7 +4,7 @@ import {
   color,
   vec4,
   useEngine,
-  createScene,
+  useScene,
   createPerspectiveCamera,
   createPointLight,
   createGround,
@@ -32,31 +32,19 @@ function App() {
       }
 
       const engine = useEngine(canvas);
-      engine.
-      const scene = createScene(engine, {});
+      engine.setting.shadow.enable = true; // 开启阴影
+      engine.setting.shadow.type = `SOFT`; // 软阴影类型
+      engine.setting.shadow.shadowSize = 2048; // 阴影贴图大小
+
+      const scene = useScene(engine);
 
       const camera = createPerspectiveCamera(
         'camera',
         { fov: 120, target: vec4(0, 0, 0), position: vec4(0, 5, -5), up: vec4(0, 1, 1) },
         scene,
       );
-      const d = 100;
-      // const camera = createOrthographicCamera(
-      //   'c2',
-      //   {
-      //     position: vec4(0, 10, 0),
-      //     up: vec4(0, 0, 1),
-      //     target: vec4(0, 0, 0),
-      //     l: -d,
-      //     r: d,
-      //     n: -d,
-      //     f: d,
-      //     b: -d,
-      //     t: d,
-      //   },
-      //   scene,
-      // );
 
+      const g = useMes;
       const g = createGround('ground1', scene, {
         width: 20,
         height: 20,
