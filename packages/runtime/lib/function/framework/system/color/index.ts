@@ -1,10 +1,12 @@
 import { System } from '../system';
 import { Entity } from '../../entity/entity';
 
-export class TransformSystem extends System {
+export class ColorSystem extends System {
   public static extensions = {
-    translate: () => {},
-    rotate: () => {},
-    scale: () => {},
+    r: 1,
+    g: 1,
+    b: 1,
+    a: 1,
+    getColor: () => {},
   };
 }

@@ -8,7 +8,8 @@ export type ComponentType =
   | 'geometry'
   | 'transform'
   | 'orthographic'
-  | 'perspective';
+  | 'perspective'
+  | 'renderer';
 export class Component {
   constructor(public type: ComponentType) {}
   onInit() {

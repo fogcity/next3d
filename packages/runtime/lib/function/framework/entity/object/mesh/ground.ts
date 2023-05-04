@@ -6,5 +6,6 @@ import { vertex, index, vertexCount, indexCount } from '../../../../../resource/
 export function useGroundMesh(material: MaterialComponent) {
   const geo = new GeometryComponent(vertex, index, vertexCount, indexCount);
   const ground = useMesh(geo, material);
+
   return ground;
 }
