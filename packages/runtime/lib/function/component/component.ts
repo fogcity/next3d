@@ -10,6 +10,19 @@ export type ComponentType =
   | 'orthographic'
   | 'perspective'
   | 'renderer';
+export const componentTypes = [
+  'color',
+  'position',
+  'node',
+  'camera',
+  'light',
+  'material',
+  'geometry',
+  'transform',
+  'orthographic',
+  'perspective',
+  'renderer',
+];
 export class Component {
   constructor(public type: ComponentType) {}
   onInit() {

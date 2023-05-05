@@ -1,9 +1,10 @@
-import { AssetManager, useAssetManager } from './AssetManager';
-import { ComponentManager, useComponentManager } from './ComponentManager';
-import { useConfigManager, ConfigManager } from './ConfigManager';
-import { EntityManager, useEntityManager } from './EntityManager';
-import { SceneManager, useSceneManager } from './SceneManager';
+import { AssetManager, useAssetManager } from '../function/manager/AssetManager';
+import { ComponentManager, useComponentManager } from '../function/manager/ComponentManager';
+import { useConfigManager, ConfigManager } from '../function/manager/ConfigManager';
+import { EntityManager, useEntityManager } from '../function/manager/EntityManager';
+import { SceneManager, useSceneManager } from '../function/manager/SceneManager';
 import { initGPU } from './gpu/pipline';
+import { Logger } from './Logger';
 export type EngineOptions = {};
 export class Engine {
   private static instance: Engine;
@@ -13,12 +14,13 @@ export class Engine {
   sceneManager: SceneManager;
   componentManager: ComponentManager;
   entityManager: EntityManager;
-  private constructor(public canvas: HTMLCanvasElement, options?: EngineOptions) {
+  private constructor( canvas: HTMLCanvasElement, options?: EngineOptions) {
     this.configManager = useConfigManager();
     this.assetManager = useAssetManager();
     this.sceneManager = useSceneManager();
     this.componentManager = useComponentManager();
     this.entityManager = useEntityManager();
+    (async () => await this.init(canvas))()
   }
 
   public static getInstance(canvas: HTMLCanvasElement, options?: EngineOptions) {
@@ -29,17 +31,13 @@ export class Engine {
     return Engine.instance;
   }
 
-  async init() {
-    const { device, context, format } = await initGPU(this.canvas);
-
-    this.device = device;
-    this.queue = device.queue;
-    this.context = context;
-    this.format = format;
-    const size = { width: this.canvas.width, height: this.canvas.height };
+  async init(canvas: HTMLCanvasElement) {
+    const { device, context, format } = await this.configManager.init(canvas);
+    const { device, context, format } = await this.assetManager.init(canvas);
+    const size = { width: canvas.width, height: canvas.height };
 
     this.shadowDepthTexture = device.createTexture({
-      size: [5096, 5096],
+      size: [2048, 2048],
       usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
       format: 'depth32float',
     });
@@ -51,7 +49,7 @@ export class Engine {
     // create depthTextureView
     this.shadowDepthView = this.shadowDepthTexture.createView();
     this.renderDepthView = this.renderDepthTexture.createView();
-    this.onEngineInit();
+
   }
 
   async loop(frameRenderFunction: (currentFrame: number) => void, frame?: number) {

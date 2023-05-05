@@ -1,3 +1,6 @@
+import { Component } from "../component/component";
+import { Entity } from "../entity/entity";
+
 export class ComponentManager {
   private static instance: ComponentManager;
   private constructor(public engine?: string) {
@@ -9,6 +12,15 @@ export class ComponentManager {
     }
 
     return ComponentManager.instance;
+  }
+  public proof = []
+  addComponent(entity:Entity ,component:Component){
+    this.proof.push({
+      id:entity.id,component
+    })
+  }
+  removeComponent(){
+    
   }
 }
 

@@ -1,3 +1,5 @@
+import { Entity } from "../entity/entity";
+
 export class EntityManager {
   private static instance: EntityManager;
   private constructor(public engine?: string) {
@@ -9,6 +11,9 @@ export class EntityManager {
     }
 
     return EntityManager.instance;
+  }
+  create(){
+    return new Entity()
   }
 }
 

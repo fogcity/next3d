@@ -10,4 +10,6 @@ export class Entity {
   constructor() {
     this.id = useEntityId();
   }
+  
+
 }

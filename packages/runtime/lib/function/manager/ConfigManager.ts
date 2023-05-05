@@ -1,3 +1,5 @@
+import { initGPU } from "../../core/gpu/pipline";
+
 export class ConfigManager {
   private static instance: ConfigManager;
   private constructor(public engine?: string) {
@@ -9,6 +11,9 @@ export class ConfigManager {
     }
 
     return ConfigManager.instance;
+  }
+  async init(canvas:HTMLCanvasElement){
+   return await initGPU(canvas)
   }
 }
 

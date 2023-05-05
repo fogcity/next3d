@@ -10,6 +10,9 @@ export class AssetManager {
 
     return AssetManager.instance;
   }
+  init(device:GPUDevice){
+
+  }
 }
 
 export function useAssetManager() {
