@@ -8,7 +8,7 @@ import {
 import { Node, NodeComponent } from '../../component/node';
 import { Camera, createOrthographicCamera, createPerspectiveCamera } from '../../component/camera';
 import { createDepthStencil, createPipline, createPrimitive } from '../../../../platform/pipline';
-import { Engine } from '../../engine';
+import { Engine } from '../../../core/engine';
 import { Light } from '../../component/light';
 import { Matrix4, vec4 } from '../../../../core/math';
 import { Mesh } from '../../component/meshes/mesh';
