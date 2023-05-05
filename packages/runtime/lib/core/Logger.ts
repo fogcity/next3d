@@ -1,4 +1,4 @@
-import { Serialize } from '../meta/Serialize';
+import { Serialize } from './Serialize';
 export class Logger {
   private static instance: Logger;
   private constructor(public engine?: string) {

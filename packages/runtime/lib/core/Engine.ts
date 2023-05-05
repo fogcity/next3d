@@ -1,41 +1,25 @@
-import { initDepthStencil, initGPU } from '../../../platform/pipline';
-import { ConfigManager } from '../../../resource/ConfigManager';
-import { useScene, Scene } from '../../function/entity/scene/scene';
-
-type EngineOptions = Partial<{
-  antialias: boolean;
-  preserveDrawingBuffer: boolean;
-  stencil: boolean;
-  onFrameRenderStart: (frame: number, duration: DOMHighResTimeStamp) => any;
-  onFrameRenderEnd: (frame: number, duration: DOMHighResTimeStamp) => any;
-  onEngineInit: () => any;
-}>;
-
+import { AssetManager, useAssetManager } from './AssetManager';
+import { ComponentManager, useComponentManager } from './ComponentManager';
+import { useConfigManager, ConfigManager } from './ConfigManager';
+import { EntityManager, useEntityManager } from './EntityManager';
+import { SceneManager, useSceneManager } from './SceneManager';
+import { initGPU } from './gpu/pipline';
+export type EngineOptions = {};
 export class Engine {
-  antialias: false;
-  preserveDrawingBuffer: false;
-  stencil: false;
-  scene: Scene;
-  device: GPUDevice;
-  context: GPUCanvasContext;
-  format: GPUTextureFormat;
-  queue: GPUQueue;
-  onFrameRenderStart: (frame: number, duration: DOMHighResTimeStamp) => any;
-  onFrameRenderEnd: (frame: number, duration: DOMHighResTimeStamp) => any;
-  onEngineInit: () => any;
-
-  renderDepthTexture: GPUTexture;
-  shadowDepthTexture: GPUTexture;
-  shadowDepthView: GPUTextureView;
-  renderDepthView: GPUTextureView;
-  configManager;
-  private constructor(public canvas: HTMLCanvasElement, options?: EngineOptions) {
-    this.configManager = new ConfigManager();
-    for (const key in options) {
-      this[key] = options[key];
-    }
-  }
   private static instance: Engine;
+
+  configManager: ConfigManager;
+  assetManager: AssetManager;
+  sceneManager: SceneManager;
+  componentManager: ComponentManager;
+  entityManager: EntityManager;
+  private constructor(public canvas: HTMLCanvasElement, options?: EngineOptions) {
+    this.configManager = useConfigManager();
+    this.assetManager = useAssetManager();
+    this.sceneManager = useSceneManager();
+    this.componentManager = useComponentManager();
+    this.entityManager = useEntityManager();
+  }
 
   public static getInstance(canvas: HTMLCanvasElement, options?: EngineOptions) {
     if (!Engine.instance) {
@@ -43,9 +27,6 @@ export class Engine {
     }
 
     return Engine.instance;
-  }
-  addScene(scene: Scene) {
-    this.scene = scene;
   }
 
   async init() {
